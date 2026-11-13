@@ -1,0 +1,7 @@
+# Giữ nguyên byte của các file có checksum khi checkout trên Windows/Linux.
+*.json text eol=lf
+*.jsonl text eol=lf
+*.csv text eol=lf
+*.ipynb text eol=lf
+*.sh text eol=lf
+*.png binary
