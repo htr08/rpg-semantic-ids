@@ -1,0 +1,1 @@
+run_name,config,seed,gpu_hours,val_recall@5,val_recall@10,val_ndcg@5,val_ndcg@10,test_recall@5,test_recall@10,test_ndcg@5,test_ndcg@10,notebook_url,notes

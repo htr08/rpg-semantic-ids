@@ -1,0 +1,7 @@
+# RQ1: semantic ID bằng PQ thường (k-means độc lập trên từng đoạn con, không xoay). Còn lại giữ như rpg_main.yaml.
+base: rpg_main.yaml
+run_name: rpg_pq
+semantic_id:
+  method: pq
+train:
+  seeds: [42]

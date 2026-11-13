@@ -1,0 +1,7 @@
+# RQ1: token ngẫu nhiên (đối chứng). Còn lại giữ như rpg_main.yaml.
+base: rpg_main.yaml
+run_name: rpg_random
+semantic_id:
+  method: random
+train:
+  seeds: [42]

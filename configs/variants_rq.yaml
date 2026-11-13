@@ -1,0 +1,7 @@
+# RQ1: semantic ID bằng RQ (k-means trên phần dư qua nhiều tầng). Còn lại giữ như rpg_main.yaml.
+base: rpg_main.yaml
+run_name: rpg_rq
+semantic_id:
+  method: rq
+train:
+  seeds: [42]

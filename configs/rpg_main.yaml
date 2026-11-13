@@ -1,0 +1,34 @@
+# Cấu hình chính: RPG chạy bằng code gốc (third_party/RPG_KDD2025), siêu tham số theo paper.
+# Tên khóa cần đối chiếu với tham số của main.py trong repo gốc khi viết adapter.
+run_name: rpg_main
+dataset: amazon_beauty_2014
+
+encoder: sentence-t5-base       # 768 chiều
+semantic_id:
+  method: opq                   # opq | pq | rq | random | behavior
+  num_subspaces: 32             # m: mỗi item gồm 32 token
+  codebook_size: 256            # tổng từ vựng 32 x 256 = 8192
+
+model:
+  hidden_dim: 448               # d
+  ffn_dim: 1024
+  num_heads: 4
+  num_layers: 2
+  temperature: 0.03             # tau
+
+train:
+  batch_size: 256
+  lr: 0.01
+  early_stopping_patience: 20
+  early_stopping_metric: ndcg@10   # trên validation
+  seeds: [42, 43, 44]
+
+eval:
+  protocol: leave_last_out
+  ranking: full
+  topk: [5, 10]
+  exclude_seen: true
+
+reference:
+  ndcg@10_paper: 0.0429         # Table 4 (RPG + sentence-t5-base); không dùng 0,0464 của Table 2
+  acceptance_range: [0.038, 0.045]

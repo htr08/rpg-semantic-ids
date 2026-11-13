@@ -1,0 +1,11 @@
+# Baseline chạy bằng RecBole, cùng dữ liệu, cùng cách chia, cùng metric (chấm lại bằng src/evaluate.py).
+dataset: amazon_beauty_2014
+models: [Pop, ItemKNN, SASRec]
+seeds: [42, 43, 44]
+eval:
+  protocol: leave_last_out
+  ranking: full
+  topk: [5, 10]
+  exclude_seen: true
+reference:
+  sasrec_ndcg@10_paper: 0.0381   # Table 2

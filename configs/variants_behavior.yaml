@@ -1,0 +1,10 @@
+# Nâng cấp chính (RQ2): semantic ID có tín hiệu hành vi.
+# Embedding văn bản ghép với embedding đồng xuất hiện (item2vec hoặc SVD, chỉ dùng phần train) theo trọng số alpha, rồi chạy OPQ.
+base: rpg_main.yaml
+run_name: rpg_behavior
+semantic_id:
+  method: behavior
+  cooccurrence_embedding: svd   # svd | item2vec
+  alpha: 0.25                   # thử {0.25, 0.5}; chọn giá trị từ bước thử nhanh (Tuần 3)
+train:
+  seeds: [42, 43, 44]           # giảm còn 2 seed nếu vượt 80% ngân sách GPU
