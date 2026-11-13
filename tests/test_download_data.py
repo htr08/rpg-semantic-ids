@@ -2,8 +2,11 @@
 
 import gzip
 import hashlib
+import io
 import tempfile
 import unittest
+import urllib.error
+import urllib.request
 from pathlib import Path
 from unittest.mock import patch
 
@@ -35,9 +38,22 @@ class DownloadDataTests(unittest.TestCase):
 
     def test_bad_checksum_never_publishes_download(self):
         spec = {**self.spec, "sha256": "0" * 64}
-        with self.assertRaisesRegex(ValueError, "SHA-256"):
-            download_file(spec, self.root / "raw", retries=1)
+        with patch("urllib.request.urlopen", wraps=urllib.request.urlopen) as request, patch("scripts.download_data.time.sleep") as sleep:
+            with self.assertRaisesRegex(ValueError, "SHA-256"):
+                download_file(spec, self.root / "raw", retries=3)
+            request.assert_called_once()
+            sleep.assert_not_called()
         self.assertFalse((self.root / "raw" / "reviews.gz").exists())
+        self.assertFalse((self.root / "raw" / "reviews.gz.part").exists())
+
+    def test_temporary_network_failure_is_still_retried(self):
+        responses = [urllib.error.URLError("temporary network failure"), io.BytesIO(self.payload)]
+        with patch("urllib.request.urlopen", side_effect=responses) as request, patch("scripts.download_data.time.sleep") as sleep:
+            result = download_file(self.spec, self.root / "raw", retries=3)
+            self.assertEqual(request.call_count, 2)
+            sleep.assert_called_once()
+        self.assertEqual(result["records"], 2)
+        self.assertTrue((self.root / "raw" / "reviews.gz").exists())
         self.assertFalse((self.root / "raw" / "reviews.gz.part").exists())
 
     def test_truncated_download_rejected(self):

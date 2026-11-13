@@ -96,7 +96,8 @@ không lọc thêm dữ liệu chỉ để ép số tương tác thô về 176.1
 Script kiểm tra kích thước, SHA-256, giải nén toàn bộ để kiểm tra CRC gzip và đếm bản ghi.
 File đang tải có đuôi `.part`, chỉ đổi sang tên chính thức sau khi kiểm tra thành công;
 file đã có được kiểm tra lại trước khi bỏ qua tải. Nếu file đã có bị lỗi, script dừng để người dùng kiểm tra.
-Lỗi tải được thử lại tối đa 3 lần. `--verify-only` kiểm tra cục bộ, không cần mạng.
+Lỗi mạng/I/O được thử lại tối đa 3 lần; sai checksum, kích thước hoặc số bản ghi thì dừng ngay.
+`--verify-only` kiểm tra cục bộ, không cần mạng.
 
 Tham chiếu SHA-256 nằm trong `configs/data_sources.json`, được nhóm ghi nhận từ lần tải HTTPS đầu tiên,
 không phải checksum do nhà phát hành công bố. Cờ `--record-checksums` chỉ dùng để ghi các checksum còn thiếu
@@ -119,7 +120,7 @@ Metadata được xuất theo cùng mapping item, chưa ghép văn bản hay enc
 - `data/splits/manifest.json`: nguồn dữ liệu, cấu hình và checksum các đầu ra (commit).
 
 Quy ước từng file, cách đọc bộ chia và đầu vào cho A/B/C: [docs/data_contract.md](docs/data_contract.md).
-`scripts/run_all.sh` đã kích hoạt hai bước tải và tiền xử lý; các bước mô hình/khai phá chưa được kích hoạt.
+`scripts/run_all.sh` chạy ba bước: tải dữ liệu, tiền xử lý và EDA; các bước mô hình/khai phá chưa được kích hoạt.
 
 ## EDA tuần 1 của B
 

@@ -65,6 +65,9 @@ Train là khoảng nửa mở `[train_start, train_stop)`. `train_stop == valida
 
 `manifest.json` ghi quy ước chỉ số, cấu hình, checksum hai file raw và checksum tất cả đầu ra.
 Lệnh `--verify-only` kiểm tra 8 file dữ liệu và bộ chia khớp manifest, không dùng mạng.
+Lệnh cũng đối chiếu `min_core` và `max_history` trong cấu hình đang dùng với manifest;
+nếu lệch thì báo lỗi và yêu cầu chạy lại tiền xử lý. Mặc định dùng `configs/preprocessing.json`,
+hoặc chỉ định file khác qua `--config`.
 Các file phải cùng một lần sinh dữ liệu; không ghép mapping hoặc bộ chia từ nguồn khác.
 `.gitattributes` giữ LF cho JSON/CSV để Git không đổi byte và làm lệch checksum khi checkout trên Windows.
 

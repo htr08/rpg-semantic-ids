@@ -2,9 +2,11 @@
 
 import csv
 import gzip
+import io
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
 
 from src.preprocessing import (
@@ -16,6 +18,7 @@ from src.preprocessing import (
     iter_training_examples,
     load_aligned_metadata,
     load_reviews,
+    main as preprocessing_main,
     preprocess,
     read_records,
     sha256_file,
@@ -188,6 +191,26 @@ class PreprocessingTests(unittest.TestCase):
             preprocess(raw, output, splits, min_core=3, source_manifest=manifest)
         self.assertFalse(output.exists())
         self.assertFalse(splits.exists())
+
+    def test_verify_only_checks_config_against_existing_manifest(self):
+        raw, manifest = self.make_raw_fixture()
+        output, splits = self.root / "processed", self.root / "splits"
+        preprocess(raw, output, splits, min_core=3, max_history=2, source_manifest=manifest)
+        config_path = self.root / "preprocessing.json"
+        config_path.write_text(json.dumps({"min_core": 3, "max_history": 2}), encoding="utf-8")
+        args = ["--verify-only", "--config", str(config_path), "--output-dir", str(output), "--splits-dir", str(splits)]
+        self.assertEqual(preprocessing_main(args), 0)
+        original_manifest = (splits / "manifest.json").read_bytes()
+        for field, value in (("min_core", 4), ("max_history", 5)):
+            with self.subTest(field=field):
+                config = {"min_core": 3, "max_history": 2, field: value}
+                config_path.write_text(json.dumps(config), encoding="utf-8")
+                error = io.StringIO()
+                with redirect_stderr(error):
+                    self.assertEqual(preprocessing_main(args), 1)
+                self.assertIn(field, error.getvalue())
+                self.assertIn("does not match manifest", error.getvalue())
+                self.assertEqual((splits / "manifest.json").read_bytes(), original_manifest)
 
 
 SPLIT_KEYS = ("train_start", "train_stop", "validation_index", "test_index")

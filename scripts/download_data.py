@@ -74,7 +74,11 @@ def download_file(spec, output_dir, *, timeout=60, retries=3):
             partial.replace(target)
             print(f"Downloaded and verified: {target.name} ({result['records']:,} records)", flush=True)
             return result
-        except (OSError, EOFError, ValueError, urllib.error.URLError) as error:
+        except ValueError:
+            # Sai checksum/kích thước/số bản ghi: dừng để kiểm tra nguồn hoặc manifest.
+            partial.unlink(missing_ok=True)
+            raise
+        except (OSError, EOFError, urllib.error.URLError) as error:
             partial.unlink(missing_ok=True)
             if attempt == retries:
                 raise

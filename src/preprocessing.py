@@ -212,10 +212,17 @@ def write_csv(path, rows, fields):
         writer.writerows(rows)
 
 
-def verify_preprocessed(output_dir, splits_dir):
-    """Kiểm tra mọi đầu ra khớp với manifest của bộ chia dùng chung."""
+def verify_preprocessed(output_dir, splits_dir, *, config=None):
+    """Kiểm tra đầu ra và, khi được truyền vào, cấu hình so với manifest."""
     output_dir, splits_dir = Path(output_dir), Path(splits_dir)
     manifest = json.loads((splits_dir / "manifest.json").read_text(encoding="utf-8"))
+    if config is not None:
+        for key in ("min_core", "max_history"):
+            if type(config[key]) is not int or config[key] != manifest[key]:
+                raise ValueError(
+                    f"{key}: config value {config[key]!r} does not match manifest value "
+                    f"{manifest[key]!r}; rerun preprocessing with this config"
+                )
     for name, reference in manifest["artifacts"].items():
         directory = splits_dir if name == "leave_last_out.csv" else output_dir
         path = directory / name
@@ -323,11 +330,11 @@ def main(argv=None):
     parser.add_argument("--verify-only", action="store_true")
     args = parser.parse_args(argv)
     try:
-        if args.verify_only:
-            manifest = verify_preprocessed(args.output_dir, args.splits_dir)
-            print(f"Verified {len(manifest['artifacts'])} generated artifacts against split manifest")
-            return 0
         config = json.loads(args.config.read_text(encoding="utf-8"))
+        if args.verify_only:
+            manifest = verify_preprocessed(args.output_dir, args.splits_dir, config=config)
+            print(f"Verified config and {len(manifest['artifacts'])} generated artifacts against split manifest")
+            return 0
         preprocess(
             args.raw_dir, args.output_dir, args.splits_dir,
             min_core=config["min_core"], max_history=config["max_history"],
