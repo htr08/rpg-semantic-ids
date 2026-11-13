@@ -1,0 +1,42 @@
+# Phiên bản được pin để mọi thành viên và CI dùng cùng một môi trường.
+# Python >= 3.10 (đã kiểm tra phân giải phụ thuộc trên Python 3.12).
+# Khi thêm hoặc nâng cấp thư viện: ghi phiên bản cụ thể tại đây và thông báo cho cả nhóm.
+#
+# Cài đặt:
+#   python -m venv venv
+#   Windows: venv/Scripts/activate      macOS/Linux: source venv/bin/activate
+#   pip install -r requirements.txt
+#
+# Kaggle/Colab: PyTorch đã có sẵn trong image; nếu cần giữ bản cài sẵn,
+# chạy `pip install -r requirements.txt --no-deps` hoặc bỏ dòng torch.
+# Phụ thuộc riêng của code gốc RPG_KDD2025 (third_party/) cài theo requirements của repo đó.
+
+# --- Lõi số học và dữ liệu ---
+numpy==1.26.4
+scipy==1.13.1
+pandas==2.2.3
+pyyaml==6.0.2
+tqdm==4.66.5
+
+# --- Mô hình, encoder, baseline ---
+torch==2.4.1
+transformers==4.44.2
+sentence-transformers==3.1.1   # sentence-t5-base (BGE-M3 / E5 nếu dùng phương án dự phòng)
+recbole==1.2.0                 # Popularity, ItemKNN, SASRec
+faiss-cpu==1.8.0.post1         # OPQ, PQ, k-means, kNN graph (Kaggle GPU: có thể dùng faiss-gpu)
+
+# --- Khai phá dữ liệu ---
+scikit-learn==1.5.2            # PCA, KMeans, AgglomerativeClustering, DBSCAN, silhouette, Davies-Bouldin, NMI, ARI
+mlxtend==0.23.1                # fpgrowth, association_rules
+prefixspan==0.5.2              # mẫu tuần tự
+gensim==4.3.3                  # item2vec
+networkx==3.3                  # đồ thị
+python-louvain==0.16           # cộng đồng Louvain (module `community`)
+
+# --- Trực quan hóa ---
+matplotlib==3.9.2
+
+# --- Notebook, kiểm thử ---
+ipykernel==6.29.5
+nbstripout==0.7.1              # xóa output notebook trước khi commit (nbstripout --install)
+pytest==8.3.3

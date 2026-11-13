@@ -1,0 +1,87 @@
+# ===== Môi trường ảo =====
+venv/
+.venv/
+env/
+ENV/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ===== Notebook =====
+.ipynb_checkpoints/
+
+# ===== Dữ liệu (không commit dữ liệu thô, embedding, đặc trưng đã xử lý) =====
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+# data/splits/ được commit: chỉ số leave-last-out dùng chung cho mọi mô hình
+
+# ===== Checkpoint, embedding, chỉ mục =====
+checkpoints/
+saved/
+log_tensorboard/
+runs/
+wandb/
+lightning_logs/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.npy
+*.npz
+*.faiss
+*.index
+*.pkl
+*.pickle
+*.h5
+*.parquet
+*.json.gz
+*.gz
+
+# Ngoại lệ: file chỉ số chia dữ liệu nhỏ, dùng chung
+!data/splits/*.npy
+!data/splits/*.npz
+
+# ===== Cache của thư viện =====
+.cache/
+.huggingface/
+.recbole/
+
+# ===== Kết quả thí nghiệm sinh tự động =====
+# experiments/log.csv được commit; các file sinh thêm thì không
+experiments/*
+!experiments/log.csv
+!experiments/.gitkeep
+
+# ===== Báo cáo xuất file =====
+reports/*.pdf
+reports/*.docx
+reports/*.pptx
+
+# ===== File khóa tạm của Office =====
+~$*
+.~lock.*
+
+# ===== IDE / hệ điều hành =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Thông tin nhạy cảm =====
+.env
+*.env
+kaggle.json
