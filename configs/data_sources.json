@@ -1,0 +1,22 @@
+{
+  "dataset": "Amazon Reviews 2014 - Beauty",
+  "source_page": "https://mcauleylab.ucsd.edu/public_datasets/data/amazon/index_2014.html",
+  "rpg_loader": "https://github.com/facebookresearch/RPG_KDD2025/blob/main/genrec/datasets/AmazonReviews2014/dataset.py",
+  "checksum_note": "SHA-256 references recorded by the project from the initial HTTPS download; not publisher-provided checksums.",
+  "files": [
+    {
+      "filename": "reviews_Beauty_5.json.gz",
+      "url": "https://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Beauty_5.json.gz",
+      "size_bytes": 44819276,
+      "records": 198502,
+      "sha256": "e5925ec99023f1dc9c7d3dff7ef34cfeacd40d1b981b5525e1e4ba9c8abc18fe"
+    },
+    {
+      "filename": "meta_Beauty.json.gz",
+      "url": "https://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Beauty.json.gz",
+      "size_bytes": 99156148,
+      "records": 259204,
+      "sha256": "c7977dc0e0ead14ac7df8c1c6de74da00e4bebfad87a0f0c5763d4c5bc9b53a0"
+    }
+  ]
+}

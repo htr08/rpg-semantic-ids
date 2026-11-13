@@ -1,0 +1,57 @@
+{
+  "run_name": "eda_beauty_5core",
+  "config": {
+    "seed": 42,
+    "head_fraction": 0.2,
+    "figure_dpi": 160
+  },
+  "config_sha256": "c2e3cb56da4a8beb5847c90eec163874d48e5eacffe0d5cc5e94b6d51a4ecdca",
+  "sources": {
+    "reviews_Beauty_5.json.gz": {
+      "sha256": "e5925ec99023f1dc9c7d3dff7ef34cfeacd40d1b981b5525e1e4ba9c8abc18fe",
+      "size_bytes": 44819276
+    },
+    "meta_Beauty.json.gz": {
+      "sha256": "c7977dc0e0ead14ac7df8c1c6de74da00e4bebfad87a0f0c5763d4c5bc9b53a0",
+      "size_bytes": 99156148
+    }
+  },
+  "processed_artifacts": {
+    "id_mapping.json": {
+      "sha256": "6f2a054b369e1cac8e5c9ec65b70dbdc7e60c4f04578a430b8cb818adb70f068",
+      "size_bytes": 1627523
+    },
+    "interactions.csv": {
+      "sha256": "ca7536f499b5b752a13531197ccfa2e7accafe34331b5083c8979ee72a0db400",
+      "size_bytes": 6783494
+    },
+    "train_sequences.jsonl": {
+      "sha256": "e4fe29a4108980c3e313bc47e4914094971da68ba847996dc75c362eec74bd1d",
+      "size_bytes": 1429185
+    },
+    "validation.jsonl": {
+      "sha256": "ea811450536fd596739a562b976ef9ab9cc57d9fbeefe46de070860d13c6a285",
+      "size_bytes": 3432118
+    },
+    "test.jsonl": {
+      "sha256": "5c423ba1c6e5ff5f24147bffc700bfc57f545bd670014697bd0031eeb2719ea5",
+      "size_bytes": 3651417
+    },
+    "items.jsonl": {
+      "sha256": "6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378",
+      "size_bytes": 8607880
+    },
+    "preprocessing_stats.json": {
+      "sha256": "39ba60d1f579070e4e131ccccd9a3d55547a66088333b15aa9b4c5f00685e33d",
+      "size_bytes": 617
+    },
+    "leave_last_out.csv": {
+      "sha256": "76e6952986ac268e2ecf4d68475e3aaf24f7700b86ee5a26d35a18c14d101c1f",
+      "size_bytes": 706084
+    }
+  },
+  "figures": {
+    "eda_sequence_lengths.png": "9b0204cfaaaecfdbfc8244fd2b4e0b5db3300cdbb64dfc62e176bedf1e916233",
+    "eda_long_tail.png": "bf06c459540b8349333a03d7811f83e7267f28a7ab7006cdb89f897704d35837"
+  }
+}

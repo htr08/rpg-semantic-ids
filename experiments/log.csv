@@ -1,1 +1,2 @@
 run_name,config,seed,gpu_hours,val_recall@5,val_recall@10,val_ndcg@5,val_ndcg@10,test_recall@5,test_recall@10,test_ndcg@5,test_ndcg@10,notebook_url,notes
+eda_beauty_5core,configs/eda.json,42,0,,,,,,,,,notebooks/01_eda.ipynb,EDA only; no trained model metrics. Summary=reports/eda_summary.json; provenance=reports/eda_provenance.json; summary_sha256=af2776ffb9cf261c4ee50f34312020e42916f06bc0d8271da5b5e50ce69eaaab; split_manifest_sha256=fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510

@@ -1,0 +1,64 @@
+{
+  "users": 22363,
+  "items": 12101,
+  "interactions": 198502,
+  "train_interactions": 153776,
+  "validation_targets": 22363,
+  "test_targets": 22363,
+  "unique_user_item_pairs": 198502,
+  "duplicate_user_item_events": 0,
+  "duplicate_user_item_timestamp_events": 0,
+  "tied_user_timestamp_events": 77402,
+  "density": 0.0007335227064174272,
+  "sparsity": 0.9992664772935825,
+  "sequence_length_full": {
+    "count": 22363,
+    "min": 5,
+    "median": 6.0,
+    "p90": 14.0,
+    "p95": 21.0,
+    "max": 204,
+    "mean": 8.876358270357287
+  },
+  "sequence_length_train": {
+    "count": 22363,
+    "min": 3,
+    "median": 4.0,
+    "p90": 12.0,
+    "p95": 19.0,
+    "max": 202,
+    "mean": 6.8763582703572865
+  },
+  "history_window": {
+    "max_history": 50,
+    "validation_users_truncated": 136,
+    "test_users_truncated": 144
+  },
+  "train_item_frequency": {
+    "count": 12101,
+    "min": 0,
+    "median": 7.0,
+    "p90": 27.0,
+    "p95": 44.0,
+    "max": 369,
+    "mean": 12.707710106602761
+  },
+  "head_fraction": 0.2,
+  "head_items": 2421,
+  "head_train_interaction_share": 0.6038913744667569,
+  "metadata_missing_items": 0,
+  "missing_fields": {
+    "title": 7,
+    "brand": 2098,
+    "categories": 0,
+    "description": 941
+  },
+  "missing_field_ratios": {
+    "title": 0.0005784645897033303,
+    "brand": 0.173374101313941,
+    "categories": 0.0,
+    "description": 0.0777621684158334
+  },
+  "missing_title_and_description": 7,
+  "missing_description_with_title": 934
+}

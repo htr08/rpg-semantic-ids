@@ -13,6 +13,7 @@ MODULES = [
     "src.ar_rec",
     "src.graph",
     "src.evaluate",
+    "src.eda",
     "adapters",
 ]
 
