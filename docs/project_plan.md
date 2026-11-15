@@ -58,6 +58,8 @@ Câu hỏi trung tâm được chia thành bốn câu hỏi con, mỗi câu gắ
 
 Project Charter được chốt lần đầu tại Tuần 1 và cập nhật ngày 13/11: do được phép dùng code gốc, trọng tâm chuyển từ tái tạo mô hình sang khai phá và phân tích dữ liệu.
 
+Bản đầy đủ (phạm vi, sản phẩm bàn giao, KPI, Definition of Done, giả định cần xác minh): [project_charter.md](project_charter.md).
+
 **KPI mô hình nền (bắt buộc).** RPG chạy bằng code gốc với `sentence-t5-base`, m = 32 trên Beauty đạt NDCG@10 trong khoảng 0,038–0,045. Mốc tham chiếu là 0,0429 (Table 4 của paper, dòng RPG + sentence-t5-base + ID dài). Không so với 0,0464 ở Table 2 vì bảng đó dùng `text-embedding-3-large` (API trả phí, không được sử dụng).
 
 **KPI so sánh baseline.** RPG vượt SASRec về NDCG@10 với paired t-test p < 0,05 qua 3 seed (paper dùng cùng mức ý nghĩa). Nếu không vượt, báo cáo trung thực kèm phân tích nguyên nhân.
