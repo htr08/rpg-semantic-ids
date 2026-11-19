@@ -162,7 +162,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 | Nhóm | Chỉ số |
 |---|---|
-| **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10; tập ứng viên toàn catalog (full ranking), không loại item đã xem trước khi lấy top-K. Báo cáo mean ± std qua 3 seed cho cấu hình chính. Quyết định nhóm ngày 19/11/2026. |
+| **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10; tập ứng viên toàn catalog (full ranking), không loại item đã xem trước khi lấy top-K. Báo cáo mean ± std qua 3 seed cho cấu hình chính. |
 | **So sánh cặp mô hình** | Paired t-test trên NDCG@10 theo user (hoặc theo seed), mức ý nghĩa p < 0,05. |
 | **Độ phổ biến và đa dạng** | Coverage (tỉ lệ item từng xuất hiện trong top-10); tỉ lệ item long-tail (ngoài 20% phổ biến nhất) trong top-10; NDCG@10 theo nhóm tần suất item [0,5], [6,10], [11,15], [16,20] (cold-start). |
 | **Luật kết hợp** | Support, confidence, lift của luật; số tập phổ biến theo min-support; Recall/NDCG@10 của AR-Rec. |
@@ -178,7 +178,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 - Leave-last-out: item cuối của mỗi user làm test, item kế cuối làm validation, phần còn lại là train; lưu file chỉ số dùng chung cho mọi mô hình và module của C.
 - Chọn checkpoint và siêu tham số trên validation; test chỉ chạy cho checkpoint đã chọn. Early stopping theo NDCG@10 trên validation, kiên nhẫn 20 epoch.
-- Không lọc item đã xem khi chọn checkpoint trên validation hoặc khi chấm test; áp dụng cùng quy tắc cho RPG, Popularity, ItemKNN, SASRec và AR-Rec. Padding ID 0 không phải ứng viên. Chi tiết và cách ghi nhận kết quả cũ: [evaluation_protocol.md](evaluation_protocol.md).
+- Không lọc item đã xem khi chọn checkpoint trên validation hoặc khi chấm test; áp dụng cùng quy tắc cho RPG, Popularity, ItemKNN, SASRec và AR-Rec. Padding ID 0 không phải ứng viên.
 - Mọi mô hình (RecBole, RPG, AR-Rec) dùng chung hàm đánh giá trong `src/evaluate.py`, có unit test với ví dụ tính tay.
 
 #### b) Semantic ID
