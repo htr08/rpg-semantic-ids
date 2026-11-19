@@ -6,6 +6,6 @@ eval:
   protocol: leave_last_out
   ranking: full
   topk: [5, 10]
-  exclude_seen: true
+  exclude_seen: false
 reference:
   sasrec_ndcg@10_paper: 0.0381   # Table 2
