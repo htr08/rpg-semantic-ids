@@ -115,7 +115,7 @@ Một đầu việc được coi là hoàn thành khi thỏa toàn bộ các đi
 |---|---|
 | Pipeline dữ liệu (đã đạt) | Đạt K1; chạy lại cho đầu ra giống nhau từng byte; `--verify-only` khớp checksum trong `manifest.json`; unit test xác nhận mỗi tương tác thuộc đúng một phần chia và nhãn validation/test không nằm trong lịch sử dùng để dự đoán chính nhãn đó. |
 | Văn bản mô tả | Ghép theo thứ tự trường của code gốc; item thiếu description dùng title + category; ghi số item áp dụng fallback; không đổi thứ tự item so với `items.jsonl`. |
-| `src/evaluate.py` | Recall@K, NDCG@K khớp ví dụ tính tay; loại item trong `seen_item_ids` khỏi danh sách ứng viên; khớp metric của RecBole trên ít nhất một mô hình (sai lệch < 1e-4). |
+| `src/evaluate.py` | Recall@K, NDCG@K khớp ví dụ tính tay; không loại item đã xem khỏi danh sách ứng viên khi chọn checkpoint trên validation và chấm test; padding ID 0 không phải ứng viên; khớp metric của RecBole trên ít nhất một mô hình (sai lệch < 1e-4) khi dùng cùng protocol. Quyết định nhóm 19/11/2026, xem [evaluation_protocol.md](evaluation_protocol.md). |
 | RPG code gốc | Đạt K2; adapter nạp lại chính ID OPQ của code gốc cho NDCG@10 không đổi (trong phạm vi dao động seed). |
 | Tokenizer | 4 file semantic ID cùng định dạng (12.101 × 32, giá trị 0–255), hàng `item_id − 1` ứng với item đó; nếu adapter dùng hàng 0 cho padding thì chuyển đổi tường minh; có tỉ lệ va chạm và entropy codebook. |
 | Module khai phá mẫu | Giao dịch là tập item duy nhất của chuỗi train đầy đủ (không cắt 50); bảng số tập phổ biến, số luật, thời gian chạy ở 3 mức min_support, kèm số item đạt ngưỡng support; 20 luật lift cao nhất kèm tên sản phẩm và số đếm tuyệt đối; AR-Rec chấm bằng `src/evaluate.py`. |
