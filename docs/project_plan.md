@@ -99,7 +99,7 @@ Không bao giờ cắt: EDA, RQ1 đánh giá cụm, RQ2 khai phá mẫu, báo c�
 | TV | Vai trò chính | Trách nhiệm chi tiết |
 |---|---|---|
 | **A** | Semantic ID & Mô hình (RQ1, nâng cấp chính) | Chạy RPG bằng code gốc (cấu hình chính, 3 seed) và viết adapter nạp semantic ID/embedding tự tạo; viết tokenizer OPQ, PQ, RQ và token ngẫu nhiên; đánh giá semantic ID như một phép phân cụm (purity, NMI theo danh mục và thương hiệu, tỉ lệ va chạm, entropy codebook); train các biến thể và vẽ tương quan chất lượng cụm ↔ NDCG; thực hiện nâng cấp chính (ID có tín hiệu hành vi) cùng C; theo dõi ngân sách GPU; viết phần Nền tảng, RQ1 và Nâng cấp chính. |
-| **B** | Dữ liệu, Đánh giá & Đồ thị (RQ3, RQ4) | Pipeline dữ liệu (5-core, sắp theo thời gian, leave-last-out) khớp Table 1; EDA và báo cáo chất lượng dữ liệu; module đánh giá Recall/NDCG, coverage, long-tail, độ đa dạng; baseline Popularity/ItemKNN/SASRec bằng RecBole; dựng đồ thị kNN như paper và phân tích: phân bố bậc vào, hubness, hub ↔ gợi ý quá mức, cộng đồng Louvain; cold-start và phân khúc người dùng; paired t-test; nâng cấp phụ (đồ thị giảm hub); viết phần Dữ liệu, RQ3 và RQ4. |
+| **B** | Dữ liệu, Đánh giá & Đồ thị (RQ3, RQ4) | Pipeline dữ liệu (5-core, sắp theo thời gian, leave-last-out) khớp Table 1; EDA và báo cáo chất lượng dữ liệu; module đánh giá Recall/NDCG, coverage, long-tail, độ đa dạng; baseline Popularity/ItemKNN bằng RecBole và SASRec-BCE bằng S³-Rec; dựng đồ thị kNN như paper và phân tích: phân bố bậc vào, hubness, hub ↔ gợi ý quá mức, cộng đồng Louvain; cold-start và phân khúc người dùng; paired t-test; nâng cấp phụ (đồ thị giảm hub); viết phần Dữ liệu, RQ3 và RQ4. |
 | **C** | Khai phá mẫu, Phân cụm & Tổng hợp (RQ1, RQ2) | Module khai phá mẫu: FP-Growth, luật A→B với support/confidence/lift, AR-Rec, PrefixSpan cho mẫu tuần tự, đối chiếu luật ↔ semantic ID; dựng embedding đồng xuất hiện (item2vec hoặc SVD) cho nâng cấp chính; module phân cụm: PCA, k-means, phân cụm phân cấp, DBSCAN, silhouette/Davies–Bouldin, ARI với semantic ID; bảng mapping kiến thức học phần ↔ mục báo cáo; hợp nhất báo cáo và slide, thống nhất văn phong; Integration Owner mặc định; chuẩn bị câu hỏi phản biện. |
 
 ### 2.2. Quy định phối hợp chung
@@ -128,7 +128,7 @@ Không bao giờ cắt: EDA, RQ1 đánh giá cụm, RQ2 khai phá mẫu, báo c�
 
 ### 3.2. Công nghệ sử dụng
 
-**Ngôn ngữ và thư viện:** Python 3.10+, PyTorch, code gốc `RPG_KDD2025` (submodule), RecBole (baseline), FAISS (OPQ, PQ, k-means, kNN graph), sentence-transformers (`sentence-t5-base`; BGE-M3 / E5 nếu dùng phương án dự phòng), scikit-learn (PCA, KMeans, AgglomerativeClustering, DBSCAN, silhouette, Davies–Bouldin, NMI, ARI), mlxtend (`fpgrowth`, `association_rules`), prefixspan, gensim (item2vec), networkx + python-louvain (đồ thị, cộng đồng), scipy (paired t-test, Spearman), pandas, matplotlib.
+**Ngôn ngữ và thư viện:** Python 3.10+, PyTorch, code gốc `RPG_KDD2025` (submodule), RecBole (Popularity, ItemKNN), repo S³-Rec (SASRec-BCE), FAISS (OPQ, PQ, k-means, kNN graph), sentence-transformers (`sentence-t5-base`; BGE-M3 / E5 nếu dùng phương án dự phòng), scikit-learn (PCA, KMeans, AgglomerativeClustering, DBSCAN, silhouette, Davies–Bouldin, NMI, ARI), mlxtend (`fpgrowth`, `association_rules`), prefixspan, gensim (item2vec), networkx + python-louvain (đồ thị, cộng đồng), scipy (paired t-test, Spearman), pandas, matplotlib.
 
 **Tính toán:** Kaggle (GPU T4/P100, 30 giờ/tuần/tài khoản) và Colab dự phòng; CPU cục bộ cho FP-Growth, phân cụm, đánh giá.
 
@@ -152,7 +152,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 | **ItemKNN** | Item-based CF, độ tương đồng item–item cosine trên ma trận user–item nhị phân; chạy bằng RecBole. | Neighborhood-based CF |
 | **AR-Rec** | FP-Growth trên chuỗi train → luật A→B; với lịch sử user, chọn các luật có tiền đề ⊆ lịch sử, xếp hạng hậu quả theo confidence × lift, bổ sung Popularity khi thiếu. | Luật kết hợp, FP-Growth |
 | **kNN nội dung** (tùy chọn) | Gợi ý k item gần nhất (cosine trên embedding `sentence-t5-base`) với item cuối của user. | kNN, độ đo tương đồng |
-| **SASRec** | Transformer tuần tự dùng item ID, chạy bằng RecBole với cùng dữ liệu và cách chia (baseline mạnh nhất không dùng semantic ID). | – |
+| **SASRec** | Transformer tuần tự dùng item ID, huấn luyện từ đầu với BCE qua repo S³-Rec. Xem [cách chạy và bộ chấm](evaluation.md#tái-lập-sasrec-bce). | – |
 | **RPG (code gốc)** | Semantic ID OPQ m = 32, codebook 256, `sentence-t5-base`; cấu hình chính của paper, chạy bằng `main.py` của repo `RPG_KDD2025`. | – |
 | **RPG + semantic ID có tín hiệu hành vi** (nâng cấp chính, RQ2) | Ghép embedding văn bản với embedding đồng xuất hiện (item2vec hoặc SVD trên ma trận đồng xuất hiện của phần train) theo trọng số α ∈ {0,25; 0,5} rồi mới chạy OPQ; mô hình giữ nguyên, nạp qua adapter. | – |
 | **RPG + đồ thị giảm hub** (nâng cấp phụ, RQ3) | Dựng đồ thị giải mã bằng mutual kNN hoặc giới hạn bậc vào; không cần train lại. | – |
@@ -162,7 +162,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 | Nhóm | Chỉ số |
 |---|---|
-| **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10; xếp hạng toàn bộ item (full ranking), loại item đã xem khỏi danh sách ứng viên. Báo cáo mean ± std qua 3 seed cho cấu hình chính. |
+| **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10. Kết quả tái lập dùng bộ chấm của từng mô hình gốc. Phép đánh giá chung dùng tập ứng viên toàn catalog và giữ item đã xem. Báo cáo mean ± std qua 3 seed cho cấu hình chính. |
 | **So sánh cặp mô hình** | Paired t-test trên NDCG@10 theo user (hoặc theo seed), mức ý nghĩa p < 0,05. |
 | **Độ phổ biến và đa dạng** | Coverage (tỉ lệ item từng xuất hiện trong top-10); tỉ lệ item long-tail (ngoài 20% phổ biến nhất) trong top-10; NDCG@10 theo nhóm tần suất item [0,5], [6,10], [11,15], [16,20] (cold-start). |
 | **Luật kết hợp** | Support, confidence, lift của luật; số tập phổ biến theo min-support; Recall/NDCG@10 của AR-Rec. |
@@ -177,8 +177,9 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 #### a) Chia dữ liệu và đánh giá
 
 - Leave-last-out: item cuối của mỗi user làm test, item kế cuối làm validation, phần còn lại là train; lưu file chỉ số dùng chung cho mọi mô hình và module của C.
-- Chọn checkpoint và siêu tham số trên validation; test chỉ chạy cho checkpoint đã chọn. Early stopping theo NDCG@10 trên validation, kiên nhẫn 20 epoch.
-- Mọi mô hình (RecBole, RPG, AR-Rec) dùng chung hàm đánh giá trong `src/evaluate.py`, có unit test với ví dụ tính tay.
+- Chọn checkpoint và siêu tham số trên validation. Test dùng checkpoint đã chọn. RPG dùng validation NDCG@10 với patience 20. SASRec dùng checkpoint của lượt S³-Rec, chọn theo validation NDCG@20 với patience 10.
+- SASRec-BCE chạy seed 42, 43 và 44, batch 256, learning rate 0,001, lịch sử tối đa 50 và giới hạn 200 epoch.
+- Tái lập mốc SASRec bằng bộ chấm S³-Rec, đặt điểm item đã xem về 0. Khi so sánh bổ sung hoặc làm paired t-test, chấm ranking của các mô hình bằng `src/evaluate.py` với cùng split và giữ nguyên điểm item đã xem.
 
 #### b) Semantic ID
 
@@ -263,7 +264,7 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 | CN 8/11 | Họp tuần (30′): đọc chung TIGER và Product Quantization; thống nhất cấu trúc repo và file chỉ số chia dữ liệu. | Họp tuần. | Họp tuần; chốt Project Charter v1. |
 | T2 9/11 | Thử OPQ của FAISS trên vector ngẫu nhiên: hiểu codebook, số đoạn con, cách lấy mã. | Pipeline dữ liệu: 5-core, sắp theo thời gian, leave-last-out; khớp Table 1 (22.363 / 12.101 / 176.139). Lưu file chỉ số chia. | Từ file chỉ số chia, xây tập giao dịch (tập item train của mỗi user) dạng ma trận thưa; chạy FP-Growth thử với min_support 0,002, ghi số tập phổ biến và thời gian. |
 | T3 10/11 | Encode mô tả bằng `sentence-t5-base`; chạy OPQ (m = 32, codebook 256); lưu ánh xạ item → 32 token. | Notebook EDA: độ dài chuỗi, long-tail, độ thưa, ví dụ mô tả sản phẩm. | Nhận embedding từ A; PCA 768 → 50 (ghi phương sai giữ lại); k-means k = 256 chạy thử; silhouette trên mẫu 5.000. |
-| T4 11/11 | Baseline Popularity, ItemKNN và SASRec bằng RecBole, cùng dữ liệu, cùng cách chia, cùng metric (chạy đêm). | Phân tích chất lượng semantic ID: số item trùng ID, mức dùng từng codebook, soi 10 cặp item có ID gần nhau. | Quét min_support ∈ {0,0005; 0,001; 0,002}; sinh luật với min_confidence 0,1; bảng số luật và 20 luật lift cao nhất kèm tên sản phẩm. |
+| T4 11/11 | Baseline Popularity và ItemKNN bằng RecBole, SASRec-BCE bằng notebook S³-Rec. Dùng cùng bộ chia Beauty leave-last-out. | Phân tích chất lượng semantic ID: số item trùng ID, mức dùng từng codebook, soi 10 cặp item có ID gần nhau. | Quét min_support ∈ {0,0005; 0,001; 0,002}; sinh luật với min_confidence 0,1; bảng số luật và 20 luật lift cao nhất kèm tên sản phẩm. |
 | T5 12/11 | **Cổng 1:** số liệu khớp Table 1, ít item trùng ID, SASRec có NDCG@10 quanh 0,03; baseline đã log. | **Cổng 1** (cùng A). | **Cổng 1:** FP-Growth chạy được ở cả 3 mức support; k-means có silhouette; mapping kiến thức (mục 3.5g) điền xong. |
 
 **Deliverables Tuần 1:** Project Charter, script tải dữ liệu, file chỉ số chia dữ liệu, notebook EDA, `semantic_ids.npy` và báo cáo chất lượng ID, kết quả baseline, tập luật FP-Growth sơ bộ, kết quả k-means sơ bộ, `src/evaluate.py` có unit test.
@@ -364,7 +365,9 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 
 ## 5. Mẫu bảng kết quả
 
-Sử dụng thống nhất cho báo cáo. Mọi số đo trên tập test với protocol leave-last-out, full ranking; cột "NDCG@10 paper" lấy từ Table 2/4 của bài báo (ghi rõ bảng nguồn).
+Các số đo dùng tập test leave-last-out. Ghi quy tắc chấm cho mỗi kết quả tái lập.
+Kết quả SASRec trong bảng dùng bộ chấm S³-Rec gốc. Cột "NDCG@10 paper" ghi
+giá trị và số bảng nguồn. Paired t-test dùng điểm theo user từ bộ chấm chung.
 
 | Mô hình | Recall@5 | Recall@10 | NDCG@5 | NDCG@10 (mean ± std) | NDCG@10 paper | Chênh lệch | p-value vs RPG | Kiến thức học phần |
 |---|---|---|---|---|---|---|---|---|
@@ -372,7 +375,7 @@ Sử dụng thống nhất cho báo cáo. Mọi số đo trên tập test với 
 | ItemKNN | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | Item-based CF, cosine |
 | AR-Rec (FP-Growth) | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ2: luật kết hợp |
 | kNN nội dung (tùy chọn) | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | kNN, tương đồng |
-| SASRec | _điền_ | _điền_ | _điền_ | _điền_ | 0,0381 (T2) | _điền_ | _điền_ | Baseline tuần tự |
+| SASRec-BCE (bộ chấm S³-Rec) | 0,03747 | 0,06053 | 0,02427 | 0,0317 ± 0,0001 | 0,0318 (T2) | −0,0001 | _chờ điểm RPG chấm chung_ | Baseline tuần tự |
 | RPG (code gốc, ID OPQ) | _điền_ | _điền_ | _điền_ | _điền_ | 0,0429 (T4) | _điền_ | – | Phân cụm (OPQ), đồ thị |
 | RPG – ID PQ | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ1: k-means từng đoạn con |
 | RPG – ID RQ | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ1: k-means phân tầng |
@@ -402,7 +405,7 @@ rpg-semantic-ids/
 ├── configs/
 │   ├── rpg_main.yaml            # code gốc: m=32, sentence-t5-base
 │   ├── variants_*.yaml          # pq, rq, random, behavior
-│   ├── baselines_recbole.yaml
+│   ├── baselines_recbole.yaml   # Popularity và ItemKNN
 │   └── gpu_budget.md            # giờ GPU đã dùng / còn lại
 ├── data/
 │   ├── raw/                     # gitignore
@@ -420,7 +423,8 @@ rpg-semantic-ids/
 ├── scripts/
 │   ├── download_data.py
 │   ├── build_semantic_ids.py    # encode → OPQ / PQ / RQ / random / behavior
-│   ├── run_baselines.py         # RecBole: Pop, ItemKNN, SASRec
+│   ├── run_baselines.py         # Popularity và ItemKNN
+│   ├── evaluate_sasrec_paper.py # chấm checkpoint SASRec-BCE bằng bộ chấm chung
 │   ├── run_rpg.py               # gọi code gốc qua adapter → top-K → đánh giá
 │   └── run_all.sh               # chạy lại toàn bộ bằng một lệnh
 ├── src/

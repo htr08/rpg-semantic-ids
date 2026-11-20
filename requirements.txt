@@ -22,7 +22,8 @@ tqdm==4.66.5
 torch==2.4.1
 transformers==4.44.2
 sentence-transformers==3.1.1   # sentence-t5-base (BGE-M3 / E5 nếu dùng phương án dự phòng)
-recbole==1.2.0                 # Popularity, ItemKNN, SASRec
+recbole==1.2.0                 # Popularity, ItemKNN
+kmeans-pytorch==0.3            # RecBole 1.2.0 import general_recommender kéo theo LDiffRec
 faiss-cpu==1.8.0.post1         # OPQ, PQ, k-means, kNN graph (Kaggle GPU: có thể dùng faiss-gpu)
 
 # --- Khai phá dữ liệu ---

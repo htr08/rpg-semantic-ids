@@ -1,0 +1,528 @@
+[
+  {
+    "model": "Pop",
+    "seed": null,
+    "config": {
+      "dataset": "amazon_beauty_2014",
+      "models": [
+        "Pop",
+        "ItemKNN"
+      ],
+      "max_history": 50,
+      "eval_batch_size": 256,
+      "itemknn": {
+        "k": 100,
+        "shrink": 0.0
+      },
+      "eval": {
+        "protocol": "leave_last_out",
+        "ranking": "full",
+        "topk": [
+          5,
+          10
+        ],
+        "exclude_seen": false
+      }
+    },
+    "python_version": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+    "runtime_policy": {
+      "tensorboard": "no_tensorflow",
+      "gpu": "Kaggle only"
+    },
+    "effective_epochs": null,
+    "fit_seconds": 18.260567200006335,
+    "selection": {},
+    "device": "cpu",
+    "config_sha256": "d6501dc9ab366fbf4f03ba66fabcc73ecdb3b977f87b52bc7d77b45c5968e477",
+    "manifest_sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510",
+    "baseline_code_sha256": "588f82826dbc6c9348fe7134d7f9a0df1ff830d358be04536b43a2a432841d91",
+    "runner_code_sha256": "920eacf37f1d0ab43f0bbc6357e3b4b59d5ea1e7963cac13bc66a30fedf59fa0",
+    "versions": {
+      "torch": "2.8.0",
+      "recbole": "1.2.0",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "pandas": "2.2.3"
+    },
+    "results": {
+      "validation": {
+        "model_name": "pop",
+        "split": "validation",
+        "metrics": {
+          "recall@5": 0.008719760318383044,
+          "ndcg@5": 0.005422135875843198,
+          "recall@10": 0.01627688592764835,
+          "ndcg@10": 0.007848314117265068,
+          "long_tail_ratio@5": 0.0,
+          "category_diversity@5": 1.0,
+          "category_diversity_users@5": 22363,
+          "category_label_coverage@5": 1.0,
+          "recommendation_fill@5": 1.0,
+          "long_tail_ratio@10": 0.0,
+          "category_diversity@10": 0.9333333333333336,
+          "category_diversity_users@10": 22363,
+          "category_label_coverage@10": 1.0,
+          "recommendation_fill@10": 1.0,
+          "coverage@5": 0.0004131889926452359,
+          "coverage@10": 0.0008263779852904718
+        },
+        "cold_start": {
+          "frequency_source": "train interaction count of the held-out target item",
+          "groups": [
+            {
+              "min_train_interactions": 0,
+              "max_train_interactions": 5,
+              "users": 5000,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            },
+            {
+              "min_train_interactions": 6,
+              "max_train_interactions": 10,
+              "users": 4091,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            },
+            {
+              "min_train_interactions": 11,
+              "max_train_interactions": 15,
+              "users": 2511,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            },
+            {
+              "min_train_interactions": 16,
+              "max_train_interactions": 20,
+              "users": 1628,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            }
+          ],
+          "users_above_20": 9133
+        },
+        "protocol": {
+          "ks": [
+            5,
+            10
+          ],
+          "exclude_seen": false,
+          "keep_repurchased_target": true,
+          "head_fraction": 0.2,
+          "head_order": "train interaction count descending, item_id ascending",
+          "category_labels": "set of full category paths to leaves",
+          "category_diversity": "mean pairwise Jaccard distance over labelled items; macro over eligible users",
+          "short_list_ratio_denominator": "actual returned items; empty list gives 0"
+        },
+        "counts": {
+          "users": 22363,
+          "catalog_items": 12101,
+          "head_items": 2421,
+          "tail_items": 9680,
+          "train_interactions": 153776,
+          "catalog_items_with_categories": 12101,
+          "short_ranking_users": {
+            "5": 0,
+            "10": 0
+          }
+        },
+        "inputs": {
+          "rankings": {
+            "path": "experiments/baselines_no_seen_history50/pop/validation/rankings.jsonl",
+            "sha256": "a718c7cdf1cef237abba2b246385f3c7e50bb052436120186ca5af7815bebf15"
+          },
+          "split": {
+            "path": "data/processed/validation.jsonl",
+            "sha256": "ea811450536fd596739a562b976ef9ab9cc57d9fbeefe46de070860d13c6a285"
+          },
+          "train": {
+            "path": "data/processed/train_sequences.jsonl",
+            "sha256": "e4fe29a4108980c3e313bc47e4914094971da68ba847996dc75c362eec74bd1d"
+          },
+          "items": {
+            "path": "data/processed/items.jsonl",
+            "sha256": "6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378"
+          },
+          "manifest": {
+            "path": "data/splits/manifest.json",
+            "sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510"
+          },
+          "evaluator": {
+            "path": "src/evaluate.py",
+            "sha256": "a013ef5944db8fe158e681300f8f9f7ed106940059e500d4e57249a3c1112612"
+          }
+        }
+      },
+      "test": {
+        "model_name": "pop",
+        "split": "test",
+        "metrics": {
+          "recall@5": 0.007199391852613693,
+          "ndcg@5": 0.003984413487599081,
+          "recall@10": 0.011447480212851585,
+          "ndcg@10": 0.005346604974836033,
+          "long_tail_ratio@5": 0.0,
+          "category_diversity@5": 1.0,
+          "category_diversity_users@5": 22363,
+          "category_label_coverage@5": 1.0,
+          "recommendation_fill@5": 1.0,
+          "long_tail_ratio@10": 0.0,
+          "category_diversity@10": 0.9333333333333336,
+          "category_diversity_users@10": 22363,
+          "category_label_coverage@10": 1.0,
+          "recommendation_fill@10": 1.0,
+          "coverage@5": 0.0004131889926452359,
+          "coverage@10": 0.0008263779852904718
+        },
+        "cold_start": {
+          "frequency_source": "train interaction count of the held-out target item",
+          "groups": [
+            {
+              "min_train_interactions": 0,
+              "max_train_interactions": 5,
+              "users": 6197,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            },
+            {
+              "min_train_interactions": 6,
+              "max_train_interactions": 10,
+              "users": 4261,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            },
+            {
+              "min_train_interactions": 11,
+              "max_train_interactions": 15,
+              "users": 2538,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            },
+            {
+              "min_train_interactions": 16,
+              "max_train_interactions": 20,
+              "users": 1529,
+              "ndcg@5": 0.0,
+              "ndcg@10": 0.0
+            }
+          ],
+          "users_above_20": 7838
+        },
+        "protocol": {
+          "ks": [
+            5,
+            10
+          ],
+          "exclude_seen": false,
+          "keep_repurchased_target": true,
+          "head_fraction": 0.2,
+          "head_order": "train interaction count descending, item_id ascending",
+          "category_labels": "set of full category paths to leaves",
+          "category_diversity": "mean pairwise Jaccard distance over labelled items; macro over eligible users",
+          "short_list_ratio_denominator": "actual returned items; empty list gives 0"
+        },
+        "counts": {
+          "users": 22363,
+          "catalog_items": 12101,
+          "head_items": 2421,
+          "tail_items": 9680,
+          "train_interactions": 153776,
+          "catalog_items_with_categories": 12101,
+          "short_ranking_users": {
+            "5": 0,
+            "10": 0
+          }
+        },
+        "inputs": {
+          "rankings": {
+            "path": "experiments/baselines_no_seen_history50/pop/test/rankings.jsonl",
+            "sha256": "d79da61df5d15257b4b999a72be00dec0ff9221c52383cfe255825cb8370935f"
+          },
+          "split": {
+            "path": "data/processed/test.jsonl",
+            "sha256": "5c423ba1c6e5ff5f24147bffc700bfc57f545bd670014697bd0031eeb2719ea5"
+          },
+          "train": {
+            "path": "data/processed/train_sequences.jsonl",
+            "sha256": "e4fe29a4108980c3e313bc47e4914094971da68ba847996dc75c362eec74bd1d"
+          },
+          "items": {
+            "path": "data/processed/items.jsonl",
+            "sha256": "6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378"
+          },
+          "manifest": {
+            "path": "data/splits/manifest.json",
+            "sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510"
+          },
+          "evaluator": {
+            "path": "src/evaluate.py",
+            "sha256": "a013ef5944db8fe158e681300f8f9f7ed106940059e500d4e57249a3c1112612"
+          }
+        }
+      }
+    },
+    "elapsed_seconds": 28.592347800004063
+  },
+  {
+    "model": "ItemKNN",
+    "seed": null,
+    "config": {
+      "dataset": "amazon_beauty_2014",
+      "models": [
+        "Pop",
+        "ItemKNN"
+      ],
+      "max_history": 50,
+      "eval_batch_size": 256,
+      "itemknn": {
+        "k": 100,
+        "shrink": 0.0
+      },
+      "eval": {
+        "protocol": "leave_last_out",
+        "ranking": "full",
+        "topk": [
+          5,
+          10
+        ],
+        "exclude_seen": false
+      }
+    },
+    "python_version": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+    "runtime_policy": {
+      "tensorboard": "no_tensorflow",
+      "gpu": "Kaggle only"
+    },
+    "effective_epochs": null,
+    "fit_seconds": 3.0033592999971006,
+    "selection": {},
+    "device": "cpu",
+    "config_sha256": "d6501dc9ab366fbf4f03ba66fabcc73ecdb3b977f87b52bc7d77b45c5968e477",
+    "manifest_sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510",
+    "baseline_code_sha256": "588f82826dbc6c9348fe7134d7f9a0df1ff830d358be04536b43a2a432841d91",
+    "runner_code_sha256": "920eacf37f1d0ab43f0bbc6357e3b4b59d5ea1e7963cac13bc66a30fedf59fa0",
+    "versions": {
+      "torch": "2.8.0",
+      "recbole": "1.2.0",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "pandas": "2.2.3"
+    },
+    "results": {
+      "validation": {
+        "model_name": "itemknn",
+        "split": "validation",
+        "metrics": {
+          "recall@5": 0.03590752582390556,
+          "ndcg@5": 0.023423408149357623,
+          "recall@10": 0.055940616196395836,
+          "ndcg@10": 0.029802382175832778,
+          "long_tail_ratio@5": 0.7455708089254572,
+          "category_diversity@5": 0.8768441920434051,
+          "category_diversity_users@5": 22363,
+          "category_label_coverage@5": 1.0,
+          "recommendation_fill@5": 1.0,
+          "long_tail_ratio@10": 0.7282877968072262,
+          "category_diversity@10": 0.8926765606549179,
+          "category_diversity_users@10": 22363,
+          "category_label_coverage@10": 1.0,
+          "recommendation_fill@10": 1.0,
+          "coverage@5": 0.9435583836046608,
+          "coverage@10": 0.9866953144368235
+        },
+        "cold_start": {
+          "frequency_source": "train interaction count of the held-out target item",
+          "groups": [
+            {
+              "min_train_interactions": 0,
+              "max_train_interactions": 5,
+              "users": 5000,
+              "ndcg@5": 0.013846811942795086,
+              "ndcg@10": 0.018598121468222005
+            },
+            {
+              "min_train_interactions": 6,
+              "max_train_interactions": 10,
+              "users": 4091,
+              "ndcg@5": 0.018718125713289267,
+              "ndcg@10": 0.0241958252663593
+            },
+            {
+              "min_train_interactions": 11,
+              "max_train_interactions": 15,
+              "users": 2511,
+              "ndcg@5": 0.01873275171101153,
+              "ndcg@10": 0.0232683990942282
+            },
+            {
+              "min_train_interactions": 16,
+              "max_train_interactions": 20,
+              "users": 1628,
+              "ndcg@5": 0.017246687666161484,
+              "ndcg@10": 0.020835170264977287
+            }
+          ],
+          "users_above_20": 9133
+        },
+        "protocol": {
+          "ks": [
+            5,
+            10
+          ],
+          "exclude_seen": false,
+          "keep_repurchased_target": true,
+          "head_fraction": 0.2,
+          "head_order": "train interaction count descending, item_id ascending",
+          "category_labels": "set of full category paths to leaves",
+          "category_diversity": "mean pairwise Jaccard distance over labelled items; macro over eligible users",
+          "short_list_ratio_denominator": "actual returned items; empty list gives 0"
+        },
+        "counts": {
+          "users": 22363,
+          "catalog_items": 12101,
+          "head_items": 2421,
+          "tail_items": 9680,
+          "train_interactions": 153776,
+          "catalog_items_with_categories": 12101,
+          "short_ranking_users": {
+            "5": 0,
+            "10": 0
+          }
+        },
+        "inputs": {
+          "rankings": {
+            "path": "experiments/baselines_no_seen_history50/itemknn/validation/rankings.jsonl",
+            "sha256": "2bbe8bba1b715564917730cf47a19a2e5f8d1111f26c88f5f95e3dfde0bfc886"
+          },
+          "split": {
+            "path": "data/processed/validation.jsonl",
+            "sha256": "ea811450536fd596739a562b976ef9ab9cc57d9fbeefe46de070860d13c6a285"
+          },
+          "train": {
+            "path": "data/processed/train_sequences.jsonl",
+            "sha256": "e4fe29a4108980c3e313bc47e4914094971da68ba847996dc75c362eec74bd1d"
+          },
+          "items": {
+            "path": "data/processed/items.jsonl",
+            "sha256": "6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378"
+          },
+          "manifest": {
+            "path": "data/splits/manifest.json",
+            "sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510"
+          },
+          "evaluator": {
+            "path": "src/evaluate.py",
+            "sha256": "a013ef5944db8fe158e681300f8f9f7ed106940059e500d4e57249a3c1112612"
+          }
+        }
+      },
+      "test": {
+        "model_name": "itemknn",
+        "split": "test",
+        "metrics": {
+          "recall@5": 0.026651164870545096,
+          "ndcg@5": 0.017440495550217178,
+          "recall@10": 0.0444484192639628,
+          "ndcg@10": 0.023224951565002584,
+          "long_tail_ratio@5": 0.7424853552743369,
+          "category_diversity@5": 0.8748766563818212,
+          "category_diversity_users@5": 22363,
+          "category_label_coverage@5": 1.0,
+          "recommendation_fill@5": 1.0,
+          "long_tail_ratio@10": 0.7248177793677056,
+          "category_diversity@10": 0.8896951147811947,
+          "category_diversity_users@10": 22363,
+          "category_label_coverage@10": 1.0,
+          "recommendation_fill@10": 1.0,
+          "coverage@5": 0.9362036195355756,
+          "coverage@10": 0.9838856292868358
+        },
+        "cold_start": {
+          "frequency_source": "train interaction count of the held-out target item",
+          "groups": [
+            {
+              "min_train_interactions": 0,
+              "max_train_interactions": 5,
+              "users": 6197,
+              "ndcg@5": 0.011621873496585758,
+              "ndcg@10": 0.01804352206072472
+            },
+            {
+              "min_train_interactions": 6,
+              "max_train_interactions": 10,
+              "users": 4261,
+              "ndcg@5": 0.01575639523671822,
+              "ndcg@10": 0.019795045693984825
+            },
+            {
+              "min_train_interactions": 11,
+              "max_train_interactions": 15,
+              "users": 2538,
+              "ndcg@5": 0.013091749668516712,
+              "ndcg@10": 0.017962411869665372
+            },
+            {
+              "min_train_interactions": 16,
+              "max_train_interactions": 20,
+              "users": 1529,
+              "ndcg@5": 0.010890163907534299,
+              "ndcg@10": 0.015188615510958615
+            }
+          ],
+          "users_above_20": 7838
+        },
+        "protocol": {
+          "ks": [
+            5,
+            10
+          ],
+          "exclude_seen": false,
+          "keep_repurchased_target": true,
+          "head_fraction": 0.2,
+          "head_order": "train interaction count descending, item_id ascending",
+          "category_labels": "set of full category paths to leaves",
+          "category_diversity": "mean pairwise Jaccard distance over labelled items; macro over eligible users",
+          "short_list_ratio_denominator": "actual returned items; empty list gives 0"
+        },
+        "counts": {
+          "users": 22363,
+          "catalog_items": 12101,
+          "head_items": 2421,
+          "tail_items": 9680,
+          "train_interactions": 153776,
+          "catalog_items_with_categories": 12101,
+          "short_ranking_users": {
+            "5": 0,
+            "10": 0
+          }
+        },
+        "inputs": {
+          "rankings": {
+            "path": "experiments/baselines_no_seen_history50/itemknn/test/rankings.jsonl",
+            "sha256": "2423b8e519271ebe5a3737db2ada957268fcd40d0f6c6791a96d90842a6a8d17"
+          },
+          "split": {
+            "path": "data/processed/test.jsonl",
+            "sha256": "5c423ba1c6e5ff5f24147bffc700bfc57f545bd670014697bd0031eeb2719ea5"
+          },
+          "train": {
+            "path": "data/processed/train_sequences.jsonl",
+            "sha256": "e4fe29a4108980c3e313bc47e4914094971da68ba847996dc75c362eec74bd1d"
+          },
+          "items": {
+            "path": "data/processed/items.jsonl",
+            "sha256": "6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378"
+          },
+          "manifest": {
+            "path": "data/splits/manifest.json",
+            "sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510"
+          },
+          "evaluator": {
+            "path": "src/evaluate.py",
+            "sha256": "a013ef5944db8fe158e681300f8f9f7ed106940059e500d4e57249a3c1112612"
+          }
+        }
+      }
+    },
+    "elapsed_seconds": 22.709538499999326
+  }
+]

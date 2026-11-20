@@ -50,7 +50,7 @@ Dữ liệu sau tiền xử lý có các đặc điểm định hình phạm vi 
 - Ghép văn bản mô tả theo cách của code gốc, kèm quy tắc fallback cho item thiếu description (title + category).
 - Adapter nạp semantic ID hoặc embedding do nhóm tạo vào code gốc.
 - Tokenizer tự viết: OPQ, PQ, RQ, token ngẫu nhiên, ID có tín hiệu hành vi.
-- Baseline: Popularity, ItemKNN, SASRec (RecBole), AR-Rec (tự viết, dựa trên FP-Growth).
+- Baseline gồm Popularity và ItemKNN (RecBole), SASRec-BCE (S³-Rec) và AR-Rec (FP-Growth).
 - Module khai phá mẫu (FP-Growth, PrefixSpan, đối chiếu luật ↔ semantic ID), module phân cụm (PCA, k-means, phân cấp, DBSCAN), phân tích đồ thị (hubness, Louvain), đánh giá mở rộng (coverage, long-tail, cold-start, phân khúc).
 - Báo cáo tổng kết, slide, repository chạy lại được từ bản clone sạch.
 

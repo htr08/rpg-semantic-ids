@@ -92,6 +92,24 @@ with open("data/processed/train_sequences.jsonl", encoding="utf-8") as stream:
             # Đưa từng tiền tố train vào adapter/baseline; không thêm nhãn validation/test.
 ```
 
+## Ranking và đầu ra đánh giá dùng chung
+
+Mỗi mô hình xuất JSONL, một dòng cho mỗi user của bộ chia:
+
+```json
+{"user_id": 1, "ranked_items": [103, 25, 84, 16, 92]}
+```
+
+ID là số nguyên dương theo mapping B; item theo điểm giảm dần, không trùng,
+không có padding. Khi đánh giá bằng bộ chấm chung, xuất ít nhất K item và giữ item đã xem.
+Khi chấm đối chiếu có lọc, cần thêm ứng viên để sau khi lọc `seen_item_ids`
+vẫn còn K item. Bộ chấm giữ nhãn mua lại trong cả hai chế độ.
+
+Bộ chấm mở rộng dùng `train_sequences.jsonl` để phân head/tail và `items.jsonl`
+để tính độ phủ catalog, đa dạng danh mục. CLI kiểm tra dữ liệu theo manifest,
+xuất `metrics.json` và `per_user.csv` tại thư mục kết quả do người chạy chọn.
+Công thức, quy tắc thiếu nhãn, cách dùng API và CLI: [evaluation.md](evaluation.md).
+
 ## Đối chiếu số lượng Beauty
 
 Đã chạy pipeline trên file thô có 198.502 tương tác, 22.363 user, 12.101 item.
