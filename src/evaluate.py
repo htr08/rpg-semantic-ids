@@ -10,11 +10,12 @@ Quy ước:
 - Mỗi user có đúng một nhãn (leave-last-out): ``target`` trong ``validation.jsonl`` hoặc ``test.jsonl``
   (định dạng theo docs/data_contract.md). Item ID là ``item_id`` theo ``id_mapping.json``;
   ID nội bộ của từng thư viện (ví dụ RecBole) phải đổi về ``item_id`` trước khi chấm.
-- Tham số ``exclude_seen`` điều khiển việc loại item đã xem trước khi cắt top-K.
-- Ngoại lệ do module này chọn (data contract chỉ yêu cầu xử lý tường minh, chưa quy định cách xử lý):
-  nếu chính nhãn nằm trong ``seen_item_ids`` (``target_in_history``, mua lại), nhãn không bị loại,
+- Mặc định không loại item đã thấy (``seen_item_ids``) khỏi danh sách xếp hạng; ứng viên là toàn catalog
+  (kế hoạch, mục 3.4 và 3.5a). ``exclude_seen=True`` chỉ dùng để đối chiếu với kết quả có lọc.
+- Khi ``exclude_seen=True`` có một ngoại lệ do module này chọn (data contract chỉ yêu cầu xử lý tường minh,
+  chưa quy định cách xử lý): nếu chính nhãn nằm trong ``seen_item_ids`` (``target_in_history``, mua lại), nhãn không bị loại,
   để mô hình không bị phạt vì một item mà quy tắc lọc tự xóa. Trên Beauty 2014 không có trường hợp này.
-- Với một nhãn ở vị trí ``r`` (đếm từ 1) trong top-K đã lọc:
+- Với một nhãn ở vị trí ``r`` (đếm từ 1) trong top-K:
   Recall@K = 1 và NDCG@K = 1 / log2(r + 1); nhãn nằm ngoài top-K cho cả hai bằng 0.
   Với một nhãn duy nhất, IDCG = 1 nên NDCG bằng DCG.
 - Giá trị cuối là trung bình cộng trên mọi user có trong tập nhãn.
@@ -131,7 +132,7 @@ def filter_seen(ranked_items, seen_items, target):
     return [item for item in ranked_items if item not in seen]
 
 
-def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=True, *, context=None):
+def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=False, *, context=None):
     """Tính Recall@K và NDCG@K cho từng user.
 
     Args:
@@ -141,7 +142,7 @@ def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=True, *, conte
             nằm sau phần này không được phát hiện.
         split: dict ``user_id -> {"target": int, "seen_item_ids": list}`` (xem ``load_split``).
         ks: các giá trị K.
-        exclude_seen: loại item đã thấy trước khi cắt top-K.
+        exclude_seen: loại item đã thấy trước khi cắt top-K (mặc định False).
         context: thêm long_tail_ratio, category_diversity, category_label_coverage,
             recommendation_fill cho từng K; xem docs/evaluation.md.
 
@@ -256,7 +257,7 @@ def _cold_start_scores(users, scores, split, train_counts):
     }
 
 
-def evaluate(rankings, split, ks=DEFAULT_KS, exclude_seen=True, *, context=None):
+def evaluate(rankings, split, ks=DEFAULT_KS, exclude_seen=False, *, context=None):
     """Trung bình theo user; khi có context thêm các metric mở rộng.
 
     Coverage tính trên hợp item được gợi ý cho mọi user / toàn catalog.
@@ -334,8 +335,8 @@ def main(argv=None):
     parser.add_argument("--processed-dir", type=Path, default=ROOT / "data" / "processed")
     parser.add_argument("--splits-dir", type=Path, default=ROOT / "data" / "splits")
     parser.add_argument("--ks", type=int, nargs="+", default=list(DEFAULT_KS))
-    parser.add_argument("--exclude-seen", action=argparse.BooleanOptionalAction, default=True,
-                        help="Loại item đã xem trước khi cắt top-K (mặc định).")
+    parser.add_argument("--exclude-seen", action=argparse.BooleanOptionalAction, default=False,
+                        help="Loại item đã xem trước khi cắt top-K. Mặc định giữ item đã xem.")
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     try:

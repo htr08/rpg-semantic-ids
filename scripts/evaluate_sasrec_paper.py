@@ -13,17 +13,14 @@ from zipfile import ZipFile
 import numpy as np
 import torch
 
+from scripts.reproduce_sasrec_paper import DATA_HASHES, REFERENCE_DIR, RUN_NAME, SEEDS, UPSTREAM_CODE, UPSTREAM_REVISION
 from src.baselines import top_items
 from src.evaluate import main as evaluate_main
 from src.preprocessing import ROOT, read_records, sha256_file, verify_preprocessed, write_json, write_jsonl
 
 
 METRICS = ("recall@5", "recall@10", "ndcg@5", "ndcg@10")
-UPSTREAM_REVISION = "49a890dcb516c9ed3126564495234ea74d5cd566"
-UPSTREAM_CODE = {
-    "models.py": "cdb7dd02f870b9bd16e2e6d9fb094be29ef490f5b7d19f85e2b72994761bd27a",
-    "modules.py": "348190dcfba4ded63441041deee9a3f8931bd1dedae9fc3cdd300beea89bba7d",
-}
+MODEL_SOURCE = {name: UPSTREAM_CODE[name] for name in ("models.py", "modules.py")}
 
 
 def match_item_ids(reference_sequences, local_sequences):
@@ -81,6 +78,8 @@ def run(reference_dir, archive_path, output_dir):
     reference_data = reference_dir / "Beauty.txt"
     attribute_path = reference_dir / "Beauty_item2attributes.json"
     input_hashes = {path.name: sha256_file(path) for path in (reference_data, attribute_path)}
+    if input_hashes != DATA_HASHES:
+        raise ValueError("Beauty inputs are from a different revision")
     reference_sequences = [
         list(map(int, line.split()[1:])) for line in reference_data.read_text().splitlines()
     ]
@@ -93,7 +92,7 @@ def run(reference_dir, archive_path, output_dir):
         attribute_size=max(attr for item in attributes.values() for attr in item) + 1,
     )
     source = reference_dir / "upstream"
-    if any(sha256_file(source / name) != checksum for name, checksum in UPSTREAM_CODE.items()):
+    if any(sha256_file(source / name) != checksum for name, checksum in MODEL_SOURCE.items()):
         raise ValueError("S³-Rec model source is from a different revision")
     sys.path.insert(0, str(source.resolve()))
     from models import S3RecModel
@@ -103,14 +102,14 @@ def run(reference_dir, archive_path, output_dir):
     runs = []
     with ZipFile(archive_path) as archive:
         paper = json.loads(archive.read("summary.json"))
-        if [run["seed"] for run in paper["runs"]] != [42, 43, 44]:
+        if tuple(run["seed"] for run in paper["runs"]) != SEEDS:
             raise ValueError("Expected paper checkpoints for seeds 42, 43, 44")
         for saved in paper["runs"]:
             seed = saved["seed"]
             if saved["input_files"] != input_hashes or saved["revision"] != UPSTREAM_REVISION:
                 raise ValueError(f"Checkpoint provenance mismatch for seed {seed}")
             model = S3RecModel(args)
-            path = f"seed_{seed}/Finetune_full-Beauty-0.pt"
+            path = f"seed_{seed}/{RUN_NAME}.pt"
             checkpoint = torch.load(BytesIO(archive.read(path)), map_location="cpu", weights_only=True)
             model.load_state_dict(checkpoint)
             record = {"seed": seed, "paper_test": saved["test"]}
@@ -134,7 +133,7 @@ def run(reference_dir, archive_path, output_dir):
     write_json(output_dir / "summary.json", {
         "model": "SASRec (S³-Rec, BCE)", "checkpoint_selection": "S³-Rec validation NDCG@20, patience 10",
         "evaluation": "leave-last-out, whole project catalog, keep seen items, K=5 and 10",
-        "source_revision": UPSTREAM_REVISION, "source_files": UPSTREAM_CODE, "input_files": input_hashes,
+        "source_revision": UPSTREAM_REVISION, "source_files": MODEL_SOURCE, "input_files": input_hashes,
         "archive_sha256": sha256_file(archive_path), "split_manifest_sha256": sha256_file(splits_dir / "manifest.json"),
         "users": len(sequences), "catalog_items": len(local_to_ref),
         "paper_reproduction": {
@@ -148,7 +147,7 @@ def run(reference_dir, archive_path, output_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--reference-dir", type=Path, default=ROOT / "experiments/sasrec_reference")
+    parser.add_argument("--reference-dir", type=Path, default=REFERENCE_DIR)
     parser.add_argument("--archive", type=Path)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "experiments/sasrec_paper_no_seen")
     cli = parser.parse_args()

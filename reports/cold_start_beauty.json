@@ -20,7 +20,7 @@
       "users": 6197,
       "ndcg@10": {
         "popularity": 0.0,
-        "itemknn": 0.01804352206072472,
+        "itemknn": 0.0180529231631873,
         "sasrec_bce": {
           "mean": 0.006007956621029158,
           "sample_std": 0.0006161595824638542
@@ -33,7 +33,7 @@
       "users": 4261,
       "ndcg@10": {
         "popularity": 0.0,
-        "itemknn": 0.019795045693984825,
+        "itemknn": 0.019801588583213126,
         "sasrec_bce": {
           "mean": 0.010515268982284054,
           "sample_std": 0.0011629814246489748
@@ -46,7 +46,7 @@
       "users": 2538,
       "ndcg@10": {
         "popularity": 0.0,
-        "itemknn": 0.017962411869665372,
+        "itemknn": 0.017955371500655286,
         "sasrec_bce": {
           "mean": 0.013163905303132863,
           "sample_std": 0.0007183385957163073
@@ -99,7 +99,7 @@
         }
       ],
       "ranking": {
-        "path": "experiments/baselines_no_seen_history50/pop/test/rankings.jsonl",
+        "path": "experiments/baselines_no_seen_pinned/pop/test/rankings.jsonl",
         "sha256": "d79da61df5d15257b4b999a72be00dec0ff9221c52383cfe255825cb8370935f"
       }
     },
@@ -112,19 +112,19 @@
           "min_train_interactions": 0,
           "max_train_interactions": 5,
           "users": 6197,
-          "ndcg@10": 0.01804352206072472
+          "ndcg@10": 0.0180529231631873
         },
         {
           "min_train_interactions": 6,
           "max_train_interactions": 10,
           "users": 4261,
-          "ndcg@10": 0.019795045693984825
+          "ndcg@10": 0.019801588583213126
         },
         {
           "min_train_interactions": 11,
           "max_train_interactions": 15,
           "users": 2538,
-          "ndcg@10": 0.017962411869665372
+          "ndcg@10": 0.017955371500655286
         },
         {
           "min_train_interactions": 16,
@@ -134,8 +134,8 @@
         }
       ],
       "ranking": {
-        "path": "experiments/baselines_no_seen_history50/itemknn/test/rankings.jsonl",
-        "sha256": "2423b8e519271ebe5a3737db2ada957268fcd40d0f6c6791a96d90842a6a8d17"
+        "path": "experiments/baselines_no_seen_pinned/itemknn/test/rankings.jsonl",
+        "sha256": "8620cb25bed66c1c8848c8d6d305d848df254a28bbbbb33b4edb78fbf33ecc41"
       }
     },
     {
@@ -169,7 +169,7 @@
         }
       ],
       "ranking": {
-        "path": "experiments/sasrec_paper_no_seen/seed_42/test/rankings.jsonl",
+        "path": "experiments/sasrec_paper_pr10/seed_42/test/rankings.jsonl",
         "sha256": "a7281d380344e6556b8933010c541acf4f7263c55d55f0e6b7a1a373ae214ff7"
       }
     },
@@ -204,7 +204,7 @@
         }
       ],
       "ranking": {
-        "path": "experiments/sasrec_paper_no_seen/seed_43/test/rankings.jsonl",
+        "path": "experiments/sasrec_paper_pr10/seed_43/test/rankings.jsonl",
         "sha256": "97e7e5d99f1590707153d903e35595721d7fd992f28f2bb9b9d0352824a850d1"
       }
     },
@@ -239,7 +239,7 @@
         }
       ],
       "ranking": {
-        "path": "experiments/sasrec_paper_no_seen/seed_44/test/rankings.jsonl",
+        "path": "experiments/sasrec_paper_pr10/seed_44/test/rankings.jsonl",
         "sha256": "5eaf87afdd07146437a14008b887ee364c68b79fdc80e9092f9a00a38a407a9f"
       }
     }
@@ -259,7 +259,7 @@
     },
     "evaluator": {
       "path": "src/evaluate.py",
-      "sha256": "a013ef5944db8fe158e681300f8f9f7ed106940059e500d4e57249a3c1112612"
+      "sha256": "333b2f2f1f1212bbd3b672f32eb24369ebea7d258d04cd699ed67781a7b80b81"
     }
   }
 }

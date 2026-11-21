@@ -87,16 +87,22 @@ def test_seen_filter_changes_rank():
     # Trước lọc nhãn 7 ở vị trí 3 (NDCG = 0.5); sau khi loại 10, nhãn lên vị trí 2.
     split = {1: {"target": 7, "seen_item_ids": [10]}}
     rankings = {1: [10, 3, 7]}
-    filtered = evaluate(rankings, split, ks=(5,))
+    filtered = evaluate(rankings, split, ks=(5,), exclude_seen=True)
     raw = evaluate(rankings, split, ks=(5,), exclude_seen=False)
     assert filtered["ndcg@5"] == pytest.approx(1 / math.log2(3))
     assert raw["ndcg@5"] == pytest.approx(0.5)
 
 
+def test_default_keeps_seen_items():
+    # Mặc định không lọc: item đã thấy vẫn chiếm vị trí, nhãn 7 ở vị trí 3.
+    split = {1: {"target": 7, "seen_item_ids": [10]}}
+    assert evaluate({1: [10, 3, 7]}, split, ks=(5,))["ndcg@5"] == pytest.approx(0.5)
+
+
 def test_seen_filter_pulls_target_into_top_k():
     # Top-2 trước lọc = [1, 2] (trượt); loại 1, 2 → nhãn 3 ở vị trí 1.
     split = {1: {"target": 3, "seen_item_ids": [1, 2]}}
-    assert evaluate({1: [1, 2, 3]}, split, ks=(2,))["recall@2"] == 1.0
+    assert evaluate({1: [1, 2, 3]}, split, ks=(2,), exclude_seen=True)["recall@2"] == 1.0
 
 
 # --- Trung bình trên nhiều user ---
@@ -156,7 +162,7 @@ def test_short_ranking_after_filter_warns():
     # Top-5 = [1..5], đã thấy {1, 2, 3} → còn [4, 5], ít hơn K = 5.
     split = {1: {"target": 5, "seen_item_ids": [1, 2, 3]}}
     with pytest.warns(UserWarning, match="1 user"):
-        evaluate({1: [1, 2, 3, 4, 5]}, split, ks=(5,))
+        evaluate({1: [1, 2, 3, 4, 5]}, split, ks=(5,), exclude_seen=True)
 
 
 def test_full_ranking_is_truncated_before_checks():
@@ -164,7 +170,7 @@ def test_full_ranking_is_truncated_before_checks():
     # Sau lọc nhãn ở vị trí 2 → NDCG@10 = 1 / log2(3).
     ranking = np.arange(1, 12102)
     split = {1: {"target": 3, "seen_item_ids": [1]}}
-    assert evaluate({1: ranking}, split, ks=(10,))["ndcg@10"] == pytest.approx(1 / math.log2(3))
+    assert evaluate({1: ranking}, split, ks=(10,), exclude_seen=True)["ndcg@10"] == pytest.approx(1 / math.log2(3))
 
 
 def test_short_ranking_warns_without_filter():
@@ -194,4 +200,4 @@ def test_load_split(tmp_path):
         2: {"target": 7, "seen_item_ids": [7]},
     }
     # User 2 mua lại item 7: nhãn được giữ khi lọc nên vẫn tính là trúng ở vị trí 1.
-    assert evaluate({1: [3, 8], 2: [7, 1]}, split, ks=(5,))["ndcg@5"] == pytest.approx(1.0)
+    assert evaluate({1: [3, 8], 2: [7, 1]}, split, ks=(5,), exclude_seen=True)["ndcg@5"] == pytest.approx(1.0)

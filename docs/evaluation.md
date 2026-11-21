@@ -6,8 +6,8 @@ chấm. Không cần embedding, GPU hoặc adapter để tính các metric này.
 
 ## Ý nghĩa và công thức
 
-Với user u, L(u,K) là tối đa K item đầu của ranking. Phép so sánh bằng bộ chấm
-chung giữ item đã xem trong danh sách. Khi đối chiếu một lần chạy cũ có lọc, bộ chấm vẫn
+Với user u, L(u,K) là tối đa K item đầu của ranking. Bộ chấm chung mặc định
+giữ item đã xem trong danh sách (`exclude_seen=False`). Khi chấm với bộ lọc, bộ chấm vẫn
 giữ nhãn nếu đó là sản phẩm mua lại.
 
 | Chỉ số | Cách tính | Câu hỏi trả lời |
@@ -71,7 +71,7 @@ mô hình có đầy đủ top-K. Không tự bổ sung item cho mô hình.
 Đa dạng hoặc coverage cao không tự chứng minh mô hình tốt: gợi ý ngẫu nhiên cũng
 có thể trải rộng nhưng trượt nhãn. Luôn đọc cùng Recall/NDCG.
 
-## Ví dụ tính tay
+## Ví dụ tính tay với `--exclude-seen`
 
 Catalog gồm 5 item; head = {1}. Danh mục: item 1 và 2 thuộc A, item 3 thuộc B,
 item 4 thuộc cả A và B, item 5 thiếu danh mục.
@@ -106,13 +106,12 @@ JSONL, một dòng cho một user của bộ chia được chấm:
 Sau khi có môi trường ảo và dữ liệu khớp manifest:
 
 ```powershell
-.\venv\Scripts\python.exe -m src.evaluate --rankings experiments/rpg_s42_validation/rankings.jsonl --model-name rpg_s42 --split validation --ks 5 10 --no-exclude-seen --output-dir experiments/rpg_s42_validation
+.\venv\Scripts\python.exe -m src.evaluate --rankings experiments/rpg_s42_validation/rankings.jsonl --model-name rpg_s42 --split validation --ks 5 10 --output-dir experiments/rpg_s42_validation
 ```
 
-Thay đường dẫn bằng file ranking thực tế; lệnh trên minh họa cách chấm RPG,
-không có sẵn file RPG trong repo. CLI mặc định đọc `data/processed/` và `data/splits/`;
-có thể đổi qua `--processed-dir` và `--splits-dir`. Dùng `--no-exclude-seen`
-để so sánh bằng bộ chấm chung. Bỏ cờ này để tái chấm theo mặc định có lọc của CLI cũ.
+Thay đường dẫn bằng file ranking thực tế. CLI mặc định đọc `data/processed/`
+và `data/splits/`. Có thể đổi qua `--processed-dir` và `--splits-dir`.
+Dùng `--exclude-seen` khi cần đối chiếu kết quả có lọc.
 
 Trước khi chấm, CLI kiểm tra checksum các đầu ra tiền xử lý theo manifest. Đầu ra:
 
@@ -121,7 +120,23 @@ Trước khi chấm, CLI kiểm tra checksum các đầu ra tiền xử lý theo
 - `per_user.csv`: mỗi user một dòng, sắp ID tăng dần; có Recall/NDCG và các tỉ lệ,
   đa dạng theo user. Coverage chỉ có ở JSON vì là chỉ số trên toàn tập.
 
-CSV giữ điểm theo user để làm paired t-test sau này.
+### Paired t-test theo user
+
+Chạy kiểm định hai phía trên NDCG@10 của RPG và SASRec theo từng `user_id`.
+Các thư mục phải có `metrics.json` và `per_user.csv` từ cùng bộ chia và cùng
+chế độ giữ item đã xem. Với nhiều seed, lấy trung bình NDCG@10 của từng user
+trong mỗi mô hình trước khi tính chênh lệch. Mỗi user tạo một cặp quan sát.
+
+```bash
+python -m scripts.paired_t_test \
+  --left experiments/rpg_s42_test experiments/rpg_s43_test experiments/rpg_s44_test \
+  --right experiments/sasrec_paper_pr10/seed_42/test experiments/sasrec_paper_pr10/seed_43/test experiments/sasrec_paper_pr10/seed_44/test
+```
+
+Đầu ra cho biết số user, chênh lệch trung bình (RPG trừ SASRec), thống kê t và p-value.
+Nếu mọi chênh lệch bằng nhau, thống kê t là `null`. Khi hai bên giống hệt nhau,
+p-value ghi 1. Khi chênh lệch là hằng số khác 0, p-value ghi `null`.
+K3 chờ ranking test của RPG từ A.
 
 ### Cold-start theo tần suất sản phẩm
 
@@ -157,27 +172,58 @@ ban đầu. API trực tiếp không kiểm tra manifest; CLI thực hiện bư�
 ## Chạy Popularity và ItemKNN trên Beauty
 
 ```powershell
-.\venv\Scripts\python.exe -m scripts.run_baselines --models Pop ItemKNN --splits validation test --output-dir experiments/baselines_no_seen_history50
+.\venv\Scripts\python.exe -m scripts.run_baselines --models Pop ItemKNN --splits validation test --output-dir experiments/baselines_no_seen_pinned
 .\venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
 
-Ranking và bảng per-user nằm trong `experiments/`.
+Kết quả dùng Python 3.12.10, torch 2.4.1, NumPy 1.26.4, SciPy 1.13.1 và RecBole
+1.2.0. Trên cùng ranking đầu vào, Recall/NDCG của bộ chấm chung và RecBole khớp
+trong sai số dưới 1e-4 ở cả hai split và hai mô hình. JSON ghi điểm RecBole và sai số.
+Đối chiếu với lượt Python 3.13.5, torch 2.8.0+cpu, NumPy 2.2.6 và SciPy 1.15.3,
+Pop giữ nguyên số đo. ItemKNN lệch tối đa khoảng 4,5e-5 ở Recall/NDCG và 5,8e-4
+ở coverage giữa hai môi trường.
+
+Trên test với bộ chấm chung, ItemKNN đạt NDCG@10 **0,0232** và SASRec-BCE
+đạt **0,0224 ± 0,0002** qua ba seed.
 [JSON kết quả Popularity và ItemKNN](../reports/baselines_cpu_no_seen.json).
 
 ## Tái lập SASRec-BCE
 
-Dùng dữ liệu Beauty và `run_finetune_full.py` từ commit S³-Rec đã pin.
-Chạy lần lượt seed 42, 43 và 44 với thư mục đầu ra riêng. Ví dụ chạy seed 42
-từ thư mục gốc của S³-Rec.
+Từ thư mục gốc của dự án, tải mã và dữ liệu Beauty của S³-Rec.
+Script kiểm tra SHA-256 của từng file và lưu tại `experiments/sasrec_reference/`.
 
 ```bash
-python run_finetune_full.py --data_name Beauty --ckp 0 --seed 42 --epochs 200 --batch_size 256 --lr 0.001 --max_seq_length 50 --output_dir results/seed_42
+python -m scripts.reproduce_sasrec_paper --prepare-only
 ```
 
-Dùng thư mục đầu ra mới để khởi tạo từ đầu. Script chọn checkpoint theo
-validation NDCG@20 với patience 10. Bộ chấm gốc đưa điểm item đã xem về 0.
-[Mã nguồn S³-Rec đã pin](https://github.com/aHuiWang/CIKM2020-S3Rec/tree/49a890dcb516c9ed3126564495234ea74d5cd566)
-· [Kết quả theo seed](../reports/sasrec_paper_common.json).
+Để chấm lại các checkpoint đã dùng cho báo cáo, lấy
+`sasrec_paper_beauty_outputs.zip` từ output của lượt chạy Kaggle do B lưu
+và đặt tại `experiments/sasrec_reference/`. SHA-256 của ZIP nằm trong JSON
+kết quả. Liên kết notebook của lượt đó chưa được lưu trong log.
+
+Có thể tạo ZIP mới từ repo trên Kaggle với GPU và Internet đã bật. Với PyTorch,
+NumPy, SciPy và tqdm trong runtime, chạy lệnh sau. Mỗi seed chạy từ khởi tạo
+ngẫu nhiên trong thư mục riêng, dùng BCE, batch 256, learning rate 0,001,
+lịch sử tối đa 50, giới hạn 200 epoch. S³-Rec chọn checkpoint bằng
+validation NDCG@20 với patience 10 và đưa điểm item đã xem về 0 khi chấm.
+
+```bash
+python -m scripts.reproduce_sasrec_paper --archive experiments/sasrec_reference/retrained.zip
+```
+
+Sau khi chuẩn bị dữ liệu của dự án theo [hợp đồng dữ liệu](data_contract.md),
+chấm ZIP gốc trên CPU với bộ chấm chung. Đổi `--archive` nếu chấm ZIP mới.
+
+```bash
+python -m scripts.evaluate_sasrec_paper \
+  --archive experiments/sasrec_reference/sasrec_paper_beauty_outputs.zip \
+  --output-dir experiments/sasrec_paper_pr10
+```
+
+Bộ chấm S³-Rec gốc cho test NDCG@10 **0,0317 ± 0,0001**, so với mốc
+**0,0318** ở Table 2. Điểm này dùng để đối chiếu paper.
+[Mã nguồn S³-Rec đã pin](https://github.com/aHuiWang/CIKM2020-S3Rec/tree/49a890dcb516c9ed3126564495234ea74d5cd566) ·
+[Kết quả theo seed](../reports/sasrec_paper_common.json).
 
 ## Đối chiếu với điểm RPG của A
 

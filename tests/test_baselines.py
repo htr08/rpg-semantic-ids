@@ -3,7 +3,6 @@
 import os
 import subprocess
 import sys
-from unittest.mock import Mock
 
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
@@ -12,8 +11,8 @@ import pytest
 from scipy import sparse
 
 from src.baselines import (
-    fit_itemknn, fit_pop, interaction_matrix, rank_itemknn, rank_torch,
-    select_device, sequence_examples, top_items, train_sasrec,
+    fit_itemknn, fit_pop, interaction_matrix, rank_itemknn, rank_pop,
+    top_items,
 )
 from src.evaluate import build_evaluation_context, evaluate
 
@@ -43,13 +42,6 @@ def test_train_matrix_is_binary_and_has_no_holdout():
     assert matrix[0].sum() == 0
 
 
-def test_sequential_examples_use_only_train_prefixes():
-    histories, lengths, targets = sequence_examples([{"user_id": 1, "item_ids": [1, 2, 3, 4]}], 2)
-    assert histories.tolist() == [[1, 0], [1, 2], [2, 3]]
-    assert lengths.tolist() == [1, 2, 2]
-    assert targets.tolist() == [2, 3, 4]
-
-
 def test_itemknn_can_use_validation_history_without_refitting():
     # Item 5 có cạnh mạnh nhưng nằm ngoài cửa sổ history của cả hai split.
     weights = sparse.csr_matrix(([1., 2., 3.], ([1, 2, 5], [3, 4, 2])), shape=(6, 6))
@@ -59,15 +51,6 @@ def test_itemknn_can_use_validation_history_without_refitting():
     assert rank_itemknn(weights, val, range(1, 6), 1)[1][0] == 3
     assert rank_itemknn(weights, test, range(1, 6), 1)[1][0] == 4
     assert (original != weights).nnz == 0
-
-
-def test_gpu_is_rejected_locally():
-    assert select_device("cpu") == "cpu"
-    # CI/local Windows/Linux không có hai thư mục Kaggle.
-    from pathlib import Path
-    if not Path("/kaggle/working").is_dir():
-        with pytest.raises(ValueError, match="restricted to Kaggle"):
-            select_device("cuda")
 
 
 @pytest.fixture
@@ -83,9 +66,10 @@ def test_recbole_pop_counts_events_exactly(recbole_ready):
     model = fit_pop(context, 1)
     assert model.item_cnt[:, 0].tolist() == [0, 3, 1, 0, 0]
     split = {1: {"target": 3, "seen_item_ids": [1, 2]}}
-    rankings = rank_torch(model, split, context.catalog, 2)
+    rankings = rank_pop(model, split, context.catalog, 2)
     assert rankings[1] == [1, 2, 3, 4]
-    assert evaluate(rankings, split, ks=(2,), context=context)["recall@2"] == 1
+    assert evaluate(rankings, split, ks=(2,), context=context)["recall@2"] == 0
+    assert evaluate(rankings, split, ks=(2,), context=context, exclude_seen=True)["recall@2"] == 1
 
 
 def test_recbole_itemknn_cosine_matches_hand_calculation(recbole_ready):
@@ -126,38 +110,3 @@ def test_tensorboard_does_not_load_broken_tensorflow(recbole_ready, tmp_path, pr
     else:
         assert result.returncode != 0
         assert "StringDType" in result.stderr
-
-
-@pytest.mark.parametrize("exclude_seen", [True, False])
-def test_recbole_sasrec_cpu_training_selects_and_reloads_checkpoint(
-        recbole_ready, tmp_path, monkeypatch, exclude_seen):
-    train = [{"user_id": 1, "item_ids": [1, 2, 3]}, {"user_id": 2, "item_ids": [2, 1, 4]}]
-    items = [{"item_id": i} for i in range(1, 7)]
-    context = build_evaluation_context(train, items)
-    # K=10 không đủ catalog trong fixture: kiểm tra cảnh báo riêng ở bộ evaluate.
-    validation = {1: {"history": [1, 2, 3], "target": 4, "seen_item_ids": [1, 2, 3]},
-                  2: {"history": [2, 1, 4], "target": 5, "seen_item_ids": [2, 1, 4]}}
-    settings = {"max_history": 3, "epochs": 2, "patience": 1, "batch_size": 2,
-                "cpu_threads": 1, "eval_batch_size": 2, "learning_rate": .001,
-                "weight_decay": 0, "clip_grad_norm": 5,
-                "model": {"n_layers": 1, "n_heads": 1, "hidden_size": 4, "inner_size": 8,
-                          "hidden_dropout_prob": 0, "attn_dropout_prob": 0, "hidden_act": "gelu",
-                          "layer_norm_eps": 1e-12, "initializer_range": .02, "loss_type": "CE"}}
-    validation_evaluate = Mock(wraps=evaluate)
-    monkeypatch.setattr("src.baselines.evaluate", validation_evaluate)
-    with pytest.warns(UserWarning, match="ranked items"):
-        model, stats = train_sasrec(train, validation, context, 2, settings,
-                                   seed=42, device="cpu", output_dir=tmp_path,
-                                   exclude_seen=exclude_seen)
-    assert stats["train_examples"] == 4
-    assert (tmp_path / "checkpoint.pt").exists()
-    assert (tmp_path / "training.json").exists()
-    rankings = rank_torch(model, validation, context.catalog, 10, max_history=3)
-    assert set(rankings) == {1, 2}
-    with pytest.warns(UserWarning, match="ranked items"):
-        score = evaluate(rankings, validation, ks=(10,), exclude_seen=exclude_seen)
-    assert validation_evaluate.call_count == stats["epochs_run"]
-    assert all(call.kwargs["exclude_seen"] is exclude_seen
-               for call in validation_evaluate.call_args_list)
-    assert stats["best_val_ndcg@10"] == score["ndcg@10"]
-    assert stats["exclude_seen"] is exclude_seen

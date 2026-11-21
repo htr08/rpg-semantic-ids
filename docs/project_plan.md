@@ -163,7 +163,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 | Nhóm | Chỉ số |
 |---|---|
 | **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10. Kết quả tái lập dùng bộ chấm của từng mô hình gốc. Phép đánh giá chung dùng tập ứng viên toàn catalog và giữ item đã xem. Báo cáo mean ± std qua 3 seed cho cấu hình chính. |
-| **So sánh cặp mô hình** | Paired t-test trên NDCG@10 theo user (hoặc theo seed), mức ý nghĩa p < 0,05. |
+| **So sánh cặp mô hình** | Paired t-test trên NDCG@10 theo user, mức ý nghĩa p < 0,05. |
 | **Độ phổ biến và đa dạng** | Coverage (tỉ lệ item từng xuất hiện trong top-10); tỉ lệ item long-tail (ngoài 20% phổ biến nhất) trong top-10; NDCG@10 theo nhóm tần suất item [0,5], [6,10], [11,15], [16,20] (cold-start). |
 | **Luật kết hợp** | Support, confidence, lift của luật; số tập phổ biến theo min-support; Recall/NDCG@10 của AR-Rec. |
 | **Phân cụm** | Silhouette (mẫu 5.000 item, khoảng cách cosine), Davies–Bouldin; với DBSCAN thêm số cụm và tỉ lệ nhiễu; độ nhất quán cụm ↔ semantic ID: số token trùng trung bình của cặp item cùng cụm so với cặp khác cụm, và Adjusted Rand Index giữa phân hoạch k-means và phân hoạch theo token đầu tiên của OPQ. |
@@ -179,7 +179,8 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 - Leave-last-out: item cuối của mỗi user làm test, item kế cuối làm validation, phần còn lại là train; lưu file chỉ số dùng chung cho mọi mô hình và module của C.
 - Chọn checkpoint và siêu tham số trên validation. Test dùng checkpoint đã chọn. RPG dùng validation NDCG@10 với patience 20. SASRec dùng checkpoint của lượt S³-Rec, chọn theo validation NDCG@20 với patience 10.
 - SASRec-BCE chạy seed 42, 43 và 44, batch 256, learning rate 0,001, lịch sử tối đa 50 và giới hạn 200 epoch.
-- Tái lập mốc SASRec bằng bộ chấm S³-Rec, đặt điểm item đã xem về 0. Khi so sánh bổ sung hoặc làm paired t-test, chấm ranking của các mô hình bằng `src/evaluate.py` với cùng split và giữ nguyên điểm item đã xem.
+- Bảng so sánh chung dùng cùng split và bộ chấm `src/evaluate.py`, giữ item đã xem trước top-K. Padding ID 0 nằm ngoài tập ứng viên. Paired t-test dùng điểm theo user từ bảng này.
+- Khi tái lập mốc SASRec trong paper, bộ chấm S³-Rec đặt điểm item đã xem về 0. Ghi kết quả tại bảng tái lập ở mục 5.
 
 #### b) Semantic ID
 
@@ -296,7 +297,7 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 
 **Dự phòng Tuần 2:**
 
-- RPG code gốc lệch mốc → kiểm tra encoder, siêu tham số, cách loại item đã xem; vẫn lệch thì ghi nhận và đi tiếp, vì các phân tích không phụ thuộc con số tuyệt đối.
+- RPG code gốc lệch mốc → kiểm tra encoder, siêu tham số và quy tắc đánh giá không lọc item đã xem; vẫn lệch thì ghi nhận và đi tiếp, vì các phân tích không phụ thuộc con số tuyệt đối.
 - Adapter chưa chạy đến hết 18/11 → thay file embedding đầu vào để code gốc tự chạy OPQ (dùng được cho nâng cấp chính); các biến thể PQ, RQ, ngẫu nhiên chỉ đánh giá độ đo cụm, không train.
 - DBSCAN ra một cụm + nhiễu → thử eps khác và PCA-20; vẫn thế thì viết thành nhận xét về giới hạn của phân cụm mật độ trên embedding văn bản.
 
@@ -365,17 +366,15 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 
 ## 5. Mẫu bảng kết quả
 
-Các số đo dùng tập test leave-last-out. Ghi quy tắc chấm cho mỗi kết quả tái lập.
-Kết quả SASRec trong bảng dùng bộ chấm S³-Rec gốc. Cột "NDCG@10 paper" ghi
-giá trị và số bảng nguồn. Paired t-test dùng điểm theo user từ bộ chấm chung.
+Bảng so sánh chung dùng tập test leave-last-out, toàn catalog và giữ item đã xem. Cột "NDCG@10 paper" ghi mốc tham chiếu kèm số bảng nguồn.
 
 | Mô hình | Recall@5 | Recall@10 | NDCG@5 | NDCG@10 (mean ± std) | NDCG@10 paper | Chênh lệch | p-value vs RPG | Kiến thức học phần |
 |---|---|---|---|---|---|---|---|---|
-| Popularity | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | Baseline |
-| ItemKNN | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | Item-based CF, cosine |
+| Popularity | 0,00720 | 0,01145 | 0,00398 | 0,0053 | – | – | _điền_ | Baseline |
+| ItemKNN | 0,02661 | 0,04440 | 0,01743 | 0,0232 | – | – | _điền_ | Item-based CF, cosine |
 | AR-Rec (FP-Growth) | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ2: luật kết hợp |
 | kNN nội dung (tùy chọn) | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | kNN, tương đồng |
-| SASRec-BCE (bộ chấm S³-Rec) | 0,03747 | 0,06053 | 0,02427 | 0,0317 ± 0,0001 | 0,0318 (T2) | −0,0001 | _chờ điểm RPG chấm chung_ | Baseline tuần tự |
+| SASRec-BCE | 0,02975 | 0,05192 | 0,01535 | 0,0224 ± 0,0002 | – | – | _chờ điểm RPG chấm chung_ | Baseline tuần tự |
 | RPG (code gốc, ID OPQ) | _điền_ | _điền_ | _điền_ | _điền_ | 0,0429 (T4) | _điền_ | – | Phân cụm (OPQ), đồ thị |
 | RPG – ID PQ | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ1: k-means từng đoạn con |
 | RPG – ID RQ | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ1: k-means phân tầng |
@@ -384,6 +383,14 @@ giá trị và số bảng nguồn. Paired t-test dùng điểm theo user từ b
 | RPG + đồ thị giảm hub | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ3: hubness |
 | RPG + ID có tín hiệu hành vi | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | RQ2: đồng xuất hiện, SVD |
 | RPG + encoder mới (dự phòng) | _điền_ | _điền_ | _điền_ | _điền_ | – | – | _điền_ | Biểu diễn văn bản |
+
+Trong bảng chung, ItemKNN nhỉnh hơn SASRec-BCE khoảng 0,0008 NDCG@10 trên test.
+
+**Tái lập SASRec trong paper trên Beauty (test).** Bộ chấm gốc S³-Rec đặt điểm item đã xem về 0 trước top-K. Kết quả là trung bình của seed 42, 43 và 44, kèm độ lệch chuẩn mẫu tại NDCG@10.
+
+| Mô hình | Recall@5 | Recall@10 | NDCG@5 | NDCG@10 | NDCG@10 paper |
+|---|---|---|---|---|---|
+| SASRec-BCE, bộ chấm S³-Rec | 0,03747 | 0,06053 | 0,02427 | 0,0317 ± 0,0001 | 0,0318 (Table 2) |
 
 **Bảng phụ 1 – Semantic ID như phân cụm (RQ1).** Biến thể (OPQ, PQ, RQ, ngẫu nhiên, ID có tín hiệu hành vi), purity/NMI theo danh mục và thương hiệu, tỉ lệ va chạm, entropy codebook, NDCG@10; kèm hình tương quan và hệ số Spearman.
 

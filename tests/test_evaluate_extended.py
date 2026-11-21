@@ -7,6 +7,7 @@ import math
 import numpy as np
 import pytest
 
+from scripts.paired_t_test import main as paired_main, paired_t_test
 from src.evaluate import (
     _cold_start_scores, build_evaluation_context, evaluate, load_rankings, load_split,
     main, per_user_metrics,
@@ -29,7 +30,7 @@ def test_extended_metrics_share_filtered_top_k(context):
     split = {1: {"target": 2, "seen_item_ids": [1]},
              2: {"target": 4, "seen_item_ids": []}}
     rankings = {1: [1, 2, 3, 4, 5], 2: [1, 4, 2, 3, 5], 99: [5]}
-    result = evaluate(rankings, split, ks=(1, 2), context=context)
+    result = evaluate(rankings, split, ks=(1, 2), context=context, exclude_seen=True)
     # Sau lọc: [2,3] và [1,4]. Hợp = 4/5 catalog; tail = (1 + 1/2)/2.
     # Jaccard(A,B) = 1; Jaccard(A,{A,B}) = 1/2 → trung bình 3/4.
     assert result["coverage@2"] == pytest.approx(4 / 5)
@@ -42,7 +43,7 @@ def test_extended_metrics_share_filtered_top_k(context):
     assert result["category_diversity@1"] is None
     assert result["category_diversity_users@1"] == 0
     # API cũ vẫn cho đúng cùng độ chính xác và không thêm khóa.
-    original = evaluate(rankings, split, ks=(1, 2))
+    original = evaluate(rankings, split, ks=(1, 2), exclude_seen=True)
     assert len(original) == 4
     assert all(result[key] == value for key, value in original.items())
 
@@ -110,7 +111,7 @@ def test_short_and_empty_lists_are_visible(context, ranked, tail, fill):
 
 def test_repurchased_target_is_kept_for_all_metrics(context):
     result = evaluate({1: [1, 3]}, {1: {"target": 1, "seen_item_ids": [1]}},
-                      ks=(2,), context=context)
+                      ks=(2,), context=context, exclude_seen=True)
     assert result["recall@2"] == 1
     assert result["long_tail_ratio@2"] == .5
     assert result["coverage@2"] == .4
@@ -122,7 +123,7 @@ def test_invalid_split_catalog_ids_raise(context, field, value):
     row = {"target": 2, "seen_item_ids": []}
     row[field] = value
     with pytest.raises(ValueError):
-        evaluate({1: [1, 2]}, {1: row}, ks=(2,), context=context)
+        evaluate({1: [1, 2]}, {1: row}, ks=(2,), context=context, exclude_seen=True)
 
 
 @pytest.mark.parametrize("ranked", [[0, 1], [1, 99], [1, 1]])
@@ -197,7 +198,7 @@ def cli_case(tmp_path):
 
 def test_cli_end_to_end_and_provenance(cli_case):
     args, processed, output, rankings = cli_case
-    assert main(args) == 0
+    assert main([*args, "--exclude-seen"]) == 0
     report = json.loads((output / "metrics.json").read_text())
     assert report["protocol"]["exclude_seen"] is True
     assert report["metrics"]["coverage@2"] == .4
@@ -215,9 +216,9 @@ def test_cli_end_to_end_and_provenance(cli_case):
     assert float(rows[0]["category_diversity@2"]) == 1
 
 
-def test_cli_keeps_seen_items_when_requested(cli_case):
+def test_cli_keeps_seen_items_by_default(cli_case):
     args, _, output, _ = cli_case
-    assert main([*args, "--no-exclude-seen"]) == 0
+    assert main(args) == 0
     report = json.loads((output / "metrics.json").read_text())
     assert report["protocol"]["exclude_seen"] is False
     assert report["metrics"]["ndcg@2"] == 0
@@ -253,3 +254,36 @@ def test_cli_serializes_unmeasurable_diversity_as_null(cli_case):
     with (output / "per_user.csv").open() as stream:
         row = next(csv.DictReader(stream))
     assert row["category_diversity@1"] == ""
+
+
+def test_paired_t_test_matches_by_user_id():
+    # Differences are 0, 0.5, 1, so t = sqrt(3) with two degrees of freedom.
+    result = paired_t_test({1: 0., 2: .5, 3: 1.}, {3: 0., 1: 0., 2: 0.})
+    assert result == pytest.approx({
+        "users": 3, "mean_difference": .5, "statistic": math.sqrt(3),
+        "p_value": 1 - math.sqrt(3 / 5),
+    })
+    assert paired_t_test({1: .5, 2: .5}, {2: .5, 1: .5})["p_value"] == 1
+    with pytest.raises(ValueError, match="identical user IDs"):
+        paired_t_test({1: 0., 2: 0.}, {1: 0., 3: 0.})
+
+
+def test_paired_cli_averages_seeds_and_checks_protocol(tmp_path, capsys):
+    report = {"split": "test", "protocol": {"exclude_seen": False}, "counts": {"users": 3},
+              "inputs": {"split": {"sha256": "test-split"}, "manifest": {"sha256": "data"}}}
+    directories = [tmp_path / name for name in ("s42", "s43", "baseline")]
+    for directory, scores in zip(directories, [(0, .25, .5), (0, .75, 1), (0, 0, 0)], strict=True):
+        directory.mkdir()
+        write_json(directory / "metrics.json", report)
+        with (directory / "per_user.csv").open("w", newline="", encoding="utf-8") as stream:
+            writer = csv.writer(stream)
+            writer.writerow(["user_id", "ndcg@10"])
+            writer.writerows(enumerate(scores, start=1))
+    args = ["--left", *map(str, directories[:2]), "--right", str(directories[2])]
+    assert paired_main(args) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["users"] == 3
+    assert result["mean_difference"] == pytest.approx((0 + .5 + .75) / 3)
+    write_json(directories[2] / "metrics.json", {**report, "split": "validation"})
+    assert paired_main(args) == 1
+    assert "split, manifest or protocol differs" in capsys.readouterr().err
