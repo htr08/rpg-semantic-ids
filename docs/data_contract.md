@@ -41,7 +41,9 @@ Thư mục này đã gitignore; mỗi thành viên tự tạo lại bằng pipel
 kể cả ngoài cửa sổ 50, để truy vết và phân tích lịch sử. Không dùng trường này
 để loại ứng viên trước khi lấy top-K; cùng quy tắc áp dụng khi chọn checkpoint
 trên validation và khi chấm test. Giữ nguyên trường dữ liệu, mapping và bộ chia; không cần sinh lại dữ liệu.
+
 Padding ID 0 không phải ứng viên.
+
 Nhãn validation không nằm trong lịch sử validation; nhãn test không nằm trong lịch sử test **ở cùng vị trí tương tác**.
 Nếu cùng một sản phẩm được mua nhiều lần, ID nhãn có thể từng xuất hiện trước đó;
 `target_in_history` đánh dấu trường hợp này để hàm đánh giá xử lý rõ ràng, pipeline không tự xóa tương tác.
