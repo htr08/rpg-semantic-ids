@@ -135,6 +135,19 @@ Notebook dùng chung `src/eda.py` với CLI; output được giữ trống khi c
 
 - [Báo cáo EDA tuần 1](reports/data_quality.md): độ dài chuỗi, long-tail, độ thưa, thống kê thiếu metadata và ví dụ mô tả; hai hình trong `reports/figures/`, số liệu trong `reports/eda_summary.json`.
 
+## Khai phá luật kết hợp (phần C)
+
+```powershell
+.\venv\Scripts\python.exe -m src.patterns --min-support 0.002   # FP-Growth một mức, in số tập phổ biến
+.\venv\Scripts\python.exe -m src.patterns rules                 # quét 0,0005 / 0,001 / 0,002, sinh luật
+```
+
+Lệnh `rules` đọc phần train trong `data/processed/interactions.csv` theo `data/splits/leave_last_out.csv`,
+chạy FP-Growth (mlxtend) với tập phổ biến và luật giới hạn |X ∪ Y| ≤ 4, `min_confidence` 0,1.
+Kết quả: [reports/fpgrowth_sweep.json](reports/fpgrowth_sweep.json) (số tập phổ biến, số luật, thời gian)
+và [reports/fpgrowth_top_rules.md](reports/fpgrowth_top_rules.md) (20 luật lift cao nhất mỗi mức, kèm tên sản phẩm).
+Chạy cả ba mức cần vài trăm MB RAM trống cho 656.681 luật ở mức 0,0005.
+
 ## Kiểm thử
 
 ```bash

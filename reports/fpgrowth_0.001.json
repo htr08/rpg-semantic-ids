@@ -1,0 +1,22 @@
+{
+  "min_support": 0.001,
+  "min_count": 23,
+  "n_transactions": 22363,
+  "n_items": 12101,
+  "n_nonzero": 153776,
+  "mean_transaction_size": 6.8763582703572865,
+  "n_frequent_itemsets": 5753,
+  "itemsets_by_size": {
+    "1": 1452,
+    "2": 1423,
+    "3": 1030,
+    "4": 793,
+    "5": 517,
+    "6": 316,
+    "7": 156,
+    "8": 54,
+    "9": 11,
+    "10": 1
+  },
+  "fpgrowth_seconds": 0.841
+}

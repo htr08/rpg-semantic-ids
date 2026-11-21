@@ -1,0 +1,3286 @@
+{
+  "n_transactions": 22363,
+  "n_items": 12101,
+  "levels": [
+    {
+      "min_support": 0.0005,
+      "min_count": 12,
+      "max_len": 4,
+      "min_confidence": 0.1,
+      "n_frequent_itemsets": 69033,
+      "itemsets_by_size": {
+        "1": 3218,
+        "2": 7070,
+        "3": 19097,
+        "4": 39648
+      },
+      "fpgrowth_seconds": 2.822,
+      "rules_seconds": 7.227,
+      "rules_summary": {
+        "n_rules": 656681,
+        "rules_by_size": {
+          "2": 13127,
+          "3": 106840,
+          "4": 536714
+        },
+        "n_items_in_rules": 514,
+        "confidence_mean": 0.578623136210768,
+        "confidence_median": 0.5833333333333333,
+        "lift_mean": 457.3222969935944,
+        "lift_median": 353.09999999999997,
+        "lift_max": 1863.5833333333335,
+        "count_median": 13.0
+      },
+      "top_rules": [
+        {
+          "antecedents": [
+            253,
+            3457
+          ],
+          "consequents": [
+            10561,
+            11212
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[3457] SHANY Cosmetics Eyelash Extend Assorted Reusable Eyelashes Thick and …",
+          "consequent_text": "[10561] SHANY Cosmetics French Nail Set, 7 Ounce<br>[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Cosmetics Eyelash Extend Assorted Reusable Eyelashes Thick and Dramatic, 3.6 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Cosmetics French Nail Set, 7 Ounce",
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 12,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1863.5833333333335,
+          "kulczynski": 1.0,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            3457
+          ],
+          "consequents": [
+            11212,
+            11987
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[3457] SHANY Cosmetics Eyelash Extend Assorted Reusable Eyelashes Thick and …",
+          "consequent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…<br>[11987] SHANY Cosmetics Intense Eyes Palette 72 Color Eyeshadow Palette, 17 O…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Cosmetics Eyelash Extend Assorted Reusable Eyelashes Thick and Dramatic, 3.6 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set",
+            "SHANY Cosmetics Intense Eyes Palette 72 Color Eyeshadow Palette, 17 Ounce"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 12,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1863.5833333333335,
+          "kulczynski": 1.0,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            10561
+          ],
+          "consequents": [
+            11212,
+            11987
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[10561] SHANY Cosmetics French Nail Set, 7 Ounce",
+          "consequent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…<br>[11987] SHANY Cosmetics Intense Eyes Palette 72 Color Eyeshadow Palette, 17 O…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Cosmetics French Nail Set, 7 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set",
+            "SHANY Cosmetics Intense Eyes Palette 72 Color Eyeshadow Palette, 17 Ounce"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 12,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1863.5833333333335,
+          "kulczynski": 1.0,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            136,
+            4704
+          ],
+          "consequents": [
+            2981,
+            4358
+          ],
+          "antecedent_text": "[136] SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "antecedent_titles": [
+            "SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            136,
+            4704
+          ],
+          "consequents": [
+            2981,
+            11060
+          ],
+          "antecedent_text": "[136] SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            136,
+            4704
+          ],
+          "consequents": [
+            2981,
+            11983
+          ],
+          "antecedent_text": "[136] SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            136,
+            4704
+          ],
+          "consequents": [
+            4358,
+            4579
+          ],
+          "antecedent_text": "[136] SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth<br>[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+          "antecedent_titles": [
+            "SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            136,
+            4704
+          ],
+          "consequents": [
+            4579,
+            11060
+          ],
+          "antecedent_text": "[136] SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series<br>[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            136,
+            4704
+          ],
+          "consequents": [
+            4579,
+            11983
+          ],
+          "antecedent_text": "[136] SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series<br>[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY Makeup Artists Must Have Pro Eyeshadow Palette, 96 Color",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            4704
+          ],
+          "consequents": [
+            2981,
+            4358
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            4704
+          ],
+          "consequents": [
+            2981,
+            11060
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            4704
+          ],
+          "consequents": [
+            2981,
+            11983
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            4704
+          ],
+          "consequents": [
+            4358,
+            4579
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth<br>[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            4704
+          ],
+          "consequents": [
+            4579,
+            11060
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series<br>[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            4704
+          ],
+          "consequents": [
+            4579,
+            11983
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series<br>[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            754,
+            4704
+          ],
+          "consequents": [
+            2981,
+            4358
+          ],
+          "antecedent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "antecedent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            754,
+            4704
+          ],
+          "consequents": [
+            2981,
+            11060
+          ],
+          "antecedent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            754,
+            4704
+          ],
+          "consequents": [
+            2981,
+            11983
+          ],
+          "antecedent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[2981] SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors<br>[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Slick & Shine Lipstick Set - Set of 12 Famouse Colors",
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            754,
+            4704
+          ],
+          "consequents": [
+            4358,
+            4579
+          ],
+          "antecedent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth<br>[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+          "antecedent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            754,
+            4704
+          ],
+          "consequents": [
+            4579,
+            11060
+          ],
+          "antecedent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[4579] SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series<br>[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY UV Gel Light Nail Dryer, 36 Watts Pro Series",
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 12,
+          "consequent_count": 13,
+          "support": 0.000536600634977418,
+          "confidence": 1.0,
+          "lift": 1720.230769230769,
+          "kulczynski": 0.9615384615384616,
+          "same_brand": false,
+          "same_leaf_category": false
+        }
+      ],
+      "top_pair_rules": [
+        {
+          "antecedents": [
+            12042
+          ],
+          "consequents": [
+            12043
+          ],
+          "antecedent_text": "[12042] Acne Sunscreen SPF 30 For Glamorous, Sensitive Skin - Oil Free Protec…",
+          "consequent_text": "[12043] Acne Treatments - Hollywood acne treatment cream that works",
+          "antecedent_titles": [
+            "Acne Sunscreen SPF 30 For Glamorous, Sensitive Skin - Oil Free Protection that prevents breakouts, nourishes & moisturizes - Therapeutic facial care products & sport tanning sunscreens - Lifetime Guarantee... It does exactly what is says on the label, period."
+          ],
+          "consequent_titles": [
+            "Acne Treatments - Hollywood acne treatment cream that works"
+          ],
+          "count": 14,
+          "antecedent_count": 17,
+          "consequent_count": 14,
+          "support": 0.0006260340741403211,
+          "confidence": 0.823529411764706,
+          "lift": 1315.4705882352941,
+          "kulczynski": 0.911764705882353,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11984
+          ],
+          "consequents": [
+            11986
+          ],
+          "antecedent_text": "[11984] Multicolor Eyeshadow palette - All In One",
+          "consequent_text": "[11986] 2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara",
+          "antecedent_titles": [
+            "Multicolor Eyeshadow palette - All In One"
+          ],
+          "consequent_titles": [
+            "2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara"
+          ],
+          "count": 13,
+          "antecedent_count": 14,
+          "consequent_count": 16,
+          "support": 0.0005813173545588696,
+          "confidence": 0.9285714285714286,
+          "lift": 1297.8526785714287,
+          "kulczynski": 0.8705357142857143,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            11060
+          ],
+          "consequents": [
+            11986
+          ],
+          "antecedent_text": "[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "consequent_text": "[11986] 2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara",
+          "antecedent_titles": [
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "consequent_titles": [
+            "2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara"
+          ],
+          "count": 16,
+          "antecedent_count": 18,
+          "consequent_count": 16,
+          "support": 0.000715467513303224,
+          "confidence": 0.8888888888888888,
+          "lift": 1242.388888888889,
+          "kulczynski": 0.9444444444444444,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            11983
+          ],
+          "consequents": [
+            11986
+          ],
+          "antecedent_text": "[11983] SHANY Eyeshadow Kit, 48 Color",
+          "consequent_text": "[11986] 2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "consequent_titles": [
+            "2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara"
+          ],
+          "count": 16,
+          "antecedent_count": 18,
+          "consequent_count": 16,
+          "support": 0.000715467513303224,
+          "confidence": 0.8888888888888888,
+          "lift": 1242.388888888889,
+          "kulczynski": 0.9444444444444444,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11060
+          ],
+          "consequents": [
+            11984
+          ],
+          "antecedent_text": "[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "consequent_text": "[11984] Multicolor Eyeshadow palette - All In One",
+          "antecedent_titles": [
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "consequent_titles": [
+            "Multicolor Eyeshadow palette - All In One"
+          ],
+          "count": 14,
+          "antecedent_count": 18,
+          "consequent_count": 14,
+          "support": 0.0006260340741403211,
+          "confidence": 0.7777777777777778,
+          "lift": 1242.388888888889,
+          "kulczynski": 0.8888888888888888,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            11983
+          ],
+          "consequents": [
+            11984
+          ],
+          "antecedent_text": "[11983] SHANY Eyeshadow Kit, 48 Color",
+          "consequent_text": "[11984] Multicolor Eyeshadow palette - All In One",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "consequent_titles": [
+            "Multicolor Eyeshadow palette - All In One"
+          ],
+          "count": 14,
+          "antecedent_count": 18,
+          "consequent_count": 14,
+          "support": 0.0006260340741403211,
+          "confidence": 0.7777777777777778,
+          "lift": 1242.388888888889,
+          "kulczynski": 0.8888888888888888,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4358
+          ],
+          "consequents": [
+            11986
+          ],
+          "antecedent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "consequent_text": "[11986] 2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara",
+          "antecedent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "consequent_titles": [
+            "2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara"
+          ],
+          "count": 16,
+          "antecedent_count": 19,
+          "consequent_count": 16,
+          "support": 0.000715467513303224,
+          "confidence": 0.8421052631578947,
+          "lift": 1177.0,
+          "kulczynski": 0.9210526315789473,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4358
+          ],
+          "consequents": [
+            11984
+          ],
+          "antecedent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "consequent_text": "[11984] Multicolor Eyeshadow palette - All In One",
+          "antecedent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "consequent_titles": [
+            "Multicolor Eyeshadow palette - All In One"
+          ],
+          "count": 14,
+          "antecedent_count": 19,
+          "consequent_count": 14,
+          "support": 0.0006260340741403211,
+          "confidence": 0.7368421052631579,
+          "lift": 1177.0,
+          "kulczynski": 0.868421052631579,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11060
+          ],
+          "consequents": [
+            11983
+          ],
+          "antecedent_text": "[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "consequent_text": "[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 17,
+          "antecedent_count": 18,
+          "consequent_count": 18,
+          "support": 0.0007601842328846755,
+          "confidence": 0.9444444444444443,
+          "lift": 1173.367283950617,
+          "kulczynski": 0.9444444444444444,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4358
+          ],
+          "consequents": [
+            11060
+          ],
+          "antecedent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "consequent_text": "[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "consequent_titles": [
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 17,
+          "antecedent_count": 19,
+          "consequent_count": 18,
+          "support": 0.0007601842328846755,
+          "confidence": 0.894736842105263,
+          "lift": 1111.6111111111109,
+          "kulczynski": 0.9195906432748537,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4358
+          ],
+          "consequents": [
+            11983
+          ],
+          "antecedent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "consequent_text": "[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 17,
+          "antecedent_count": 19,
+          "consequent_count": 18,
+          "support": 0.0007601842328846755,
+          "confidence": 0.894736842105263,
+          "lift": 1111.6111111111109,
+          "kulczynski": 0.9195906432748537,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11984
+          ],
+          "consequents": [
+            11985
+          ],
+          "antecedent_text": "[11984] Multicolor Eyeshadow palette - All In One",
+          "consequent_text": "[11985] SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Poun…",
+          "antecedent_titles": [
+            "Multicolor Eyeshadow palette - All In One"
+          ],
+          "consequent_titles": [
+            "SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Pounds"
+          ],
+          "count": 13,
+          "antecedent_count": 14,
+          "consequent_count": 19,
+          "support": 0.0005813173545588696,
+          "confidence": 0.9285714285714286,
+          "lift": 1092.9285714285716,
+          "kulczynski": 0.8063909774436091,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11985
+          ],
+          "consequents": [
+            11986
+          ],
+          "antecedent_text": "[11985] SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Poun…",
+          "consequent_text": "[11986] 2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara",
+          "antecedent_titles": [
+            "SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Pounds"
+          ],
+          "consequent_titles": [
+            "2011 Ultimate Makeup set - Eyeshadow/ Blush/ Lipgloss/ Mascara"
+          ],
+          "count": 14,
+          "antecedent_count": 19,
+          "consequent_count": 16,
+          "support": 0.0006260340741403211,
+          "confidence": 0.7368421052631579,
+          "lift": 1029.875,
+          "kulczynski": 0.805921052631579,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4704
+          ],
+          "consequents": [
+            11060
+          ],
+          "antecedent_text": "[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "antecedent_titles": [
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 15,
+          "consequent_count": 18,
+          "support": 0.000536600634977418,
+          "confidence": 0.7999999999999999,
+          "lift": 993.9111111111109,
+          "kulczynski": 0.7333333333333333,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4704
+          ],
+          "consequents": [
+            11983
+          ],
+          "antecedent_text": "[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "consequent_text": "[11983] SHANY Eyeshadow Kit, 48 Color",
+          "antecedent_titles": [
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "count": 12,
+          "antecedent_count": 15,
+          "consequent_count": 18,
+          "support": 0.000536600634977418,
+          "confidence": 0.7999999999999999,
+          "lift": 993.9111111111109,
+          "kulczynski": 0.7333333333333333,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            11060
+          ],
+          "consequents": [
+            11985
+          ],
+          "antecedent_text": "[11060] SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Co…",
+          "consequent_text": "[11985] SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Poun…",
+          "antecedent_titles": [
+            "SHANY Professional Multi Effect Velvet Touch Eyeshadow Palette, 24 Color"
+          ],
+          "consequent_titles": [
+            "SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Pounds"
+          ],
+          "count": 15,
+          "antecedent_count": 18,
+          "consequent_count": 19,
+          "support": 0.0006707507937217726,
+          "confidence": 0.8333333333333333,
+          "lift": 980.8333333333333,
+          "kulczynski": 0.8114035087719298,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11983
+          ],
+          "consequents": [
+            11985
+          ],
+          "antecedent_text": "[11983] SHANY Eyeshadow Kit, 48 Color",
+          "consequent_text": "[11985] SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Poun…",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, 48 Color"
+          ],
+          "consequent_titles": [
+            "SHANY Leopard Professional Rolling Makeup Case, Light Weight, 12 Pounds"
+          ],
+          "count": 15,
+          "antecedent_count": 18,
+          "consequent_count": 19,
+          "support": 0.0006707507937217726,
+          "confidence": 0.8333333333333333,
+          "lift": 980.8333333333333,
+          "kulczynski": 0.8114035087719298,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            10561
+          ],
+          "consequents": [
+            11987
+          ],
+          "antecedent_text": "[10561] SHANY Cosmetics French Nail Set, 7 Ounce",
+          "consequent_text": "[11987] SHANY Cosmetics Intense Eyes Palette 72 Color Eyeshadow Palette, 17 O…",
+          "antecedent_titles": [
+            "SHANY Cosmetics French Nail Set, 7 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Cosmetics Intense Eyes Palette 72 Color Eyeshadow Palette, 17 Ounce"
+          ],
+          "count": 16,
+          "antecedent_count": 20,
+          "consequent_count": 19,
+          "support": 0.000715467513303224,
+          "confidence": 0.7999999999999999,
+          "lift": 941.5999999999999,
+          "kulczynski": 0.8210526315789473,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            4358
+          ],
+          "consequents": [
+            4704
+          ],
+          "antecedent_text": "[4358] SHANY Foundation Brush - Premium collection -Ultra Firm and smooth",
+          "consequent_text": "[4704] Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champa…",
+          "antecedent_titles": [
+            "SHANY Foundation Brush - Premium collection -Ultra Firm and smooth"
+          ],
+          "consequent_titles": [
+            "Shany Cosmetics Everyday Travel Trio Eyeshadow Palette, Olive, Champagne, 4 Ounce"
+          ],
+          "count": 12,
+          "antecedent_count": 19,
+          "consequent_count": 15,
+          "support": 0.000536600634977418,
+          "confidence": 0.631578947368421,
+          "lift": 941.5999999999999,
+          "kulczynski": 0.7157894736842105,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3559
+          ],
+          "consequents": [
+            5386
+          ],
+          "antecedent_text": "[3559] BelleSha Smooth Silky Glowing Hair No Tangles Brush",
+          "consequent_text": "[5386] Bellesha Hands Free Foot Scrubber",
+          "antecedent_titles": [
+            "BelleSha Smooth Silky Glowing Hair No Tangles Brush"
+          ],
+          "consequent_titles": [
+            "Bellesha Hands Free Foot Scrubber"
+          ],
+          "count": 12,
+          "antecedent_count": 18,
+          "consequent_count": 16,
+          "support": 0.000536600634977418,
+          "confidence": 0.6666666666666666,
+          "lift": 931.7916666666666,
+          "kulczynski": 0.7083333333333333,
+          "same_brand": false,
+          "same_leaf_category": false
+        }
+      ]
+    },
+    {
+      "min_support": 0.001,
+      "min_count": 23,
+      "max_len": 4,
+      "min_confidence": 0.1,
+      "n_frequent_itemsets": 4698,
+      "itemsets_by_size": {
+        "1": 1452,
+        "2": 1423,
+        "3": 1030,
+        "4": 793
+      },
+      "fpgrowth_seconds": 2.005,
+      "rules_seconds": 0.072,
+      "rules_summary": {
+        "n_rules": 20024,
+        "rules_by_size": {
+          "2": 2837,
+          "3": 6158,
+          "4": 11029
+        },
+        "n_items_in_rules": 245,
+        "confidence_mean": 0.5580301809135202,
+        "confidence_median": 0.5510204081632654,
+        "lift_mean": 249.8764384273962,
+        "lift_median": 182.66585873681075,
+        "lift_max": 972.304347826087,
+        "count_median": 25.0
+      },
+      "top_rules": [
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            670,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 23,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 972.304347826087,
+          "kulczynski": 1.0,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            754,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 23,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 972.304347826087,
+          "kulczynski": 1.0,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            9619,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 23,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 972.304347826087,
+          "kulczynski": 1.0,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            9739
+          ],
+          "consequents": [
+            671,
+            9619
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 24,
+          "antecedent_count": 24,
+          "consequent_count": 24,
+          "support": 0.001073201269954836,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 1.0,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            9739
+          ],
+          "consequents": [
+            6436,
+            9619
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 24,
+          "antecedent_count": 24,
+          "consequent_count": 24,
+          "support": 0.001073201269954836,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 1.0,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            9739
+          ],
+          "consequents": [
+            9619,
+            11212
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color<br>[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 24,
+          "antecedent_count": 24,
+          "consequent_count": 24,
+          "support": 0.001073201269954836,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 1.0,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            671,
+            9619
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            11992
+          ],
+          "consequents": [
+            671,
+            9619
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            671,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            834,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[834] SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 …<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 Brushes and 1 Pouch, Red",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            6436,
+            9619
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            11992
+          ],
+          "consequents": [
+            6436,
+            9619
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            6436,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            9619,
+            11212
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color<br>[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            11992
+          ],
+          "consequents": [
+            9619,
+            11212
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "consequent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color<br>[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            253,
+            9739
+          ],
+          "consequents": [
+            11212,
+            11992
+          ],
+          "antecedent_text": "[253] SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, Unite…<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 180 Color Eyeshadow Palette (180 Color Eyeshadow Palette, United Colors of SHANY, Neon Frenzy, Limited), 6.25 Ounce",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            11992
+          ],
+          "consequents": [
+            671,
+            9619
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            9739
+          ],
+          "consequents": [
+            754,
+            11992
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[754] SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 2…<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Studio Quality Natural Cosmetic Brush Set with Leather Pouch, 24 Count",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 24,
+          "consequent_count": 23,
+          "support": 0.0010284845503733845,
+          "confidence": 0.9583333333333334,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            11992
+          ],
+          "consequents": [
+            6436,
+            9619
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce<br>[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "count": 23,
+          "antecedent_count": 23,
+          "consequent_count": 24,
+          "support": 0.0010284845503733845,
+          "confidence": 1.0,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            9739
+          ],
+          "consequents": [
+            9619,
+            11992
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color<br>[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 24,
+          "consequent_count": 23,
+          "support": 0.0010284845503733845,
+          "confidence": 0.9583333333333334,
+          "lift": 931.7916666666667,
+          "kulczynski": 0.9791666666666667,
+          "same_brand": false,
+          "same_leaf_category": false
+        }
+      ],
+      "top_pair_rules": [
+        {
+          "antecedents": [
+            9933
+          ],
+          "consequents": [
+            9934
+          ],
+          "antecedent_text": "[9933] Hair Tamer \"No Knot\" Pink Detangling Hair Brush Teezer",
+          "consequent_text": "[9934] Hair Tamer Black Diamond Ultra Mist Multi-Use Spray Bottle",
+          "antecedent_titles": [
+            "Hair Tamer \"No Knot\" Pink Detangling Hair Brush Teezer"
+          ],
+          "consequent_titles": [
+            "Hair Tamer Black Diamond Ultra Mist Multi-Use Spray Bottle"
+          ],
+          "count": 31,
+          "antecedent_count": 31,
+          "consequent_count": 31,
+          "support": 0.0013862183070249966,
+          "confidence": 1.0,
+          "lift": 721.3870967741935,
+          "kulczynski": 1.0,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9931
+          ],
+          "consequents": [
+            9933
+          ],
+          "antecedent_text": "[9931] Comfy White Microfiber Salon Towels - 10 Pack , 29\" x 16\"",
+          "consequent_text": "[9933] Hair Tamer \"No Knot\" Pink Detangling Hair Brush Teezer",
+          "antecedent_titles": [
+            "Comfy White Microfiber Salon Towels - 10 Pack , 29\" x 16\""
+          ],
+          "consequent_titles": [
+            "Hair Tamer \"No Knot\" Pink Detangling Hair Brush Teezer"
+          ],
+          "count": 24,
+          "antecedent_count": 25,
+          "consequent_count": 31,
+          "support": 0.001073201269954836,
+          "confidence": 0.9599999999999999,
+          "lift": 692.5316129032257,
+          "kulczynski": 0.8670967741935482,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9931
+          ],
+          "consequents": [
+            9934
+          ],
+          "antecedent_text": "[9931] Comfy White Microfiber Salon Towels - 10 Pack , 29\" x 16\"",
+          "consequent_text": "[9934] Hair Tamer Black Diamond Ultra Mist Multi-Use Spray Bottle",
+          "antecedent_titles": [
+            "Comfy White Microfiber Salon Towels - 10 Pack , 29\" x 16\""
+          ],
+          "consequent_titles": [
+            "Hair Tamer Black Diamond Ultra Mist Multi-Use Spray Bottle"
+          ],
+          "count": 24,
+          "antecedent_count": 25,
+          "consequent_count": 31,
+          "support": 0.001073201269954836,
+          "confidence": 0.9599999999999999,
+          "lift": 692.5316129032257,
+          "kulczynski": 0.8670967741935482,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9932
+          ],
+          "consequents": [
+            9933
+          ],
+          "antecedent_text": "[9932] Black Croc Hair Styling Clips - 6 Pack",
+          "consequent_text": "[9933] Hair Tamer \"No Knot\" Pink Detangling Hair Brush Teezer",
+          "antecedent_titles": [
+            "Black Croc Hair Styling Clips - 6 Pack"
+          ],
+          "consequent_titles": [
+            "Hair Tamer \"No Knot\" Pink Detangling Hair Brush Teezer"
+          ],
+          "count": 31,
+          "antecedent_count": 33,
+          "consequent_count": 31,
+          "support": 0.0013862183070249966,
+          "confidence": 0.9393939393939394,
+          "lift": 677.6666666666667,
+          "kulczynski": 0.9696969696969697,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9932
+          ],
+          "consequents": [
+            9934
+          ],
+          "antecedent_text": "[9932] Black Croc Hair Styling Clips - 6 Pack",
+          "consequent_text": "[9934] Hair Tamer Black Diamond Ultra Mist Multi-Use Spray Bottle",
+          "antecedent_titles": [
+            "Black Croc Hair Styling Clips - 6 Pack"
+          ],
+          "consequent_titles": [
+            "Hair Tamer Black Diamond Ultra Mist Multi-Use Spray Bottle"
+          ],
+          "count": 31,
+          "antecedent_count": 33,
+          "consequent_count": 31,
+          "support": 0.0013862183070249966,
+          "confidence": 0.9393939393939394,
+          "lift": 677.6666666666667,
+          "kulczynski": 0.9696969696969697,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9931
+          ],
+          "consequents": [
+            9932
+          ],
+          "antecedent_text": "[9931] Comfy White Microfiber Salon Towels - 10 Pack , 29\" x 16\"",
+          "consequent_text": "[9932] Black Croc Hair Styling Clips - 6 Pack",
+          "antecedent_titles": [
+            "Comfy White Microfiber Salon Towels - 10 Pack , 29\" x 16\""
+          ],
+          "consequent_titles": [
+            "Black Croc Hair Styling Clips - 6 Pack"
+          ],
+          "count": 25,
+          "antecedent_count": 25,
+          "consequent_count": 33,
+          "support": 0.0011179179895362877,
+          "confidence": 1.0,
+          "lift": 677.6666666666667,
+          "kulczynski": 0.8787878787878788,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9739
+          ],
+          "consequents": [
+            11992
+          ],
+          "antecedent_text": "[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 24,
+          "antecedent_count": 36,
+          "consequent_count": 25,
+          "support": 0.001073201269954836,
+          "confidence": 0.6666666666666666,
+          "lift": 596.3466666666666,
+          "kulczynski": 0.8133333333333332,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9619
+          ],
+          "consequents": [
+            11992
+          ],
+          "antecedent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "consequent_text": "[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "consequent_titles": [
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 23,
+          "antecedent_count": 35,
+          "consequent_count": 25,
+          "support": 0.0010284845503733845,
+          "confidence": 0.657142857142857,
+          "lift": 587.8274285714284,
+          "kulczynski": 0.7885714285714285,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            2837
+          ],
+          "consequents": [
+            11976
+          ],
+          "antecedent_text": "[2837] SHANY Zebra Rolling Trolly Makeup Case, Light Weight, 12 Pounds",
+          "consequent_text": "[11976] SHANY Jet Black Professional Rolling Makeup Case Premium Collection, …",
+          "antecedent_titles": [
+            "SHANY Zebra Rolling Trolly Makeup Case, Light Weight, 12 Pounds"
+          ],
+          "consequent_titles": [
+            "SHANY Jet Black Professional Rolling Makeup Case Premium Collection, Slim Design, 12 Pounds"
+          ],
+          "count": 23,
+          "antecedent_count": 27,
+          "consequent_count": 34,
+          "support": 0.0010284845503733845,
+          "confidence": 0.8518518518518517,
+          "lift": 560.29302832244,
+          "kulczynski": 0.764161220043573,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            9619
+          ],
+          "consequents": [
+            11156
+          ],
+          "antecedent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "consequent_text": "[11156] SHANY Acrylic Nail Brush Sets with Pouch, 5 Ounce",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "consequent_titles": [
+            "SHANY Acrylic Nail Brush Sets with Pouch, 5 Ounce"
+          ],
+          "count": 23,
+          "antecedent_count": 35,
+          "consequent_count": 27,
+          "support": 0.0010284845503733845,
+          "confidence": 0.657142857142857,
+          "lift": 544.2846560846559,
+          "kulczynski": 0.7544973544973544,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9739
+          ],
+          "consequents": [
+            11156
+          ],
+          "antecedent_text": "[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[11156] SHANY Acrylic Nail Brush Sets with Pouch, 5 Ounce",
+          "antecedent_titles": [
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Acrylic Nail Brush Sets with Pouch, 5 Ounce"
+          ],
+          "count": 23,
+          "antecedent_count": 36,
+          "consequent_count": 27,
+          "support": 0.0010284845503733845,
+          "confidence": 0.6388888888888888,
+          "lift": 529.1656378600823,
+          "kulczynski": 0.7453703703703703,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            11212
+          ],
+          "consequents": [
+            11992
+          ],
+          "antecedent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "consequent_text": "[11992] Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium…",
+          "antecedent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "consequent_titles": [
+            "Cameo Carry All Beauty Case by Shany © 90pc Pro Make Up Set - Premium Collection"
+          ],
+          "count": 24,
+          "antecedent_count": 41,
+          "consequent_count": 25,
+          "support": 0.001073201269954836,
+          "confidence": 0.5853658536585366,
+          "lift": 523.621463414634,
+          "kulczynski": 0.7726829268292683,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            11156
+          ],
+          "consequents": [
+            11212
+          ],
+          "antecedent_text": "[11156] SHANY Acrylic Nail Brush Sets with Pouch, 5 Ounce",
+          "consequent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY Acrylic Nail Brush Sets with Pouch, 5 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 23,
+          "antecedent_count": 27,
+          "consequent_count": 41,
+          "support": 0.0010284845503733845,
+          "confidence": 0.8518518518518517,
+          "lift": 464.63324299909664,
+          "kulczynski": 0.7064137308039746,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9619
+          ],
+          "consequents": [
+            9739
+          ],
+          "antecedent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "consequent_text": "[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "consequent_titles": [
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "count": 25,
+          "antecedent_count": 35,
+          "consequent_count": 36,
+          "support": 0.0011179179895362877,
+          "confidence": 0.7142857142857143,
+          "lift": 443.71031746031747,
+          "kulczynski": 0.7043650793650793,
+          "same_brand": true,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            11212
+          ],
+          "consequents": [
+            11583
+          ],
+          "antecedent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "consequent_text": "[11583] SHANY Cosmetics Urban Gal Collection Brush Kit (15 Piece Vegan Travel…",
+          "antecedent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "consequent_titles": [
+            "SHANY Cosmetics Urban Gal Collection Brush Kit (15 Piece Vegan Travel Brushes with Carry On Case), 13 Ounce"
+          ],
+          "count": 26,
+          "antecedent_count": 41,
+          "consequent_count": 34,
+          "support": 0.0011626347091177392,
+          "confidence": 0.6341463414634146,
+          "lift": 417.1004304160689,
+          "kulczynski": 0.6994261119081779,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9046
+          ],
+          "consequents": [
+            11976
+          ],
+          "antecedent_text": "[9046] SHANY Cosmetics Feather Hair Extension Kit, 8 Ounce (Feather Hair, Ho…",
+          "consequent_text": "[11976] SHANY Jet Black Professional Rolling Makeup Case Premium Collection, …",
+          "antecedent_titles": [
+            "SHANY Cosmetics Feather Hair Extension Kit, 8 Ounce (Feather Hair, Hook, Beads, Feather Grizzly Solid Mix All-In-One) -100 Piece"
+          ],
+          "consequent_titles": [
+            "SHANY Jet Black Professional Rolling Makeup Case Premium Collection, Slim Design, 12 Pounds"
+          ],
+          "count": 26,
+          "antecedent_count": 43,
+          "consequent_count": 34,
+          "support": 0.0011626347091177392,
+          "confidence": 0.6046511627906977,
+          "lift": 397.7004103967169,
+          "kulczynski": 0.6846785225718195,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1231
+          ],
+          "consequents": [
+            11771
+          ],
+          "antecedent_text": "[1231] Shea Butter - 100% Natural African Ultra Rich Raw Shea Nuts Including…",
+          "consequent_text": "[11771] Best Bentonite Clay - Top Healing Clay - Finest Azteca Gold Blended B…",
+          "antecedent_titles": [
+            "Shea Butter - 100% Natural African Ultra Rich Raw Shea Nuts Including Other Organic Ingredients- Intense Long Lasting Moisturization - Easily Absorbed Into Your Skin - Heals Extremely Dry, Rough or Damaged Skin -Naturally Rich in Essential Vitamins A, E & F for Skin Balance, Skin Cells Regeneration and Rejuvenation, Can Help Preventing and Removing Skin Stretch Marks."
+          ],
+          "consequent_titles": [
+            "Best Bentonite Clay - Top Healing Clay - Finest Azteca Gold Blended Bentonite Clay, Purest Highest Quality You Can Buy - The Real Secret Formula Your Face Needs To Stay Looking Young, Detox, Deep Pore Cleaning, Strongest Strength. 100% Natural No Additives And Ultra Pure, Hypoallergenic. Money Back Guarantee, Free Bonus. Use the Best Secret Indian Healing Clay."
+          ],
+          "count": 26,
+          "antecedent_count": 40,
+          "consequent_count": 37,
+          "support": 0.0011626347091177392,
+          "confidence": 0.65,
+          "lift": 392.8635135135135,
+          "kulczynski": 0.6763513513513514,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            5382
+          ],
+          "consequents": [
+            5384
+          ],
+          "antecedent_text": "[5382] Axe Styling Spiked Up Look Gel, 6 Ounce",
+          "consequent_text": "[5384] Axe Styling Messy Look Matte Gel, 6 Ounce",
+          "antecedent_titles": [
+            "Axe Styling Spiked Up Look Gel, 6 Ounce"
+          ],
+          "consequent_titles": [
+            "Axe Styling Messy Look Matte Gel, 6 Ounce"
+          ],
+          "count": 29,
+          "antecedent_count": 38,
+          "consequent_count": 45,
+          "support": 0.0012967848678620936,
+          "confidence": 0.7631578947368421,
+          "lift": 379.2555555555556,
+          "kulczynski": 0.7038011695906433,
+          "same_brand": true,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            9739
+          ],
+          "consequents": [
+            11212
+          ],
+          "antecedent_text": "[9739] SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams",
+          "consequent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY Professional Eyeshadow Kit, 180 Color, 180 Grams"
+          ],
+          "consequent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 25,
+          "antecedent_count": 36,
+          "consequent_count": 41,
+          "support": 0.0011179179895362877,
+          "confidence": 0.6944444444444444,
+          "lift": 378.7771002710027,
+          "kulczynski": 0.65210027100271,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            9619
+          ],
+          "consequents": [
+            11212
+          ],
+          "antecedent_text": "[9619] SHANY Eyeshadow Kit, Metallic Runway, 96 Color",
+          "consequent_text": "[11212] SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,ma…",
+          "antecedent_titles": [
+            "SHANY Eyeshadow Kit, Metallic Runway, 96 Color"
+          ],
+          "consequent_titles": [
+            "SHANY Carry All Trunk Professional Makeup Kit - Eyeshadow,Pedicure,manicure - Gift Set"
+          ],
+          "count": 24,
+          "antecedent_count": 35,
+          "consequent_count": 41,
+          "support": 0.001073201269954836,
+          "confidence": 0.6857142857142856,
+          "lift": 374.01533101045294,
+          "kulczynski": 0.6355400696864111,
+          "same_brand": true,
+          "same_leaf_category": false
+        }
+      ]
+    },
+    {
+      "min_support": 0.002,
+      "min_count": 45,
+      "max_len": 4,
+      "min_confidence": 0.1,
+      "n_frequent_itemsets": 716,
+      "itemsets_by_size": {
+        "1": 601,
+        "2": 102,
+        "3": 12,
+        "4": 1
+      },
+      "fpgrowth_seconds": 0.899,
+      "rules_seconds": 0.007,
+      "rules_summary": {
+        "n_rules": 290,
+        "rules_by_size": {
+          "2": 204,
+          "3": 72,
+          "4": 14
+        },
+        "n_items_in_rules": 66,
+        "confidence_mean": 0.511857619758832,
+        "confidence_median": 0.5,
+        "lift_mean": 113.11855574479524,
+        "lift_median": 102.68724489795918,
+        "lift_max": 348.4950265251989,
+        "count_median": 50.0
+      },
+      "top_rules": [
+        {
+          "antecedents": [
+            670,
+            6436
+          ],
+          "consequents": [
+            671,
+            834
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[834] SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 …",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 Brushes and 1 Pouch, Red"
+          ],
+          "count": 47,
+          "antecedent_count": 58,
+          "consequent_count": 52,
+          "support": 0.0021016858203282206,
+          "confidence": 0.8103448275862069,
+          "lift": 348.4950265251989,
+          "kulczynski": 0.8570954907161803,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1809
+          ],
+          "consequents": [
+            1810
+          ],
+          "antecedent_text": "[1809] Motions Straight Finish Sealer, 3.3 Ounce",
+          "consequent_text": "[1810] Motions Straight Finish Leave in Conditioner, 8 Ounce",
+          "antecedent_titles": [
+            "Motions Straight Finish Sealer, 3.3 Ounce"
+          ],
+          "consequent_titles": [
+            "Motions Straight Finish Leave in Conditioner, 8 Ounce"
+          ],
+          "count": 45,
+          "antecedent_count": 59,
+          "consequent_count": 62,
+          "support": 0.0020122523811653176,
+          "confidence": 0.7627118644067796,
+          "lift": 275.1052487698196,
+          "kulczynski": 0.7442591580098414,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            671,
+            834
+          ],
+          "consequents": [
+            6436
+          ],
+          "antecedent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…<br>[834] SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 …",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+          "antecedent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)",
+            "SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 Brushes and 1 Pouch, Red"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce"
+          ],
+          "count": 49,
+          "antecedent_count": 52,
+          "consequent_count": 77,
+          "support": 0.0021911192594911235,
+          "confidence": 0.9423076923076922,
+          "lift": 273.6730769230769,
+          "kulczynski": 0.7893356643356643,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1808
+          ],
+          "consequents": [
+            1809
+          ],
+          "antecedent_text": "[1808] Motions Straight Finish Cleanser, 8 Ounce",
+          "consequent_text": "[1809] Motions Straight Finish Sealer, 3.3 Ounce",
+          "antecedent_titles": [
+            "Motions Straight Finish Cleanser, 8 Ounce"
+          ],
+          "consequent_titles": [
+            "Motions Straight Finish Sealer, 3.3 Ounce"
+          ],
+          "count": 47,
+          "antecedent_count": 67,
+          "consequent_count": 59,
+          "support": 0.0021016858203282206,
+          "confidence": 0.7014925373134329,
+          "lift": 265.8894510498356,
+          "kulczynski": 0.7490513534024792,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            6436
+          ],
+          "consequents": [
+            671
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)"
+          ],
+          "count": 48,
+          "antecedent_count": 58,
+          "consequent_count": 73,
+          "support": 0.002146402539909672,
+          "confidence": 0.8275862068965516,
+          "lift": 253.52479924421345,
+          "kulczynski": 0.742560226735947,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1808
+          ],
+          "consequents": [
+            1810
+          ],
+          "antecedent_text": "[1808] Motions Straight Finish Cleanser, 8 Ounce",
+          "consequent_text": "[1810] Motions Straight Finish Leave in Conditioner, 8 Ounce",
+          "antecedent_titles": [
+            "Motions Straight Finish Cleanser, 8 Ounce"
+          ],
+          "consequent_titles": [
+            "Motions Straight Finish Leave in Conditioner, 8 Ounce"
+          ],
+          "count": 45,
+          "antecedent_count": 67,
+          "consequent_count": 62,
+          "support": 0.0020122523811653176,
+          "confidence": 0.6716417910447762,
+          "lift": 242.2568608570053,
+          "kulczynski": 0.6987241213288398,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            834
+          ],
+          "consequents": [
+            6436
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[834] SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 …",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 Brushes and 1 Pouch, Red"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce"
+          ],
+          "count": 54,
+          "antecedent_count": 67,
+          "consequent_count": 77,
+          "support": 0.0024147028573983814,
+          "confidence": 0.8059701492537314,
+          "lift": 234.0767590618337,
+          "kulczynski": 0.7536344252762164,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            670,
+            834
+          ],
+          "consequents": [
+            671
+          ],
+          "antecedent_text": "[670] SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs<br>[834] SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 …",
+          "consequent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…",
+          "antecedent_titles": [
+            "SHANY 2012 Nail Art Polish Stamp Manicure Image Plates set of 25pcs",
+            "SHANY Professional 13-Piece Cosmetic Brush Set with Pouch, Set of 12 Brushes and 1 Pouch, Red"
+          ],
+          "consequent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)"
+          ],
+          "count": 50,
+          "antecedent_count": 67,
+          "consequent_count": 73,
+          "support": 0.0022358359790725754,
+          "confidence": 0.7462686567164181,
+          "lift": 228.61378041300352,
+          "kulczynski": 0.7156000817828665,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            2891
+          ],
+          "consequents": [
+            2892
+          ],
+          "antecedent_text": "[2891] Just For Me Hair Milk Styling Creme, 8-Ounce Bottle",
+          "consequent_text": "[2892] Just For Me Hair Milk Smoothing Edges Crème, 4-Ounce Container",
+          "antecedent_titles": [
+            "Just For Me Hair Milk Styling Creme, 8-Ounce Bottle"
+          ],
+          "consequent_titles": [
+            "Just For Me Hair Milk Smoothing Edges Crème, 4-Ounce Container"
+          ],
+          "count": 45,
+          "antecedent_count": 69,
+          "consequent_count": 70,
+          "support": 0.0020122523811653176,
+          "confidence": 0.6521739130434782,
+          "lift": 208.3509316770186,
+          "kulczynski": 0.6475155279503105,
+          "same_brand": true,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            671
+          ],
+          "consequents": [
+            6436
+          ],
+          "antecedent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+          "antecedent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce"
+          ],
+          "count": 51,
+          "antecedent_count": 73,
+          "consequent_count": 77,
+          "support": 0.002280552698654027,
+          "confidence": 0.6986301369863014,
+          "lift": 202.90215264187867,
+          "kulczynski": 0.6804838996619819,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1078
+          ],
+          "consequents": [
+            1079
+          ],
+          "antecedent_text": "[1078] Organic Rosehip Oil 4OZ ★SALE★ 100% Pure Rosehip Seed Oil & USDA Cert…",
+          "consequent_text": "[1079] Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluroni…",
+          "antecedent_titles": [
+            "Organic Rosehip Oil 4OZ ★SALE★ 100% Pure Rosehip Seed Oil & USDA Certified BEST Rosehip Oil For Face and Skin - InstaNatural | Great Moisturizer for Dry Skin, Hair, Nails, Stretch Marks, Scars, & Spots | Unrefined, Cold Pressed Virgin Rosehip Seed Oil | 100% LIFETIME GUARANTEE :: We'll refund your money if you're not satisfied! Try Risk FREE!"
+          ],
+          "consequent_titles": [
+            "Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluronic Acid, Ferulic Acid & Vitamin E | Best Anti-Aging Anti-Wrinkle Facial Skin Care Serum | Helps Diminish Appearance of Sun Damaged Skin, Sun Spots, Age Spots, Skin Discoloration, Fine Lines & Wrinkles! | INSTANATURAL backs this product with a WORKS OR YOUR MONEY BACK Guarantee! ★ We'll refund your money if you're not satisfied! Try Risk FREE and Get The Beautiful, Radiant and Youthful Skin You Have Always Desired!"
+          ],
+          "count": 56,
+          "antecedent_count": 86,
+          "consequent_count": 79,
+          "support": 0.0025041362965612843,
+          "confidence": 0.6511627906976745,
+          "lift": 184.328525169267,
+          "kulczynski": 0.6800117750956727,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            3025,
+            6466
+          ],
+          "consequents": [
+            9744
+          ],
+          "antecedent_text": "[3025] Dead Sea Salt Soap - Face and Body Soap - 100% Natural Soap - with De…<br>[6466] Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great…",
+          "consequent_text": "[9744] Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vit…",
+          "antecedent_titles": [
+            "Dead Sea Salt Soap - Face and Body Soap - 100% Natural Soap - with Dead Sea Salt and Minerals - Deeply Moisturizing Cleanser for Very Dry Skin, Infuses Skin with Dead Sea Minerals from 100% Genuine and Pure Dead Sea Salt - Satisfaction Guaranteed",
+            "Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great for Natural Curly Hair - for Men and Women - Deeply Hydrating and Nourishing on Scalp & Hair - Helps to Reduce Dandruff and Dry Scalp - Made with Pure Dead Sea Salt and Minerals, Chamomile, Vitamin E & Natural Aloe Vera - Leaves Your Hair Looking & Feeling Healthy, Silky and Hydrated"
+          ],
+          "consequent_titles": [
+            "Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vitamin C, Dead Sea Salt and Green Tea - Get Firmer, More Radiant Looking Skin - Non-Oily Deep Moisturizer Delivers Minerals & Nutrients Deep Into Skin - Satisfaction Guaranteed"
+          ],
+          "count": 47,
+          "antecedent_count": 55,
+          "consequent_count": 104,
+          "support": 0.0021016858203282206,
+          "confidence": 0.8545454545454545,
+          "lift": 183.75192307692305,
+          "kulczynski": 0.6532342657342657,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3548
+          ],
+          "consequents": [
+            3549
+          ],
+          "antecedent_text": "[3548] Eye Cream For Dark Circles, Puffiness, Wrinkles & Bags - 1.7 OZ / Bes…",
+          "consequent_text": "[3549] Anti-Aging Facial Moisturizer Cream 3.4 OZ For Face, Under Eye, Oily,…",
+          "antecedent_titles": [
+            "Eye Cream For Dark Circles, Puffiness, Wrinkles & Bags - 1.7 OZ | Best Under Eye Gel Treatment Solution For Crows Feet, Dry Skin, Fine Lines, Eye Bags & Sagging Eyes | By InstaNatural - With Plant Stem Cells, Hyaluronic Acid, Matrixyl 3000, Cucumber, Peptide Complex, Cucumber, Aloe, MSM & More! 100 DAYS 100% MONEY BACK GUARANTEE!"
+          ],
+          "consequent_titles": [
+            "Anti-Aging Facial Moisturizer Cream 3.4 OZ For Face, Under Eye, Oily, Sensitive, & Dry Skin ★LIMITED SALE!★ Best Anti-Wrinkle Cream | Youth Express Age-Defying Moisturizer | Suitable for Men & Women | Reduces Appearance of Wrinkles, Fine Lines & Hydrates the Skin - Moisturizing Night & Day Cream | Perfectly Suitable As Hand Cream & Eye Cream | 100 Days 100% Satisfaction Guarantee"
+          ],
+          "count": 50,
+          "antecedent_count": 88,
+          "consequent_count": 72,
+          "support": 0.0022358359790725754,
+          "confidence": 0.5681818181818182,
+          "lift": 176.47569444444446,
+          "kulczynski": 0.6313131313131313,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3025
+          ],
+          "consequents": [
+            9744
+          ],
+          "antecedent_text": "[3025] Dead Sea Salt Soap - Face and Body Soap - 100% Natural Soap - with De…",
+          "consequent_text": "[9744] Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vit…",
+          "antecedent_titles": [
+            "Dead Sea Salt Soap - Face and Body Soap - 100% Natural Soap - with Dead Sea Salt and Minerals - Deeply Moisturizing Cleanser for Very Dry Skin, Infuses Skin with Dead Sea Minerals from 100% Genuine and Pure Dead Sea Salt - Satisfaction Guaranteed"
+          ],
+          "consequent_titles": [
+            "Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vitamin C, Dead Sea Salt and Green Tea - Get Firmer, More Radiant Looking Skin - Non-Oily Deep Moisturizer Delivers Minerals & Nutrients Deep Into Skin - Satisfaction Guaranteed"
+          ],
+          "count": 64,
+          "antecedent_count": 83,
+          "consequent_count": 104,
+          "support": 0.002861870053212896,
+          "confidence": 0.7710843373493976,
+          "lift": 165.80537534754401,
+          "kulczynski": 0.6932344763670065,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3515
+          ],
+          "consequents": [
+            3516
+          ],
+          "antecedent_text": "[3515] Axe Spiking Glue Spiked Up Look, 3.2 Ounce",
+          "consequent_text": "[3516] Axe Styling Gum Messy Look, 3.2 Ounce",
+          "antecedent_titles": [
+            "Axe Spiking Glue Spiked Up Look, 3.2 Ounce"
+          ],
+          "consequent_titles": [
+            "Axe Styling Gum Messy Look, 3.2 Ounce"
+          ],
+          "count": 62,
+          "antecedent_count": 94,
+          "consequent_count": 96,
+          "support": 0.0027724366140499932,
+          "confidence": 0.6595744680851064,
+          "lift": 153.64649822695037,
+          "kulczynski": 0.6527039007092199,
+          "same_brand": true,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            3023
+          ],
+          "consequents": [
+            6466,
+            10747
+          ],
+          "antecedent_text": "[3023] Dead Sea Mud Shampoo - Fast, Natural Relief from Dandruff - Itchy, Dr…",
+          "consequent_text": "[6466] Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great…<br>[10747] Dead Sea Mud Facial Mask and Deep Facial Cleanser by Adovia - Deep Po…",
+          "antecedent_titles": [
+            "Dead Sea Mud Shampoo - Fast, Natural Relief from Dandruff - Itchy, Dry, Flaky Scalp - Scalp Psoriasis - Seborrhea Dermatitis - with Dead Sea Mud, Olive Oil & Shea Butter - Highly Effective - Satisfaction Guaranteed"
+          ],
+          "consequent_titles": [
+            "Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great for Natural Curly Hair - for Men and Women - Deeply Hydrating and Nourishing on Scalp & Hair - Helps to Reduce Dandruff and Dry Scalp - Made with Pure Dead Sea Salt and Minerals, Chamomile, Vitamin E & Natural Aloe Vera - Leaves Your Hair Looking & Feeling Healthy, Silky and Hydrated",
+            "Dead Sea Mud Facial Mask and Deep Facial Cleanser by Adovia - Deep Pore Cleansing and Purifying Acne Treatment - Reduce Acne, Blackheads & Pimples - Natural Face Mask, Exfoliator and Skin Care Treatment for Women, Men and Teens - Works for Eczema, Psoriasis, Acne and Blackheads - Leaves Your Skin Clear, Radiant and Younger Looking - 100% Satisfaction Guaranteed"
+          ],
+          "count": 56,
+          "antecedent_count": 136,
+          "consequent_count": 60,
+          "support": 0.0025041362965612843,
+          "confidence": 0.411764705882353,
+          "lift": 153.471568627451,
+          "kulczynski": 0.6725490196078432,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            385
+          ],
+          "consequents": [
+            386
+          ],
+          "antecedent_text": "[385] Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Shampoo,…",
+          "consequent_text": "[386] Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Daily Co…",
+          "antecedent_titles": [
+            "Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Shampoo, 12.9 Fluid Ounce"
+          ],
+          "consequent_titles": [
+            "Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Daily Conditioner, 12.7 Fluid Ounce"
+          ],
+          "count": 57,
+          "antecedent_count": 92,
+          "consequent_count": 91,
+          "support": 0.002548853016142736,
+          "confidence": 0.6195652173913044,
+          "lift": 152.25645007166747,
+          "kulczynski": 0.6229694218824654,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3023,
+            6464
+          ],
+          "consequents": [
+            6466
+          ],
+          "antecedent_text": "[3023] Dead Sea Mud Shampoo - Fast, Natural Relief from Dandruff - Itchy, Dr…<br>[6464] Dead Sea Mud Facial Mask - Ancient Natural Facial Mask and Skin Care …",
+          "consequent_text": "[6466] Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great…",
+          "antecedent_titles": [
+            "Dead Sea Mud Shampoo - Fast, Natural Relief from Dandruff - Itchy, Dry, Flaky Scalp - Scalp Psoriasis - Seborrhea Dermatitis - with Dead Sea Mud, Olive Oil & Shea Butter - Highly Effective - Satisfaction Guaranteed",
+            "Dead Sea Mud Facial Mask - Ancient Natural Facial Mask and Skin Care Treatment for Women, Men and Teens + FREE BONUS EBOOK! - Organic Mud Mask Offers Gentle Facial Cleanser, Exfoliator & Natural Moisturizer to Restore Your Skin's Natural Radiance - This Renowned Anti-Aging Mud Mask Heals Dry & Oily Skin, Acne, Eczema & Psoriasis - Leaves You With a Youthful-Looking, Radiant Complexion"
+          ],
+          "consequent_titles": [
+            "Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great for Natural Curly Hair - for Men and Women - Deeply Hydrating and Nourishing on Scalp & Hair - Helps to Reduce Dandruff and Dry Scalp - Made with Pure Dead Sea Salt and Minerals, Chamomile, Vitamin E & Natural Aloe Vera - Leaves Your Hair Looking & Feeling Healthy, Silky and Hydrated"
+          ],
+          "count": 49,
+          "antecedent_count": 60,
+          "consequent_count": 120,
+          "support": 0.0021911192594911235,
+          "confidence": 0.8166666666666665,
+          "lift": 152.19263888888887,
+          "kulczynski": 0.6124999999999999,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1079
+          ],
+          "consequents": [
+            3021
+          ],
+          "antecedent_text": "[1079] Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluroni…",
+          "consequent_text": "[3021] ORGANIC Argan Oil 4OZ ★SALE★ 100% PURE Argan Oil for Hair, Face, Skin…",
+          "antecedent_titles": [
+            "Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluronic Acid, Ferulic Acid & Vitamin E | Best Anti-Aging Anti-Wrinkle Facial Skin Care Serum | Helps Diminish Appearance of Sun Damaged Skin, Sun Spots, Age Spots, Skin Discoloration, Fine Lines & Wrinkles! | INSTANATURAL backs this product with a WORKS OR YOUR MONEY BACK Guarantee! ★ We'll refund your money if you're not satisfied! Try Risk FREE and Get The Beautiful, Radiant and Youthful Skin You Have Always Desired!"
+          ],
+          "consequent_titles": [
+            "ORGANIC Argan Oil 4OZ ★SALE★ 100% PURE Argan Oil for Hair, Face, Skin & Nails | USDA Certified | Best Argania Spinosa from Morocco - Cold Pressed, Unrefined Virgin Argan Oil | Great for Acne, Dry Scalp, Body, Cuticles - ★ WORKS OR YOUR MONEY BACK | 100% LIFETIME Money Back Guarantee"
+          ],
+          "count": 60,
+          "antecedent_count": 79,
+          "consequent_count": 114,
+          "support": 0.0026830031748870903,
+          "confidence": 0.759493670886076,
+          "lift": 148.9873417721519,
+          "kulczynski": 0.64290473017988,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            375
+          ],
+          "consequents": [
+            376
+          ],
+          "antecedent_text": "[375] Suave Professionals Moroccan Infusion Color Care Shampoo 28 oz",
+          "consequent_text": "[376] Suave Professionals Moroccan Infusion Color Care Conditioner 28 oz",
+          "antecedent_titles": [
+            "Suave Professionals Moroccan Infusion Color Care Shampoo 28 oz"
+          ],
+          "consequent_titles": [
+            "Suave Professionals Moroccan Infusion Color Care Conditioner 28 oz"
+          ],
+          "count": 58,
+          "antecedent_count": 99,
+          "consequent_count": 88,
+          "support": 0.0025935697357241873,
+          "confidence": 0.5858585858585859,
+          "lift": 148.88131313131314,
+          "kulczynski": 0.6224747474747474,
+          "same_brand": true,
+          "same_leaf_category": false
+        }
+      ],
+      "top_pair_rules": [
+        {
+          "antecedents": [
+            1809
+          ],
+          "consequents": [
+            1810
+          ],
+          "antecedent_text": "[1809] Motions Straight Finish Sealer, 3.3 Ounce",
+          "consequent_text": "[1810] Motions Straight Finish Leave in Conditioner, 8 Ounce",
+          "antecedent_titles": [
+            "Motions Straight Finish Sealer, 3.3 Ounce"
+          ],
+          "consequent_titles": [
+            "Motions Straight Finish Leave in Conditioner, 8 Ounce"
+          ],
+          "count": 45,
+          "antecedent_count": 59,
+          "consequent_count": 62,
+          "support": 0.0020122523811653176,
+          "confidence": 0.7627118644067796,
+          "lift": 275.1052487698196,
+          "kulczynski": 0.7442591580098414,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1808
+          ],
+          "consequents": [
+            1809
+          ],
+          "antecedent_text": "[1808] Motions Straight Finish Cleanser, 8 Ounce",
+          "consequent_text": "[1809] Motions Straight Finish Sealer, 3.3 Ounce",
+          "antecedent_titles": [
+            "Motions Straight Finish Cleanser, 8 Ounce"
+          ],
+          "consequent_titles": [
+            "Motions Straight Finish Sealer, 3.3 Ounce"
+          ],
+          "count": 47,
+          "antecedent_count": 67,
+          "consequent_count": 59,
+          "support": 0.0021016858203282206,
+          "confidence": 0.7014925373134329,
+          "lift": 265.8894510498356,
+          "kulczynski": 0.7490513534024792,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1808
+          ],
+          "consequents": [
+            1810
+          ],
+          "antecedent_text": "[1808] Motions Straight Finish Cleanser, 8 Ounce",
+          "consequent_text": "[1810] Motions Straight Finish Leave in Conditioner, 8 Ounce",
+          "antecedent_titles": [
+            "Motions Straight Finish Cleanser, 8 Ounce"
+          ],
+          "consequent_titles": [
+            "Motions Straight Finish Leave in Conditioner, 8 Ounce"
+          ],
+          "count": 45,
+          "antecedent_count": 67,
+          "consequent_count": 62,
+          "support": 0.0020122523811653176,
+          "confidence": 0.6716417910447762,
+          "lift": 242.2568608570053,
+          "kulczynski": 0.6987241213288398,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            2891
+          ],
+          "consequents": [
+            2892
+          ],
+          "antecedent_text": "[2891] Just For Me Hair Milk Styling Creme, 8-Ounce Bottle",
+          "consequent_text": "[2892] Just For Me Hair Milk Smoothing Edges Crème, 4-Ounce Container",
+          "antecedent_titles": [
+            "Just For Me Hair Milk Styling Creme, 8-Ounce Bottle"
+          ],
+          "consequent_titles": [
+            "Just For Me Hair Milk Smoothing Edges Crème, 4-Ounce Container"
+          ],
+          "count": 45,
+          "antecedent_count": 69,
+          "consequent_count": 70,
+          "support": 0.0020122523811653176,
+          "confidence": 0.6521739130434782,
+          "lift": 208.3509316770186,
+          "kulczynski": 0.6475155279503105,
+          "same_brand": true,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            671
+          ],
+          "consequents": [
+            6436
+          ],
+          "antecedent_text": "[671] SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, St…",
+          "consequent_text": "[6436] SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce",
+          "antecedent_titles": [
+            "SHANY Stamping Nail Art Set (Nail Art Image Plate Holder, Scraper, Stamper)"
+          ],
+          "consequent_titles": [
+            "SHANY 2012 Edition All In One Harmony Makeup Kit, 25 Ounce"
+          ],
+          "count": 51,
+          "antecedent_count": 73,
+          "consequent_count": 77,
+          "support": 0.002280552698654027,
+          "confidence": 0.6986301369863014,
+          "lift": 202.90215264187867,
+          "kulczynski": 0.6804838996619819,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1078
+          ],
+          "consequents": [
+            1079
+          ],
+          "antecedent_text": "[1078] Organic Rosehip Oil 4OZ ★SALE★ 100% Pure Rosehip Seed Oil & USDA Cert…",
+          "consequent_text": "[1079] Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluroni…",
+          "antecedent_titles": [
+            "Organic Rosehip Oil 4OZ ★SALE★ 100% Pure Rosehip Seed Oil & USDA Certified BEST Rosehip Oil For Face and Skin - InstaNatural | Great Moisturizer for Dry Skin, Hair, Nails, Stretch Marks, Scars, & Spots | Unrefined, Cold Pressed Virgin Rosehip Seed Oil | 100% LIFETIME GUARANTEE :: We'll refund your money if you're not satisfied! Try Risk FREE!"
+          ],
+          "consequent_titles": [
+            "Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluronic Acid, Ferulic Acid & Vitamin E | Best Anti-Aging Anti-Wrinkle Facial Skin Care Serum | Helps Diminish Appearance of Sun Damaged Skin, Sun Spots, Age Spots, Skin Discoloration, Fine Lines & Wrinkles! | INSTANATURAL backs this product with a WORKS OR YOUR MONEY BACK Guarantee! ★ We'll refund your money if you're not satisfied! Try Risk FREE and Get The Beautiful, Radiant and Youthful Skin You Have Always Desired!"
+          ],
+          "count": 56,
+          "antecedent_count": 86,
+          "consequent_count": 79,
+          "support": 0.0025041362965612843,
+          "confidence": 0.6511627906976745,
+          "lift": 184.328525169267,
+          "kulczynski": 0.6800117750956727,
+          "same_brand": false,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            3548
+          ],
+          "consequents": [
+            3549
+          ],
+          "antecedent_text": "[3548] Eye Cream For Dark Circles, Puffiness, Wrinkles & Bags - 1.7 OZ / Bes…",
+          "consequent_text": "[3549] Anti-Aging Facial Moisturizer Cream 3.4 OZ For Face, Under Eye, Oily,…",
+          "antecedent_titles": [
+            "Eye Cream For Dark Circles, Puffiness, Wrinkles & Bags - 1.7 OZ | Best Under Eye Gel Treatment Solution For Crows Feet, Dry Skin, Fine Lines, Eye Bags & Sagging Eyes | By InstaNatural - With Plant Stem Cells, Hyaluronic Acid, Matrixyl 3000, Cucumber, Peptide Complex, Cucumber, Aloe, MSM & More! 100 DAYS 100% MONEY BACK GUARANTEE!"
+          ],
+          "consequent_titles": [
+            "Anti-Aging Facial Moisturizer Cream 3.4 OZ For Face, Under Eye, Oily, Sensitive, & Dry Skin ★LIMITED SALE!★ Best Anti-Wrinkle Cream | Youth Express Age-Defying Moisturizer | Suitable for Men & Women | Reduces Appearance of Wrinkles, Fine Lines & Hydrates the Skin - Moisturizing Night & Day Cream | Perfectly Suitable As Hand Cream & Eye Cream | 100 Days 100% Satisfaction Guarantee"
+          ],
+          "count": 50,
+          "antecedent_count": 88,
+          "consequent_count": 72,
+          "support": 0.0022358359790725754,
+          "confidence": 0.5681818181818182,
+          "lift": 176.47569444444446,
+          "kulczynski": 0.6313131313131313,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3025
+          ],
+          "consequents": [
+            9744
+          ],
+          "antecedent_text": "[3025] Dead Sea Salt Soap - Face and Body Soap - 100% Natural Soap - with De…",
+          "consequent_text": "[9744] Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vit…",
+          "antecedent_titles": [
+            "Dead Sea Salt Soap - Face and Body Soap - 100% Natural Soap - with Dead Sea Salt and Minerals - Deeply Moisturizing Cleanser for Very Dry Skin, Infuses Skin with Dead Sea Minerals from 100% Genuine and Pure Dead Sea Salt - Satisfaction Guaranteed"
+          ],
+          "consequent_titles": [
+            "Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vitamin C, Dead Sea Salt and Green Tea - Get Firmer, More Radiant Looking Skin - Non-Oily Deep Moisturizer Delivers Minerals & Nutrients Deep Into Skin - Satisfaction Guaranteed"
+          ],
+          "count": 64,
+          "antecedent_count": 83,
+          "consequent_count": 104,
+          "support": 0.002861870053212896,
+          "confidence": 0.7710843373493976,
+          "lift": 165.80537534754401,
+          "kulczynski": 0.6932344763670065,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3515
+          ],
+          "consequents": [
+            3516
+          ],
+          "antecedent_text": "[3515] Axe Spiking Glue Spiked Up Look, 3.2 Ounce",
+          "consequent_text": "[3516] Axe Styling Gum Messy Look, 3.2 Ounce",
+          "antecedent_titles": [
+            "Axe Spiking Glue Spiked Up Look, 3.2 Ounce"
+          ],
+          "consequent_titles": [
+            "Axe Styling Gum Messy Look, 3.2 Ounce"
+          ],
+          "count": 62,
+          "antecedent_count": 94,
+          "consequent_count": 96,
+          "support": 0.0027724366140499932,
+          "confidence": 0.6595744680851064,
+          "lift": 153.64649822695037,
+          "kulczynski": 0.6527039007092199,
+          "same_brand": true,
+          "same_leaf_category": true
+        },
+        {
+          "antecedents": [
+            385
+          ],
+          "consequents": [
+            386
+          ],
+          "antecedent_text": "[385] Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Shampoo,…",
+          "consequent_text": "[386] Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Daily Co…",
+          "antecedent_titles": [
+            "Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Shampoo, 12.9 Fluid Ounce"
+          ],
+          "consequent_titles": [
+            "Clear Scalp and Hair Beauty Therapy Frizz Control Nourishing Daily Conditioner, 12.7 Fluid Ounce"
+          ],
+          "count": 57,
+          "antecedent_count": 92,
+          "consequent_count": 91,
+          "support": 0.002548853016142736,
+          "confidence": 0.6195652173913044,
+          "lift": 152.25645007166747,
+          "kulczynski": 0.6229694218824654,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1079
+          ],
+          "consequents": [
+            3021
+          ],
+          "antecedent_text": "[1079] Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluroni…",
+          "consequent_text": "[3021] ORGANIC Argan Oil 4OZ ★SALE★ 100% PURE Argan Oil for Hair, Face, Skin…",
+          "antecedent_titles": [
+            "Vitamin C Serum For Face 20% ★Weekend SALE★ Organic Serum + Hyaluronic Acid, Ferulic Acid & Vitamin E | Best Anti-Aging Anti-Wrinkle Facial Skin Care Serum | Helps Diminish Appearance of Sun Damaged Skin, Sun Spots, Age Spots, Skin Discoloration, Fine Lines & Wrinkles! | INSTANATURAL backs this product with a WORKS OR YOUR MONEY BACK Guarantee! ★ We'll refund your money if you're not satisfied! Try Risk FREE and Get The Beautiful, Radiant and Youthful Skin You Have Always Desired!"
+          ],
+          "consequent_titles": [
+            "ORGANIC Argan Oil 4OZ ★SALE★ 100% PURE Argan Oil for Hair, Face, Skin & Nails | USDA Certified | Best Argania Spinosa from Morocco - Cold Pressed, Unrefined Virgin Argan Oil | Great for Acne, Dry Scalp, Body, Cuticles - ★ WORKS OR YOUR MONEY BACK | 100% LIFETIME Money Back Guarantee"
+          ],
+          "count": 60,
+          "antecedent_count": 79,
+          "consequent_count": 114,
+          "support": 0.0026830031748870903,
+          "confidence": 0.759493670886076,
+          "lift": 148.9873417721519,
+          "kulczynski": 0.64290473017988,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            375
+          ],
+          "consequents": [
+            376
+          ],
+          "antecedent_text": "[375] Suave Professionals Moroccan Infusion Color Care Shampoo 28 oz",
+          "consequent_text": "[376] Suave Professionals Moroccan Infusion Color Care Conditioner 28 oz",
+          "antecedent_titles": [
+            "Suave Professionals Moroccan Infusion Color Care Shampoo 28 oz"
+          ],
+          "consequent_titles": [
+            "Suave Professionals Moroccan Infusion Color Care Conditioner 28 oz"
+          ],
+          "count": 58,
+          "antecedent_count": 99,
+          "consequent_count": 88,
+          "support": 0.0025935697357241873,
+          "confidence": 0.5858585858585859,
+          "lift": 148.88131313131314,
+          "kulczynski": 0.6224747474747474,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            923
+          ],
+          "consequents": [
+            1174
+          ],
+          "antecedent_text": "[923] Nexxus Youth Renewal Rejuvenating Shampoo, 13.5 Ounce",
+          "consequent_text": "[1174] Nexxus Youth Renewal Rejuvenating Conditioner, 13.5 Ounce",
+          "antecedent_titles": [
+            "Nexxus Youth Renewal Rejuvenating Shampoo, 13.5 Ounce"
+          ],
+          "consequent_titles": [
+            "Nexxus Youth Renewal Rejuvenating Conditioner, 13.5 Ounce"
+          ],
+          "count": 51,
+          "antecedent_count": 90,
+          "consequent_count": 89,
+          "support": 0.002280552698654027,
+          "confidence": 0.5666666666666668,
+          "lift": 142.38614232209738,
+          "kulczynski": 0.5698501872659176,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3549
+          ],
+          "consequents": [
+            9744
+          ],
+          "antecedent_text": "[3549] Anti-Aging Facial Moisturizer Cream 3.4 OZ For Face, Under Eye, Oily,…",
+          "consequent_text": "[9744] Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vit…",
+          "antecedent_titles": [
+            "Anti-Aging Facial Moisturizer Cream 3.4 OZ For Face, Under Eye, Oily, Sensitive, & Dry Skin ★LIMITED SALE!★ Best Anti-Wrinkle Cream | Youth Express Age-Defying Moisturizer | Suitable for Men & Women | Reduces Appearance of Wrinkles, Fine Lines & Hydrates the Skin - Moisturizing Night & Day Cream | Perfectly Suitable As Hand Cream & Eye Cream | 100 Days 100% Satisfaction Guarantee"
+          ],
+          "consequent_titles": [
+            "Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vitamin C, Dead Sea Salt and Green Tea - Get Firmer, More Radiant Looking Skin - Non-Oily Deep Moisturizer Delivers Minerals & Nutrients Deep Into Skin - Satisfaction Guaranteed"
+          ],
+          "count": 46,
+          "antecedent_count": 72,
+          "consequent_count": 104,
+          "support": 0.002056969100746769,
+          "confidence": 0.6388888888888888,
+          "lift": 137.3795405982906,
+          "kulczynski": 0.5405982905982906,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3548
+          ],
+          "consequents": [
+            9744
+          ],
+          "antecedent_text": "[3548] Eye Cream For Dark Circles, Puffiness, Wrinkles & Bags - 1.7 OZ / Bes…",
+          "consequent_text": "[9744] Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vit…",
+          "antecedent_titles": [
+            "Eye Cream For Dark Circles, Puffiness, Wrinkles & Bags - 1.7 OZ | Best Under Eye Gel Treatment Solution For Crows Feet, Dry Skin, Fine Lines, Eye Bags & Sagging Eyes | By InstaNatural - With Plant Stem Cells, Hyaluronic Acid, Matrixyl 3000, Cucumber, Peptide Complex, Cucumber, Aloe, MSM & More! 100 DAYS 100% MONEY BACK GUARANTEE!"
+          ],
+          "consequent_titles": [
+            "Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vitamin C, Dead Sea Salt and Green Tea - Get Firmer, More Radiant Looking Skin - Non-Oily Deep Moisturizer Delivers Minerals & Nutrients Deep Into Skin - Satisfaction Guaranteed"
+          ],
+          "count": 54,
+          "antecedent_count": 88,
+          "consequent_count": 104,
+          "support": 0.0024147028573983814,
+          "confidence": 0.6136363636363636,
+          "lift": 131.94951923076923,
+          "kulczynski": 0.5664335664335665,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            702
+          ],
+          "consequents": [
+            3516
+          ],
+          "antecedent_text": "[702] Axe Gravity Defying Dust Messy Look, 0.035 Ounce",
+          "consequent_text": "[3516] Axe Styling Gum Messy Look, 3.2 Ounce",
+          "antecedent_titles": [
+            "Axe Gravity Defying Dust Messy Look, 0.035 Ounce"
+          ],
+          "consequent_titles": [
+            "Axe Styling Gum Messy Look, 3.2 Ounce"
+          ],
+          "count": 53,
+          "antecedent_count": 94,
+          "consequent_count": 96,
+          "support": 0.00236998613781693,
+          "confidence": 0.5638297872340426,
+          "lift": 131.34297429078018,
+          "kulczynski": 0.557956560283688,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            3023
+          ],
+          "consequents": [
+            5595
+          ],
+          "antecedent_text": "[3023] Dead Sea Mud Shampoo - Fast, Natural Relief from Dandruff - Itchy, Dr…",
+          "consequent_text": "[5595] Konjac Sponge - Activated Charcoal - Facial Sponge, 100% Natural Spon…",
+          "antecedent_titles": [
+            "Dead Sea Mud Shampoo - Fast, Natural Relief from Dandruff - Itchy, Dry, Flaky Scalp - Scalp Psoriasis - Seborrhea Dermatitis - with Dead Sea Mud, Olive Oil & Shea Butter - Highly Effective - Satisfaction Guaranteed"
+          ],
+          "consequent_titles": [
+            "Konjac Sponge - Activated Charcoal - Facial Sponge, 100% Natural Sponge, Eco-Friendly - Gentle Exfoliating Sponge, Deep Cleansing, Improved Skin Texture - Konjac Facial Cleansing Sponge - Natural Beauty Products -Free of Chemicals, Parabens, Sulphates, Fragrances & Coloring. Good for Sensitive Skin, Hypoallergenic - Cruelty Free, Vegan, Biodegradable, Naturally Sustainable - 100% Money Back Guarantee"
+          ],
+          "count": 46,
+          "antecedent_count": 136,
+          "consequent_count": 58,
+          "support": 0.002056969100746769,
+          "confidence": 0.3382352941176471,
+          "lift": 130.41303245436106,
+          "kulczynski": 0.5656693711967546,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            1078
+          ],
+          "consequents": [
+            3021
+          ],
+          "antecedent_text": "[1078] Organic Rosehip Oil 4OZ ★SALE★ 100% Pure Rosehip Seed Oil & USDA Cert…",
+          "consequent_text": "[3021] ORGANIC Argan Oil 4OZ ★SALE★ 100% PURE Argan Oil for Hair, Face, Skin…",
+          "antecedent_titles": [
+            "Organic Rosehip Oil 4OZ ★SALE★ 100% Pure Rosehip Seed Oil & USDA Certified BEST Rosehip Oil For Face and Skin - InstaNatural | Great Moisturizer for Dry Skin, Hair, Nails, Stretch Marks, Scars, & Spots | Unrefined, Cold Pressed Virgin Rosehip Seed Oil | 100% LIFETIME GUARANTEE :: We'll refund your money if you're not satisfied! Try Risk FREE!"
+          ],
+          "consequent_titles": [
+            "ORGANIC Argan Oil 4OZ ★SALE★ 100% PURE Argan Oil for Hair, Face, Skin & Nails | USDA Certified | Best Argania Spinosa from Morocco - Cold Pressed, Unrefined Virgin Argan Oil | Great for Acne, Dry Scalp, Body, Cuticles - ★ WORKS OR YOUR MONEY BACK | 100% LIFETIME Money Back Guarantee"
+          ],
+          "count": 57,
+          "antecedent_count": 86,
+          "consequent_count": 114,
+          "support": 0.002548853016142736,
+          "confidence": 0.6627906976744187,
+          "lift": 130.01744186046514,
+          "kulczynski": 0.5813953488372093,
+          "same_brand": false,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            702
+          ],
+          "consequents": [
+            3515
+          ],
+          "antecedent_text": "[702] Axe Gravity Defying Dust Messy Look, 0.035 Ounce",
+          "consequent_text": "[3515] Axe Spiking Glue Spiked Up Look, 3.2 Ounce",
+          "antecedent_titles": [
+            "Axe Gravity Defying Dust Messy Look, 0.035 Ounce"
+          ],
+          "consequent_titles": [
+            "Axe Spiking Glue Spiked Up Look, 3.2 Ounce"
+          ],
+          "count": 50,
+          "antecedent_count": 94,
+          "consequent_count": 94,
+          "support": 0.0022358359790725754,
+          "confidence": 0.5319148936170214,
+          "lift": 126.5448166591218,
+          "kulczynski": 0.5319148936170213,
+          "same_brand": true,
+          "same_leaf_category": false
+        },
+        {
+          "antecedents": [
+            6466
+          ],
+          "consequents": [
+            9744
+          ],
+          "antecedent_text": "[6466] Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great…",
+          "consequent_text": "[9744] Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vit…",
+          "antecedent_titles": [
+            "Dead Sea Salt Deep Hair Conditioner - for Dry or Damaged Hair - Great for Natural Curly Hair - for Men and Women - Deeply Hydrating and Nourishing on Scalp & Hair - Helps to Reduce Dandruff and Dry Scalp - Made with Pure Dead Sea Salt and Minerals, Chamomile, Vitamin E & Natural Aloe Vera - Leaves Your Hair Looking & Feeling Healthy, Silky and Hydrated"
+          ],
+          "consequent_titles": [
+            "Adovia Facial Serum - Anti Aging, Skin Lifting, Facial Serum with Vitamin C, Dead Sea Salt and Green Tea - Get Firmer, More Radiant Looking Skin - Non-Oily Deep Moisturizer Delivers Minerals & Nutrients Deep Into Skin - Satisfaction Guaranteed"
+          ],
+          "count": 70,
+          "antecedent_count": 120,
+          "consequent_count": 104,
+          "support": 0.0031301703707016055,
+          "confidence": 0.5833333333333334,
+          "lift": 125.43349358974359,
+          "kulczynski": 0.6282051282051282,
+          "same_brand": false,
+          "same_leaf_category": false
+        }
+      ]
+    }
+  ]
+}
