@@ -10,9 +10,10 @@ Quy ước:
 - Mỗi user có đúng một nhãn (leave-last-out): ``target`` trong ``validation.jsonl`` hoặc ``test.jsonl``
   (định dạng theo docs/data_contract.md). Item ID là ``item_id`` theo ``id_mapping.json``;
   ID nội bộ của từng thư viện (ví dụ RecBole) phải đổi về ``item_id`` trước khi chấm.
-- Item đã thấy (``seen_item_ids``) bị loại khỏi danh sách xếp hạng trước khi cắt top-K (kế hoạch, mục 3.4).
-- Ngoại lệ do module này chọn (data contract chỉ yêu cầu xử lý tường minh, chưa quy định cách xử lý):
-  nếu chính nhãn nằm trong ``seen_item_ids`` (``target_in_history``, mua lại), nhãn không bị loại,
+- Mặc định không loại item đã thấy (``seen_item_ids``) khỏi danh sách xếp hạng; ứng viên là toàn catalog
+  (kế hoạch, mục 3.4 và 3.5a). ``exclude_seen=True`` chỉ dùng để đối chiếu với kết quả có lọc.
+- Khi ``exclude_seen=True`` có một ngoại lệ do module này chọn (data contract chỉ yêu cầu xử lý tường minh,
+  chưa quy định cách xử lý): nếu chính nhãn nằm trong ``seen_item_ids`` (``target_in_history``, mua lại), nhãn không bị loại,
   để mô hình không bị phạt vì một item mà quy tắc lọc tự xóa. Trên Beauty 2014 không có trường hợp này.
 - Với một nhãn ở vị trí ``r`` (đếm từ 1) trong top-K đã lọc:
   Recall@K = 1 và NDCG@K = 1 / log2(r + 1); nhãn nằm ngoài top-K cho cả hai bằng 0.
@@ -62,7 +63,7 @@ def filter_seen(ranked_items, seen_items, target):
     return [item for item in ranked_items if item not in seen]
 
 
-def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=True):
+def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=False):
     """Tính Recall@K và NDCG@K cho từng user.
 
     Args:
@@ -72,7 +73,7 @@ def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=True):
             nằm sau phần này không được phát hiện.
         split: dict ``user_id -> {"target": int, "seen_item_ids": list}`` (xem ``load_split``).
         ks: các giá trị K.
-        exclude_seen: loại item đã thấy trước khi cắt top-K.
+        exclude_seen: loại item đã thấy trước khi cắt top-K (mặc định False, theo quyết định 19/11).
 
     Returns:
         ``(user_ids, scores)``: ``user_ids`` là mảng user theo thứ tự tăng dần,
@@ -122,7 +123,7 @@ def per_user_metrics(rankings, split, ks=DEFAULT_KS, exclude_seen=True):
     return np.array(user_ids), scores
 
 
-def evaluate(rankings, split, ks=DEFAULT_KS, exclude_seen=True):
+def evaluate(rankings, split, ks=DEFAULT_KS, exclude_seen=False):
     """Trung bình Recall@K, NDCG@K trên mọi user của tập nhãn; trả về dict ``"recall@5" -> float``."""
     _, scores = per_user_metrics(rankings, split, ks=ks, exclude_seen=exclude_seen)
     return {name: float(values.mean()) for name, values in scores.items()}
