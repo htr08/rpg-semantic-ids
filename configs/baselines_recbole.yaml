@@ -1,11 +1,13 @@
-# Baseline chạy bằng RecBole, cùng dữ liệu, cùng cách chia, cùng metric (chấm lại bằng src/evaluate.py).
+# Popularity và ItemKNN bằng RecBole 1.2.0, dùng mapping và split của B.
 dataset: amazon_beauty_2014
-models: [Pop, ItemKNN, SASRec]
-seeds: [42, 43, 44]
+models: [Pop, ItemKNN]
+max_history: 50
+eval_batch_size: 256
+itemknn:
+  k: 100
+  shrink: 0.0
 eval:
   protocol: leave_last_out
   ranking: full
   topk: [5, 10]
-  exclude_seen: true
-reference:
-  sasrec_ndcg@10_paper: 0.0381   # Table 2
+  exclude_seen: false

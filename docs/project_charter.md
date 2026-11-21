@@ -50,7 +50,7 @@ Dữ liệu sau tiền xử lý có các đặc điểm định hình phạm vi 
 - Ghép văn bản mô tả theo cách của code gốc, kèm quy tắc fallback cho item thiếu description (title + category).
 - Adapter nạp semantic ID hoặc embedding do nhóm tạo vào code gốc.
 - Tokenizer tự viết: OPQ, PQ, RQ, token ngẫu nhiên, ID có tín hiệu hành vi.
-- Baseline: Popularity, ItemKNN, SASRec (RecBole), AR-Rec (tự viết, dựa trên FP-Growth).
+- Baseline gồm Popularity và ItemKNN (RecBole), SASRec-BCE (S³-Rec) và AR-Rec (FP-Growth).
 - Module khai phá mẫu (FP-Growth, PrefixSpan, đối chiếu luật ↔ semantic ID), module phân cụm (PCA, k-means, phân cấp, DBSCAN), phân tích đồ thị (hubness, Louvain), đánh giá mở rộng (coverage, long-tail, cold-start, phân khúc).
 - Báo cáo tổng kết, slide, repository chạy lại được từ bản clone sạch.
 
@@ -115,7 +115,7 @@ Một đầu việc được coi là hoàn thành khi thỏa toàn bộ các đi
 |---|---|
 | Pipeline dữ liệu (đã đạt) | Đạt K1; chạy lại cho đầu ra giống nhau từng byte; `--verify-only` khớp checksum trong `manifest.json`; unit test xác nhận mỗi tương tác thuộc đúng một phần chia và nhãn validation/test không nằm trong lịch sử dùng để dự đoán chính nhãn đó. |
 | Văn bản mô tả | Ghép theo thứ tự trường của code gốc; item thiếu description dùng title + category; ghi số item áp dụng fallback; không đổi thứ tự item so với `items.jsonl`. |
-| `src/evaluate.py` | Recall@K, NDCG@K khớp ví dụ tính tay; loại item trong `seen_item_ids` khỏi danh sách ứng viên; khớp metric của RecBole trên ít nhất một mô hình (sai lệch < 1e-4). |
+| `src/evaluate.py` | Recall@K, NDCG@K khớp ví dụ tính tay; chấm chung trên validation/test giữ item đã xem và bỏ padding ID 0; khớp metric của RecBole trên ít nhất một mô hình (sai lệch < 1e-4) khi dùng cùng protocol. SASRec-BCE được chọn checkpoint bằng bộ chấm S³-Rec theo quy trình tái lập ở mục 3.5a của kế hoạch. |
 | RPG code gốc | Đạt K2; adapter nạp lại chính ID OPQ của code gốc cho NDCG@10 không đổi (trong phạm vi dao động seed). |
 | Tokenizer | 4 file semantic ID cùng định dạng (12.101 × 32, giá trị 0–255), hàng `item_id − 1` ứng với item đó; nếu adapter dùng hàng 0 cho padding thì chuyển đổi tường minh; có tỉ lệ va chạm và entropy codebook. |
 | Module khai phá mẫu | Giao dịch là tập item duy nhất của chuỗi train đầy đủ (không cắt 50); bảng số tập phổ biến, số luật, thời gian chạy ở 3 mức min_support, kèm số item đạt ngưỡng support; 20 luật lift cao nhất kèm tên sản phẩm và số đếm tuyệt đối; AR-Rec chấm bằng `src/evaluate.py`. |
