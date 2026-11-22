@@ -6,7 +6,8 @@ Quy ước:
 
 - Chỉ dùng bộ chia validation (luật khai phá từ train); test không được chạy trong mô-đun này.
 - Lưới gồm ba chiều: ``max_len`` (giới hạn |X ∪ Y|), min_support và min_confidence. Mỗi ``max_len`` có tập min_support riêng
-  vì số tập phổ biến tăng rất nhanh theo ``max_len`` khi support thấp (``max_len`` = 4 ở 0,0005 tạo hơn 650.000 luật và hết RAM).
+  vì số tập phổ biến và số luật tăng rất nhanh theo ``max_len`` khi support thấp (``max_len`` = 4 ở 0,0005 tạo 656.681 luật, RAM đỉnh
+  khoảng 0,65 GB); lưới dừng ở 0,0005 cho ``max_len`` 3 và 4 vì hai mức này đã kém ``max_len`` = 2 ở các support dùng chung.
 - Với mỗi cặp (``max_len``, min_support), tập phổ biến và luật được khai phá một lần ở min_confidence thấp nhất, các ngưỡng cao
   hơn lọc lại từ cùng bảng luật (kết quả giống khai phá riêng từng ngưỡng vì confidence của một luật không phụ thuộc ngưỡng).
 - Tiêu chí chọn, cố định trước khi chạy: NDCG@10 trung bình theo user ở chế độ giữ item đã xem (``exclude_seen = false``,
@@ -47,11 +48,11 @@ from src.patterns import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-# max_len -> các min_support; max_len lớn chỉ chạy ở mức support đủ cao để vừa RAM 8 GB.
+# max_len -> các min_support; max_len 3 và 4 dừng ở 0,0005 (số luật tăng nhanh khi hạ thêm; xem docstring mô-đun).
 DEFAULT_GRID = {
     2: (0.00005, 0.0001, 0.00015, 0.0002, 0.0003, 0.0004, 0.0005, 0.0007, 0.001, 0.0015, 0.002),
     3: (0.0005, 0.0007, 0.001, 0.0015, 0.002),
-    4: (0.0007, 0.001, 0.0015, 0.002),
+    4: (0.0005, 0.0007, 0.001, 0.0015, 0.002),
 }
 DEFAULT_CONFIDENCES = (0.02, 0.05, 0.1, 0.2, 0.3)
 DEFAULT_OUTPUT = ROOT / "reports" / "ar_rec_sweep.json"
