@@ -196,12 +196,16 @@ Script kiểm tra SHA-256 của từng file và lưu tại `experiments/sasrec_r
 python -m scripts.reproduce_sasrec_paper --prepare-only
 ```
 
-Để chấm lại các checkpoint đã dùng cho báo cáo, lấy
-`sasrec_paper_beauty_outputs.zip` từ output của lượt chạy Kaggle do B lưu
-và đặt tại `experiments/sasrec_reference/`. SHA-256 của ZIP nằm trong JSON
-kết quả. Liên kết notebook của lượt đó chưa được lưu trong log.
+Để tái lập điểm đã ghi, dùng đúng ZIP đầu ra Kaggle
+`sasrec_paper_beauty_outputs.zip` của B và đặt tại `experiments/sasrec_reference/`.
+Bản gốc có SHA-256
+`566ef7d072605503759a2f0fa6150adc8eb9d087e197c2fbb8007d0b21558f76`.
+Kiểm tra bằng `sha256sum` trên Linux hoặc `Get-FileHash -Algorithm SHA256`
+trên PowerShell trước khi chấm. Trong ZIP, `summary.json` ghi kết quả
+ba seed và mỗi thư mục `seed_<seed>/` chứa checkpoint cùng log huấn luyện.
 
-Có thể tạo ZIP mới từ repo trên Kaggle với GPU và Internet đã bật. Với PyTorch,
+Để chạy lại thí nghiệm, có thể tạo ZIP mới từ repo trên Kaggle với GPU và
+Internet đã bật. Điểm và trọng số của lượt mới có thể khác bản gốc. Với PyTorch,
 NumPy, SciPy và tqdm trong runtime, chạy lệnh sau. Mỗi seed chạy từ khởi tạo
 ngẫu nhiên trong thư mục riêng, dùng BCE, batch 256, learning rate 0,001,
 lịch sử tối đa 50, giới hạn 200 epoch. S³-Rec chọn checkpoint bằng

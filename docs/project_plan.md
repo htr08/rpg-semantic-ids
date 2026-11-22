@@ -367,6 +367,7 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 ## 5. Mẫu bảng kết quả
 
 Bảng so sánh chung dùng tập test leave-last-out, toàn catalog và giữ item đã xem. Cột "NDCG@10 paper" ghi mốc tham chiếu kèm số bảng nguồn.
+Kết quả cũ có lọc hoặc dùng cách chấm hay quy tắc chọn checkpoint khác phải ghi rõ protocol và trình bày riêng ngoài bảng so sánh chung.
 
 | Mô hình | Recall@5 | Recall@10 | NDCG@5 | NDCG@10 (mean ± std) | NDCG@10 paper | Chênh lệch | p-value vs RPG | Kiến thức học phần |
 |---|---|---|---|---|---|---|---|---|

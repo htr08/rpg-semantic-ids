@@ -11,7 +11,6 @@ from types import SimpleNamespace
 from zipfile import ZipFile
 
 import numpy as np
-import torch
 
 from scripts.reproduce_sasrec_paper import DATA_HASHES, REFERENCE_DIR, RUN_NAME, SEEDS, UPSTREAM_CODE, UPSTREAM_REVISION
 from src.baselines import top_items
@@ -47,6 +46,8 @@ def match_item_ids(reference_sequences, local_sequences):
 
 
 def rank(model, split, local_to_ref):
+    import torch
+
     item_ids = np.asarray(sorted(local_to_ref))
     ref_items = torch.tensor([local_to_ref[item] for item in item_ids])
     users = sorted(split)
@@ -65,6 +66,8 @@ def rank(model, split, local_to_ref):
 
 
 def run(reference_dir, archive_path, output_dir):
+    import torch
+
     processed, splits_dir = ROOT / "data/processed", ROOT / "data/splits"
     verify_preprocessed(processed, splits_dir)
     splits = {

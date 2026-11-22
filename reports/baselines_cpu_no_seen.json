@@ -24,9 +24,9 @@
       }
     },
     "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
-    "fit_seconds": 8.26077890000306,
+    "fit_seconds": 15.887452399998438,
     "device": "cpu",
-    "config_sha256": "d6501dc9ab366fbf4f03ba66fabcc73ecdb3b977f87b52bc7d77b45c5968e477",
+    "config_sha256": "1c83c65af6c43da5a3de8b26542eb3e1ed2ad5f8af4fbda04a30542847a2c5de",
     "manifest_sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510",
     "baseline_code_sha256": "419cf80c57138527891e93e6c39d75113184d44145d18b349436895a89cba304",
     "runner_code_sha256": "6eb5f26bbdd343b19076304bd3bdfe3ad0f406c5f3fbf7e41d1e2beb0137596f",
@@ -141,7 +141,7 @@
           },
           "evaluator": {
             "path": "src/evaluate.py",
-            "sha256": "333b2f2f1f1212bbd3b672f32eb24369ebea7d258d04cd699ed67781a7b80b81"
+            "sha256": "8128cf890d47112b9c90b4f61115fb2f02027092547030f554c07bb3ac7545fa"
           }
         },
         "recbole_accuracy_check": {
@@ -257,7 +257,7 @@
           },
           "evaluator": {
             "path": "src/evaluate.py",
-            "sha256": "333b2f2f1f1212bbd3b672f32eb24369ebea7d258d04cd699ed67781a7b80b81"
+            "sha256": "8128cf890d47112b9c90b4f61115fb2f02027092547030f554c07bb3ac7545fa"
           }
         },
         "recbole_accuracy_check": {
@@ -271,7 +271,7 @@
         }
       }
     },
-    "elapsed_seconds": 20.768236100004287
+    "elapsed_seconds": 31.518034900014754
   },
   {
     "model": "ItemKNN",
@@ -298,9 +298,9 @@
       }
     },
     "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
-    "fit_seconds": 3.4823918000038248,
+    "fit_seconds": 4.456877299991902,
     "device": "cpu",
-    "config_sha256": "d6501dc9ab366fbf4f03ba66fabcc73ecdb3b977f87b52bc7d77b45c5968e477",
+    "config_sha256": "1c83c65af6c43da5a3de8b26542eb3e1ed2ad5f8af4fbda04a30542847a2c5de",
     "manifest_sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510",
     "baseline_code_sha256": "419cf80c57138527891e93e6c39d75113184d44145d18b349436895a89cba304",
     "runner_code_sha256": "6eb5f26bbdd343b19076304bd3bdfe3ad0f406c5f3fbf7e41d1e2beb0137596f",
@@ -415,7 +415,7 @@
           },
           "evaluator": {
             "path": "src/evaluate.py",
-            "sha256": "333b2f2f1f1212bbd3b672f32eb24369ebea7d258d04cd699ed67781a7b80b81"
+            "sha256": "8128cf890d47112b9c90b4f61115fb2f02027092547030f554c07bb3ac7545fa"
           }
         },
         "recbole_accuracy_check": {
@@ -531,7 +531,7 @@
           },
           "evaluator": {
             "path": "src/evaluate.py",
-            "sha256": "333b2f2f1f1212bbd3b672f32eb24369ebea7d258d04cd699ed67781a7b80b81"
+            "sha256": "8128cf890d47112b9c90b4f61115fb2f02027092547030f554c07bb3ac7545fa"
           }
         },
         "recbole_accuracy_check": {
@@ -545,6 +545,6 @@
         }
       }
     },
-    "elapsed_seconds": 19.366666999994777
+    "elapsed_seconds": 21.502185499994084
   }
 ]
