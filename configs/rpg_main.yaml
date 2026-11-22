@@ -27,7 +27,7 @@ eval:
   protocol: leave_last_out
   ranking: full
   topk: [5, 10]
-  exclude_seen: true
+  exclude_seen: false
 
 reference:
   ndcg@10_paper: 0.0429         # Table 4 (RPG + sentence-t5-base); không dùng 0,0464 của Table 2
