@@ -121,6 +121,15 @@ class ARRecommender:
         rule_ids, hits = np.unique(np.concatenate(postings), return_counts=True)
         return rule_ids[hits == self.sizes[rule_ids]]
 
+    def rule_scores(self, seen_items):
+        """Mảng độ dài ``n_items + 1``: điểm luật (max confidence x lift) của từng item_id, 0 nếu không luật nào khớp."""
+        matched = self.matched_rules(seen_items)
+        scores = np.zeros(self.n_items + 1)
+        if matched.size:
+            sub = self._consequents[matched]
+            np.maximum.at(scores, sub.indices, np.repeat(self.weights[matched], np.diff(sub.indptr)))
+        return scores
+
     def recommend(self, seen_items, length):
         """Danh sách item_id xếp giảm dần, không lặp, dài ``min(length, n_items)``.
 
@@ -131,11 +140,7 @@ class ARRecommender:
         if type(length) is not int or length < 1:
             raise ValueError("length phải là số nguyên dương")
         length = min(length, self.n_items)
-        matched = self.matched_rules(seen_items)
-        scores = np.zeros(self.n_items + 1)
-        if matched.size:
-            sub = self._consequents[matched]
-            np.maximum.at(scores, sub.indices, np.repeat(self.weights[matched], np.diff(sub.indptr)))
+        scores = self.rule_scores(seen_items)
         scored = np.flatnonzero(scores > 0)
         scored = scored[np.lexsort((scored, -scores[scored]))][:length]
         if len(scored) < length:

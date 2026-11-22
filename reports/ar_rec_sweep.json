@@ -1,0 +1,5763 @@
+{
+  "split": "validation",
+  "selection": {
+    "metric": "ndcg@10",
+    "protocol": "keep_seen",
+    "ties": "ít luật hơn, rồi min_support lớn hơn, rồi min_confidence lớn hơn, rồi max_len nhỏ hơn"
+  },
+  "n_transactions": 22363,
+  "n_items": 12101,
+  "reference_popularity": {
+    "keep_seen": {
+      "recall@5": 0.008719760318383044,
+      "ndcg@5": 0.005422135875843198,
+      "recall@10": 0.01627688592764835,
+      "ndcg@10": 0.007848314117265068
+    },
+    "exclude_seen": {
+      "recall@5": 0.009122210794616108,
+      "ndcg@5": 0.005613538628016907,
+      "recall@10": 0.016366319366811252,
+      "ndcg@10": 0.007961707848286243
+    }
+  },
+  "levels": [
+    {
+      "min_support": 5e-05,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 21.425,
+      "min_count": 2,
+      "n_frequent_itemsets": 121810,
+      "itemsets_by_size": {
+        "1": 11930,
+        "2": 109880
+      },
+      "n_frequent_items": 11930,
+      "frequent_items_ratio": 0.985868936451533,
+      "users_with_frequent_item_ratio": 1.0,
+      "target_is_frequent_item_ratio": 0.9865849841255645,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 109880,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0001,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 9.06,
+      "min_count": 3,
+      "n_frequent_itemsets": 67193,
+      "itemsets_by_size": {
+        "1": 11541,
+        "2": 55652
+      },
+      "n_frequent_items": 11541,
+      "frequent_items_ratio": 0.9537228328237336,
+      "users_with_frequent_item_ratio": 1.0,
+      "target_is_frequent_item_ratio": 0.9571613826409695,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 55652,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.00015,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 8.212,
+      "min_count": 4,
+      "n_frequent_itemsets": 47159,
+      "itemsets_by_size": {
+        "1": 10623,
+        "2": 36536
+      },
+      "n_frequent_items": 10623,
+      "frequent_items_ratio": 0.8778613337740683,
+      "users_with_frequent_item_ratio": 0.9999552832804185,
+      "target_is_frequent_item_ratio": 0.9011313330054107,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 36536,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0002,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 4.574,
+      "min_count": 5,
+      "n_frequent_itemsets": 35751,
+      "itemsets_by_size": {
+        "1": 9106,
+        "2": 26645
+      },
+      "n_frequent_items": 9106,
+      "frequent_items_ratio": 0.7524997934055037,
+      "users_with_frequent_item_ratio": 0.9996422662433484,
+      "target_is_frequent_item_ratio": 0.8342798372311407,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 26645,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0003,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 3.032,
+      "min_count": 7,
+      "n_frequent_itemsets": 22842,
+      "itemsets_by_size": {
+        "1": 6082,
+        "2": 16760
+      },
+      "n_frequent_items": 6082,
+      "frequent_items_ratio": 0.502603090653665,
+      "users_with_frequent_item_ratio": 0.9944104100523186,
+      "target_is_frequent_item_ratio": 0.7295085632517998,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 16760,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0004,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 2.673,
+      "min_count": 9,
+      "n_frequent_itemsets": 16248,
+      "itemsets_by_size": {
+        "1": 4545,
+        "2": 11703
+      },
+      "n_frequent_items": 4545,
+      "frequent_items_ratio": 0.37558879431451947,
+      "users_with_frequent_item_ratio": 0.9823816124849081,
+      "target_is_frequent_item_ratio": 0.6533112730850065,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 11703,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0005,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 1.81,
+      "min_count": 12,
+      "n_frequent_itemsets": 10288,
+      "itemsets_by_size": {
+        "1": 3218,
+        "2": 7070
+      },
+      "n_frequent_items": 3218,
+      "frequent_items_ratio": 0.26592843566647384,
+      "users_with_frequent_item_ratio": 0.956222331529759,
+      "target_is_frequent_item_ratio": 0.5678576219648527,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 7070,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0007,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 1.501,
+      "min_count": 16,
+      "n_frequent_itemsets": 6044,
+      "itemsets_by_size": {
+        "1": 2254,
+        "2": 3790
+      },
+      "n_frequent_items": 2254,
+      "frequent_items_ratio": 0.18626559788447236,
+      "users_with_frequent_item_ratio": 0.9152170996735679,
+      "target_is_frequent_item_ratio": 0.4811966194159996,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 3790,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.001,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 0.962,
+      "min_count": 23,
+      "n_frequent_itemsets": 2875,
+      "itemsets_by_size": {
+        "1": 1452,
+        "2": 1423
+      },
+      "n_frequent_items": 1452,
+      "frequent_items_ratio": 0.11999008346417651,
+      "users_with_frequent_item_ratio": 0.8466216518356213,
+      "target_is_frequent_item_ratio": 0.38657604078164826,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 1423,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0015,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 1.137,
+      "min_count": 34,
+      "n_frequent_itemsets": 1251,
+      "itemsets_by_size": {
+        "1": 915,
+        "2": 336
+      },
+      "n_frequent_items": 915,
+      "frequent_items_ratio": 0.07561358565407818,
+      "users_with_frequent_item_ratio": 0.7496758037830344,
+      "target_is_frequent_item_ratio": 0.2910164110360864,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 336,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.002,
+      "max_len": 2,
+      "status": "ok",
+      "fpgrowth_seconds": 0.737,
+      "min_count": 45,
+      "n_frequent_itemsets": 703,
+      "itemsets_by_size": {
+        "1": 601,
+        "2": 102
+      },
+      "n_frequent_items": 601,
+      "frequent_items_ratio": 0.04966531691595736,
+      "users_with_frequent_item_ratio": 0.6642668693824622,
+      "target_is_frequent_item_ratio": 0.21709967356794704,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 102,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0005,
+      "max_len": 3,
+      "status": "ok",
+      "fpgrowth_seconds": 2.248,
+      "min_count": 12,
+      "n_frequent_itemsets": 29385,
+      "itemsets_by_size": {
+        "1": 3218,
+        "2": 7070,
+        "3": 19097
+      },
+      "n_frequent_items": 3218,
+      "frequent_items_ratio": 0.26592843566647384,
+      "users_with_frequent_item_ratio": 0.956222331529759,
+      "target_is_frequent_item_ratio": 0.5678576219648527,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 7070,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0007,
+      "max_len": 3,
+      "status": "ok",
+      "fpgrowth_seconds": 1.453,
+      "min_count": 16,
+      "n_frequent_itemsets": 11915,
+      "itemsets_by_size": {
+        "1": 2254,
+        "2": 3790,
+        "3": 5871
+      },
+      "n_frequent_items": 2254,
+      "frequent_items_ratio": 0.18626559788447236,
+      "users_with_frequent_item_ratio": 0.9152170996735679,
+      "target_is_frequent_item_ratio": 0.4811966194159996,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 3790,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.001,
+      "max_len": 3,
+      "status": "ok",
+      "fpgrowth_seconds": 1.051,
+      "min_count": 23,
+      "n_frequent_itemsets": 3905,
+      "itemsets_by_size": {
+        "1": 1452,
+        "2": 1423,
+        "3": 1030
+      },
+      "n_frequent_items": 1452,
+      "frequent_items_ratio": 0.11999008346417651,
+      "users_with_frequent_item_ratio": 0.8466216518356213,
+      "target_is_frequent_item_ratio": 0.38657604078164826,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 1423,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0015,
+      "max_len": 3,
+      "status": "ok",
+      "fpgrowth_seconds": 1.339,
+      "min_count": 34,
+      "n_frequent_itemsets": 1367,
+      "itemsets_by_size": {
+        "1": 915,
+        "2": 336,
+        "3": 116
+      },
+      "n_frequent_items": 915,
+      "frequent_items_ratio": 0.07561358565407818,
+      "users_with_frequent_item_ratio": 0.7496758037830344,
+      "target_is_frequent_item_ratio": 0.2910164110360864,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 336,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.002,
+      "max_len": 3,
+      "status": "ok",
+      "fpgrowth_seconds": 0.858,
+      "min_count": 45,
+      "n_frequent_itemsets": 715,
+      "itemsets_by_size": {
+        "1": 601,
+        "2": 102,
+        "3": 12
+      },
+      "n_frequent_items": 601,
+      "frequent_items_ratio": 0.04966531691595736,
+      "users_with_frequent_item_ratio": 0.6642668693824622,
+      "target_is_frequent_item_ratio": 0.21709967356794704,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 102,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0007,
+      "max_len": 4,
+      "status": "ok",
+      "fpgrowth_seconds": 1.725,
+      "min_count": 16,
+      "n_frequent_itemsets": 19792,
+      "itemsets_by_size": {
+        "1": 2254,
+        "2": 3790,
+        "3": 5871,
+        "4": 7877
+      },
+      "n_frequent_items": 2254,
+      "frequent_items_ratio": 0.18626559788447236,
+      "users_with_frequent_item_ratio": 0.9152170996735679,
+      "target_is_frequent_item_ratio": 0.4811966194159996,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 3790,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.001,
+      "max_len": 4,
+      "status": "ok",
+      "fpgrowth_seconds": 1.006,
+      "min_count": 23,
+      "n_frequent_itemsets": 4698,
+      "itemsets_by_size": {
+        "1": 1452,
+        "2": 1423,
+        "3": 1030,
+        "4": 793
+      },
+      "n_frequent_items": 1452,
+      "frequent_items_ratio": 0.11999008346417651,
+      "users_with_frequent_item_ratio": 0.8466216518356213,
+      "target_is_frequent_item_ratio": 0.38657604078164826,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 1423,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.0015,
+      "max_len": 4,
+      "status": "ok",
+      "fpgrowth_seconds": 0.797,
+      "min_count": 34,
+      "n_frequent_itemsets": 1384,
+      "itemsets_by_size": {
+        "1": 915,
+        "2": 336,
+        "3": 116,
+        "4": 17
+      },
+      "n_frequent_items": 915,
+      "frequent_items_ratio": 0.07561358565407818,
+      "users_with_frequent_item_ratio": 0.7496758037830344,
+      "target_is_frequent_item_ratio": 0.2910164110360864,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 336,
+      "pair_count_median": 1.0
+    },
+    {
+      "min_support": 0.002,
+      "max_len": 4,
+      "status": "ok",
+      "fpgrowth_seconds": 0.682,
+      "min_count": 45,
+      "n_frequent_itemsets": 716,
+      "itemsets_by_size": {
+        "1": 601,
+        "2": 102,
+        "3": 12,
+        "4": 1
+      },
+      "n_frequent_items": 601,
+      "frequent_items_ratio": 0.04966531691595736,
+      "users_with_frequent_item_ratio": 0.6642668693824622,
+      "target_is_frequent_item_ratio": 0.21709967356794704,
+      "pairs_cooccurring": 834194,
+      "pairs_reaching_min_count": 102,
+      "pair_count_median": 1.0
+    }
+  ],
+  "runs": [
+    {
+      "min_support": 5e-05,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 205012,
+      "status": "ok",
+      "n_items_in_rules": 7617,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 22228,
+        "users_with_rule_ratio": 0.9939632428565041,
+        "users_with_unseen_rule_item": 22181,
+        "mean_rule_items_in_top_k": 9.486115458569959,
+        "rule_items_already_seen_ratio": 0.11087122533445211
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.9939632428565041,
+        "target_covered_ratio": 0.2574341546304163,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.988579460599139
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9993273240952509
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 1.0
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03952958011000313,
+          "ndcg@5": 0.025665154375208832,
+          "recall@10": 0.06416849259938291,
+          "ndcg@10": 0.03358259868948515
+        },
+        "exclude_seen": {
+          "recall@5": 0.04780217323257166,
+          "ndcg@5": 0.03323784330937009,
+          "recall@10": 0.07342485355274338,
+          "ndcg@10": 0.04149750527037011
+        }
+      },
+      "seconds": 17.529
+    },
+    {
+      "min_support": 5e-05,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 137660,
+      "status": "ok",
+      "n_items_in_rules": 7617,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 22214,
+        "users_with_rule_ratio": 0.9933372087823638,
+        "users_with_unseen_rule_item": 22162,
+        "mean_rule_items_in_top_k": 9.255064168492598,
+        "rule_items_already_seen_ratio": 0.11471172289837707
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.9933372087823638,
+        "target_covered_ratio": 0.20010732012699547,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.987437406659053
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9991927889143011
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 1.0
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04024504762330636,
+          "ndcg@5": 0.02601684871828651,
+          "recall@10": 0.06627017841971113,
+          "ndcg@10": 0.03439960442758845
+        },
+        "exclude_seen": {
+          "recall@5": 0.04892009122210795,
+          "ndcg@5": 0.03377428346371542,
+          "recall@10": 0.07557125609265304,
+          "ndcg@10": 0.04238603825466803
+        }
+      },
+      "seconds": 10.729
+    },
+    {
+      "min_support": 5e-05,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 79929,
+      "status": "ok",
+      "n_items_in_rules": 7579,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 21827,
+        "users_with_rule_ratio": 0.976031838304342,
+        "users_with_unseen_rule_item": 21665,
+        "mean_rule_items_in_top_k": 7.8185395519384695,
+        "rule_items_already_seen_ratio": 0.1370577536803816
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.976031838304342,
+        "target_covered_ratio": 0.13571524392970533,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.9554598963366424
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9960984797524552
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 1.0
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.043017484237356345,
+          "ndcg@5": 0.027473315741398042,
+          "recall@10": 0.06792469704422484,
+          "ndcg@10": 0.03551051614905264
+        },
+        "exclude_seen": {
+          "recall@5": 0.051781961275320844,
+          "ndcg@5": 0.03543605788092355,
+          "recall@10": 0.07682332424093369,
+          "ndcg@10": 0.043552563284020594
+        }
+      },
+      "seconds": 8.967
+    },
+    {
+      "min_support": 5e-05,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 36921,
+      "status": "ok",
+      "n_items_in_rules": 6893,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 18695,
+        "users_with_rule_ratio": 0.8359790725752358,
+        "users_with_unseen_rule_item": 17948,
+        "mean_rule_items_in_top_k": 4.687474846845236,
+        "rule_items_already_seen_ratio": 0.19743193482532959
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.8359790725752358,
+        "target_covered_ratio": 0.07490050529893127,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.7359219889308618
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9137629490111664
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9916930379746836
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.038456378840048294,
+          "ndcg@5": 0.02576073358557059,
+          "recall@10": 0.05562759915932567,
+          "ndcg@10": 0.03129732872179666
+        },
+        "exclude_seen": {
+          "recall@5": 0.04547690381433618,
+          "ndcg@5": 0.03216634576665591,
+          "recall@10": 0.06211152349863614,
+          "ndcg@10": 0.03756370562788388
+        }
+      },
+      "seconds": 7.27
+    },
+    {
+      "min_support": 5e-05,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 18513,
+      "status": "ok",
+      "n_items_in_rules": 5124,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 13178,
+        "users_with_rule_ratio": 0.5892769306443679,
+        "users_with_unseen_rule_item": 11669,
+        "mean_rule_items_in_top_k": 2.5076242006886376,
+        "rule_items_already_seen_ratio": 0.26760940119119797
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.5892769306443679,
+        "target_covered_ratio": 0.043822385189822476,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.42844592813845206
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.6738867213776403
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9007120253164557
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9960745829244357
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.0296919018020838,
+          "ndcg@5": 0.020478048744811066,
+          "recall@10": 0.043822385189822476,
+          "ndcg@10": 0.025025487855742434
+        },
+        "exclude_seen": {
+          "recall@5": 0.0355945087868354,
+          "ndcg@5": 0.025718580477888123,
+          "recall@10": 0.049367258417922465,
+          "ndcg@10": 0.030179167003616857
+        }
+      },
+      "seconds": 7.517
+    },
+    {
+      "min_support": 0.0001,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 108048,
+      "status": "ok",
+      "n_items_in_rules": 3459,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 20600,
+        "users_with_rule_ratio": 0.9211644233779009,
+        "users_with_unseen_rule_item": 20448,
+        "mean_rule_items_in_top_k": 7.7857621964852655,
+        "rule_items_already_seen_ratio": 0.10324329602040054
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.9211644233779009,
+        "target_covered_ratio": 0.19697714975629388,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.8648862338575068
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9701331898291403
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9988132911392406
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04516388677726602,
+          "ndcg@5": 0.02925452335801181,
+          "recall@10": 0.06895318159459822,
+          "ndcg@10": 0.036980341014959055
+        },
+        "exclude_seen": {
+          "recall@5": 0.05330232974109019,
+          "ndcg@5": 0.03645402740925911,
+          "recall@10": 0.07673389080177079,
+          "ndcg@10": 0.044078011775816106
+        }
+      },
+      "seconds": 11.291
+    },
+    {
+      "min_support": 0.0001,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 84883,
+      "status": "ok",
+      "n_items_in_rules": 3459,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 20549,
+        "users_with_rule_ratio": 0.9188838706792469,
+        "users_with_unseen_rule_item": 20394,
+        "mean_rule_items_in_top_k": 7.211062916424451,
+        "rule_items_already_seen_ratio": 0.11168230384283863
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.9188838706792469,
+        "target_covered_ratio": 0.1607118901757367,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.8612843714310814
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9689223732005919
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9984177215189873
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04547690381433618,
+          "ndcg@5": 0.02937942917798573,
+          "recall@10": 0.06984751598622725,
+          "ndcg@10": 0.03727830612269943
+        },
+        "exclude_seen": {
+          "recall@5": 0.05370478021732326,
+          "ndcg@5": 0.036616309852452594,
+          "recall@10": 0.07767294191298127,
+          "ndcg@10": 0.044403240314911774
+        }
+      },
+      "seconds": 10.54
+    },
+    {
+      "min_support": 0.0001,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 49987,
+      "status": "ok",
+      "n_items_in_rules": 3394,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 19132,
+        "users_with_rule_ratio": 0.8555202790323302,
+        "users_with_unseen_rule_item": 18759,
+        "mean_rule_items_in_top_k": 5.429548808299423,
+        "rule_items_already_seen_ratio": 0.14144999629388655
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.8555202790323302,
+        "target_covered_ratio": 0.11402763493270134,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.7663181937977686
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9254675097538007
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9932753164556962
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 1.0
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04552162053391763,
+          "ndcg@5": 0.029583120804064143,
+          "recall@10": 0.06676206233510709,
+          "ndcg@10": 0.036467327451449226
+        },
+        "exclude_seen": {
+          "recall@5": 0.05330232974109019,
+          "ndcg@5": 0.03672466492255974,
+          "recall@10": 0.07369315387023208,
+          "ndcg@10": 0.04337692589922029
+        }
+      },
+      "seconds": 12.124
+    },
+    {
+      "min_support": 0.0001,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 22021,
+      "status": "ok",
+      "n_items_in_rules": 2891,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 14403,
+        "users_with_rule_ratio": 0.644054912131646,
+        "users_with_unseen_rule_item": 13433,
+        "mean_rule_items_in_top_k": 3.1732772883781246,
+        "rule_items_already_seen_ratio": 0.19807226199199593
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.644054912131646,
+        "target_covered_ratio": 0.06443679291687161,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.500395326363876
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.7216467106148258
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9196993670886076
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9990186457311089
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03711487725260475,
+          "ndcg@5": 0.025279133910649686,
+          "recall@10": 0.051826677994902294,
+          "ndcg@10": 0.030019723036744293
+        },
+        "exclude_seen": {
+          "recall@5": 0.042838617359030544,
+          "ndcg@5": 0.030620281258764256,
+          "recall@10": 0.057550418101328084,
+          "ndcg@10": 0.03540117284847153
+        }
+      },
+      "seconds": 15.216
+    },
+    {
+      "min_support": 0.0001,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 11727,
+      "status": "ok",
+      "n_items_in_rules": 2218,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 9900,
+        "users_with_rule_ratio": 0.4426955238563699,
+        "users_with_unseen_rule_item": 8555,
+        "mean_rule_items_in_top_k": 1.878772973214685,
+        "rule_items_already_seen_ratio": 0.25462334880399856
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4426955238563699,
+        "target_covered_ratio": 0.03979788042749184,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.29148730563120445
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.4923987622763353
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.7654272151898734
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9685966633954858
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02879756741045477,
+          "ndcg@5": 0.01992342558732599,
+          "recall@10": 0.041675982649912804,
+          "ndcg@10": 0.024067648259124868
+        },
+        "exclude_seen": {
+          "recall@5": 0.033761123283995886,
+          "ndcg@5": 0.024435221151291427,
+          "recall@10": 0.04637123820596521,
+          "ndcg@10": 0.02854440002158903
+        }
+      },
+      "seconds": 17.95
+    },
+    {
+      "min_support": 0.00015,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 72196,
+      "status": "ok",
+      "n_items_in_rules": 2082,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 18503,
+        "users_with_rule_ratio": 0.8273934624155972,
+        "users_with_unseen_rule_item": 18332,
+        "mean_rule_items_in_top_k": 6.448776997719447,
+        "rule_items_already_seen_ratio": 0.10306905016156545
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.8273934624155972,
+        "target_covered_ratio": 0.16115905737155123,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.7308266713520162
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.9001748957352348
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9794303797468354
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9980372914622179
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04355408487233377,
+          "ndcg@5": 0.028599793776237135,
+          "recall@10": 0.06367660868398695,
+          "ndcg@10": 0.03509539128308106
+        },
+        "exclude_seen": {
+          "recall@5": 0.05008272593122569,
+          "ndcg@5": 0.03502875326772995,
+          "recall@10": 0.07074185037785628,
+          "ndcg@10": 0.04173429268767958
+        }
+      },
+      "seconds": 11.793
+    },
+    {
+      "min_support": 0.00015,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 62872,
+      "status": "ok",
+      "n_items_in_rules": 2082,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 18389,
+        "users_with_rule_ratio": 0.8222957563833118,
+        "users_with_unseen_rule_item": 18216,
+        "mean_rule_items_in_top_k": 5.892635156284935,
+        "rule_items_already_seen_ratio": 0.11202258360715452
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.8222957563833118,
+        "target_covered_ratio": 0.13669901176049726,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.723886497408416
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.8958697699448406
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.978243670886076
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9980372914622179
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04400125206814828,
+          "ndcg@5": 0.02879818452597623,
+          "recall@10": 0.0637213254035684,
+          "ndcg@10": 0.035168323068193307
+        },
+        "exclude_seen": {
+          "recall@5": 0.05048517640745875,
+          "ndcg@5": 0.03523008351412992,
+          "recall@10": 0.07051826677994902,
+          "ndcg@10": 0.04174737577207046
+        }
+      },
+      "seconds": 10.308
+    },
+    {
+      "min_support": 0.00015,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 40363,
+      "status": "ok",
+      "n_items_in_rules": 2034,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 16581,
+        "users_with_rule_ratio": 0.7414479273800474,
+        "users_with_unseen_rule_item": 16190,
+        "mean_rule_items_in_top_k": 4.423154317399276,
+        "rule_items_already_seen_ratio": 0.13993833089015822
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.7414479273800474,
+        "target_covered_ratio": 0.10025488530161428,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.6176754809804094
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.8226826315081394
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9564873417721519
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9980372914622179
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.04221258328489022,
+          "ndcg@5": 0.027874720898173565,
+          "recall@10": 0.060591155032866786,
+          "ndcg@10": 0.03382683788521524
+        },
+        "exclude_seen": {
+          "recall@5": 0.0489648079416894,
+          "ndcg@5": 0.034327579478522455,
+          "recall@10": 0.0670303626525958,
+          "ndcg@10": 0.040201072591936116
+        }
+      },
+      "seconds": 8.939
+    },
+    {
+      "min_support": 0.00015,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 17283,
+      "status": "ok",
+      "n_items_in_rules": 1705,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 12031,
+        "users_with_rule_ratio": 0.5379868532844431,
+        "users_with_unseen_rule_item": 11195,
+        "mean_rule_items_in_top_k": 2.697044224835666,
+        "rule_items_already_seen_ratio": 0.19022117584640383
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.5379868532844431,
+        "target_covered_ratio": 0.05804230201672405,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.39225160326803127
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.6001614422171397
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.8334651898734177
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9793915603532876
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.034029423601484594,
+          "ndcg@5": 0.023385538009887373,
+          "recall@10": 0.047399722756338594,
+          "ndcg@10": 0.02770555852367042
+        },
+        "exclude_seen": {
+          "recall@5": 0.039305996512095875,
+          "ndcg@5": 0.028203245973766087,
+          "recall@10": 0.052721012386531325,
+          "ndcg@10": 0.03255684542713477
+        }
+      },
+      "seconds": 7.576
+    },
+    {
+      "min_support": 0.00015,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 9004,
+      "status": "ok",
+      "n_items_in_rules": 1271,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8038,
+        "users_with_rule_ratio": 0.3594329919957072,
+        "users_with_unseen_rule_item": 7005,
+        "mean_rule_items_in_top_k": 1.632965165675446,
+        "rule_items_already_seen_ratio": 0.2399912371980941
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3594329919957072,
+        "target_covered_ratio": 0.036175826141394266,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2202407098304489
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.39566796717341585
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.6602056962025317
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9038272816486752
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.026830031748870904,
+          "ndcg@5": 0.018420362924102776,
+          "recall@10": 0.03881411259669991,
+          "ndcg@10": 0.022275403307479937
+        },
+        "exclude_seen": {
+          "recall@5": 0.03143585386576041,
+          "ndcg@5": 0.022556354979187673,
+          "recall@10": 0.04328578455484506,
+          "ndcg@10": 0.026409798701777967
+        }
+      },
+      "seconds": 7.848
+    },
+    {
+      "min_support": 0.0002,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 53047,
+      "status": "ok",
+      "n_items_in_rules": 1524,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 16831,
+        "users_with_rule_ratio": 0.7526271072754103,
+        "users_with_unseen_rule_item": 16650,
+        "mean_rule_items_in_top_k": 5.624200688637481,
+        "rule_items_already_seen_ratio": 0.10341565029338337
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.7526271072754103,
+        "target_covered_ratio": 0.13638599472342708,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.6353333919002021
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.8302166016413292
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9556962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9931305201177625
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.039395429951258776,
+          "ndcg@5": 0.026020766919219226,
+          "recall@10": 0.05862361937128292,
+          "ndcg@10": 0.03224139209935173
+        },
+        "exclude_seen": {
+          "recall@5": 0.045879354290569246,
+          "ndcg@5": 0.031528583342516736,
+          "recall@10": 0.06568886106515226,
+          "ndcg@10": 0.037937096104166054
+        }
+      },
+      "seconds": 7.029
+    },
+    {
+      "min_support": 0.0002,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 49369,
+      "status": "ok",
+      "n_items_in_rules": 1524,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 16703,
+        "users_with_rule_ratio": 0.7469033671689845,
+        "users_with_unseen_rule_item": 16511,
+        "mean_rule_items_in_top_k": 5.146939140544649,
+        "rule_items_already_seen_ratio": 0.11203204142448805
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.7469033671689845,
+        "target_covered_ratio": 0.11881232392791664,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.6276904155319336
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.8251042647652361
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9545094936708861
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9931305201177625
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.039305996512095875,
+          "ndcg@5": 0.025924419292862124,
+          "recall@10": 0.05808701873630551,
+          "ndcg@10": 0.032010750852408426
+        },
+        "exclude_seen": {
+          "recall@5": 0.045879354290569246,
+          "ndcg@5": 0.031482172427283586,
+          "recall@10": 0.0650181102714305,
+          "ndcg@10": 0.03768765469164435
+        }
+      },
+      "seconds": 7.152
+    },
+    {
+      "min_support": 0.0002,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 34328,
+      "status": "ok",
+      "n_items_in_rules": 1495,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 14847,
+        "users_with_rule_ratio": 0.6639091356258104,
+        "users_with_unseen_rule_item": 14450,
+        "mean_rule_items_in_top_k": 3.9409292134329026,
+        "rule_items_already_seen_ratio": 0.1375565918916159
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.6639091356258104,
+        "target_covered_ratio": 0.08880740508876268,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.5288588245629448
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.7379254675097539
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.9236550632911392
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9882237487733072
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.037204310691767654,
+          "ndcg@5": 0.024773974295209642,
+          "recall@10": 0.05468854804811519,
+          "ndcg@10": 0.030463756874029885
+        },
+        "exclude_seen": {
+          "recall@5": 0.04373295175065957,
+          "ndcg@5": 0.030177338985725465,
+          "recall@10": 0.0608594553503555,
+          "ndcg@10": 0.0357515567129017
+        }
+      },
+      "seconds": 6.882
+    },
+    {
+      "min_support": 0.0002,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 14807,
+      "status": "ok",
+      "n_items_in_rules": 1258,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 10659,
+        "users_with_rule_ratio": 0.4766355140186916,
+        "users_with_unseen_rule_item": 9945,
+        "mean_rule_items_in_top_k": 2.4518624513705674,
+        "rule_items_already_seen_ratio": 0.18433003228100892
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4766355140186916,
+        "target_covered_ratio": 0.053078746143182934,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.33427040323289114
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.5277815148661374
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.776503164556962
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9499509322865555
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.030854536511201538,
+          "ndcg@5": 0.02108991628328807,
+          "recall@10": 0.04364351831149667,
+          "ndcg@10": 0.025237202873671694
+        },
+        "exclude_seen": {
+          "recall@5": 0.03595224254348701,
+          "ndcg@5": 0.02566581044658847,
+          "recall@10": 0.04892009122210795,
+          "ndcg@10": 0.029871296710335574
+        }
+      },
+      "seconds": 5.52
+    },
+    {
+      "min_support": 0.0002,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 7595,
+      "status": "ok",
+      "n_items_in_rules": 922,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 7025,
+        "users_with_rule_ratio": 0.3141349550596968,
+        "users_with_unseen_rule_item": 6181,
+        "mean_rule_items_in_top_k": 1.5111568215355722,
+        "rule_items_already_seen_ratio": 0.2303663372196248
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3141349550596968,
+        "target_covered_ratio": 0.03353753968608863,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.18185012738293946
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.3418538947934885
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.6064082278481012
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8645731108930323
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.024862496087287037,
+          "ndcg@5": 0.016959623264858534,
+          "recall@10": 0.03693601037427894,
+          "ndcg@10": 0.020845251373552726
+        },
+        "exclude_seen": {
+          "recall@5": 0.029155301167106382,
+          "ndcg@5": 0.020780366185914664,
+          "recall@10": 0.04113938201493538,
+          "ndcg@10": 0.024685785160820175
+        }
+      },
+      "seconds": 4.898
+    },
+    {
+      "min_support": 0.0003,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 33514,
+      "status": "ok",
+      "n_items_in_rules": 985,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 13718,
+        "users_with_rule_ratio": 0.6134239592183517,
+        "users_with_unseen_rule_item": 13503,
+        "mean_rule_items_in_top_k": 4.474980995394178,
+        "rule_items_already_seen_ratio": 0.10764034614385355
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.6134239592183517,
+        "target_covered_ratio": 0.10307203863524572,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.4758850918035667
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.679268128615633
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.8924050632911392
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9774288518155054
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03452130751688056,
+          "ndcg@5": 0.022898806775882772,
+          "recall@10": 0.051558377677413586,
+          "ndcg@10": 0.028430338081496545
+        },
+        "exclude_seen": {
+          "recall@5": 0.04127353217367974,
+          "ndcg@5": 0.02786227286278831,
+          "recall@10": 0.05795286857756115,
+          "ndcg@10": 0.03325425036382267
+        }
+      },
+      "seconds": 6.64
+    },
+    {
+      "min_support": 0.0003,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 32300,
+      "status": "ok",
+      "n_items_in_rules": 985,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 13654,
+        "users_with_rule_ratio": 0.6105620891651389,
+        "users_with_unseen_rule_item": 13428,
+        "mean_rule_items_in_top_k": 4.116576487948844,
+        "rule_items_already_seen_ratio": 0.11613204575326692
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.6105620891651389,
+        "target_covered_ratio": 0.09265304297276752,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.47254678028639197
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.6765774249966366
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.8900316455696202
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9774288518155054
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03438715735813621,
+          "ndcg@5": 0.022849456394178697,
+          "recall@10": 0.05142422751866923,
+          "ndcg@10": 0.028381680422863573
+        },
+        "exclude_seen": {
+          "recall@5": 0.04113938201493538,
+          "ndcg@5": 0.0278148821354615,
+          "recall@10": 0.0578187184188168,
+          "ndcg@10": 0.03321202228915349
+        }
+      },
+      "seconds": 7.236
+    },
+    {
+      "min_support": 0.0003,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 26263,
+      "status": "ok",
+      "n_items_in_rules": 979,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 12265,
+        "users_with_rule_ratio": 0.5484505656665027,
+        "users_with_unseen_rule_item": 11856,
+        "mean_rule_items_in_top_k": 3.323033582256406,
+        "rule_items_already_seen_ratio": 0.13593853027061215
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.5484505656665027,
+        "target_covered_ratio": 0.07516880561641998,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.40709830448915046
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.604466568007534
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.850870253164557
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9685966633954858
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03309037249027411,
+          "ndcg@5": 0.022176535959702738,
+          "recall@10": 0.04878594106336359,
+          "ndcg@10": 0.027299108394477842
+        },
+        "exclude_seen": {
+          "recall@5": 0.03984259714707329,
+          "ndcg@5": 0.02708590475187075,
+          "recall@10": 0.05424138085230067,
+          "ndcg@10": 0.031787805771400564
+        }
+      },
+      "seconds": 6.073
+    },
+    {
+      "min_support": 0.0003,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 11917,
+      "status": "ok",
+      "n_items_in_rules": 851,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 9000,
+        "users_with_rule_ratio": 0.40245047623306357,
+        "users_with_unseen_rule_item": 8406,
+        "mean_rule_items_in_top_k": 2.199839019809507,
+        "rule_items_already_seen_ratio": 0.1761357861571298
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.40245047623306357,
+        "target_covered_ratio": 0.04771273979340875,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2675041728893965
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.4397955065249563
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.6973892405063291
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9057899901864573
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.027813799579662835,
+          "ndcg@5": 0.01913381414247834,
+          "recall@10": 0.039708446988328934,
+          "ndcg@10": 0.022985946758348152
+        },
+        "exclude_seen": {
+          "recall@5": 0.03268792201404105,
+          "ndcg@5": 0.023050225069230906,
+          "recall@10": 0.045029736618521665,
+          "ndcg@10": 0.02704274407550342
+        }
+      },
+      "seconds": 4.816
+    },
+    {
+      "min_support": 0.0003,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 5772,
+      "status": "ok",
+      "n_items_in_rules": 631,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5856,
+        "users_with_rule_ratio": 0.26186110986898004,
+        "users_with_unseen_rule_item": 5209,
+        "mean_rule_items_in_top_k": 1.3861288735858337,
+        "rule_items_already_seen_ratio": 0.21836892702755017
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.26186110986898004,
+        "target_covered_ratio": 0.030317935876224122,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14266889220767812
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2796986411946724
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5296677215189873
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7988223748773308
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02289496042570317,
+          "ndcg@5": 0.015681613182334207,
+          "recall@10": 0.034834324553950725,
+          "ndcg@10": 0.01952417399322757
+        },
+        "exclude_seen": {
+          "recall@5": 0.027187765505522515,
+          "ndcg@5": 0.01906611137999898,
+          "recall@10": 0.03894826275544426,
+          "ndcg@10": 0.02289434852156195
+        }
+      },
+      "seconds": 4.274
+    },
+    {
+      "min_support": 0.0004,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 23406,
+      "status": "ok",
+      "n_items_in_rules": 740,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 11969,
+        "users_with_rule_ratio": 0.535214416670393,
+        "users_with_unseen_rule_item": 11757,
+        "mean_rule_items_in_top_k": 3.6515226043017486,
+        "rule_items_already_seen_ratio": 0.11721916751368495
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.535214416670393,
+        "target_covered_ratio": 0.08312838170191834,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.3944478608451199
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.590340374007803
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.8354430379746836
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9607458292443573
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03139113714617896,
+          "ndcg@5": 0.021009104801616774,
+          "recall@10": 0.04672897196261682,
+          "ndcg@10": 0.026003646934241315
+        },
+        "exclude_seen": {
+          "recall@5": 0.03711487725260475,
+          "ndcg@5": 0.02538548748905653,
+          "recall@10": 0.05236327862987971,
+          "ndcg@10": 0.030336508124775827
+        }
+      },
+      "seconds": 5.943
+    },
+    {
+      "min_support": 0.0004,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 23056,
+      "status": "ok",
+      "n_items_in_rules": 740,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 11969,
+        "users_with_rule_ratio": 0.535214416670393,
+        "users_with_unseen_rule_item": 11750,
+        "mean_rule_items_in_top_k": 3.455260922058758,
+        "rule_items_already_seen_ratio": 0.12299728225702083
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.535214416670393,
+        "target_covered_ratio": 0.0786567097437732,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.3944478608451199
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.590340374007803
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.8354430379746836
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9607458292443573
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.03143585386576041,
+          "ndcg@5": 0.02106359557902808,
+          "recall@10": 0.04677368868219827,
+          "ndcg@10": 0.02605765405278927
+        },
+        "exclude_seen": {
+          "recall@5": 0.0371595939721862,
+          "ndcg@5": 0.02543997826646784,
+          "recall@10": 0.05258686222778697,
+          "ndcg@10": 0.030448707797543387
+        }
+      },
+      "seconds": 6.664
+    },
+    {
+      "min_support": 0.0004,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 20577,
+      "status": "ok",
+      "n_items_in_rules": 735,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 10690,
+        "users_with_rule_ratio": 0.4780217323257166,
+        "users_with_unseen_rule_item": 10355,
+        "mean_rule_items_in_top_k": 2.948173322005098,
+        "rule_items_already_seen_ratio": 0.13819202184134688
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4780217323257166,
+        "target_covered_ratio": 0.06729866297008451,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.33945357111482033
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.5198439391900982
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.790743670886076
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9450441609421001
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.030496802754549926,
+          "ndcg@5": 0.020395180722346615,
+          "recall@10": 0.04561105397308053,
+          "ndcg@10": 0.025332299822251023
+        },
+        "exclude_seen": {
+          "recall@5": 0.03635469301972007,
+          "ndcg@5": 0.024813734145570684,
+          "recall@10": 0.050306309529132946,
+          "ndcg@10": 0.02938293723625305
+        }
+      },
+      "seconds": 6.118
+    },
+    {
+      "min_support": 0.0004,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 9986,
+      "status": "ok",
+      "n_items_in_rules": 657,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 7875,
+        "users_with_rule_ratio": 0.3521441667039306,
+        "users_with_unseen_rule_item": 7406,
+        "mean_rule_items_in_top_k": 2.041497115771587,
+        "rule_items_already_seen_ratio": 0.17310640907697025
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3521441667039306,
+        "target_covered_ratio": 0.04449313598354425,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2238425722568743
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.3797928158213373
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.6408227848101266
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8675171736997056
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.026338147833474938,
+          "ndcg@5": 0.018017226895630484,
+          "recall@10": 0.038143361802978136,
+          "ndcg@10": 0.021842730283762907
+        },
+        "exclude_seen": {
+          "recall@5": 0.030720386352457184,
+          "ndcg@5": 0.021668132613112064,
+          "recall@10": 0.04274918391986764,
+          "ndcg@10": 0.02557103042596639
+        }
+      },
+      "seconds": 4.707
+    },
+    {
+      "min_support": 0.0004,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 4723,
+      "status": "ok",
+      "n_items_in_rules": 512,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5328,
+        "users_with_rule_ratio": 0.23825068192997362,
+        "users_with_unseen_rule_item": 4800,
+        "mean_rule_items_in_top_k": 1.3230335822564057,
+        "rule_items_already_seen_ratio": 0.21384391793693175
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.23825068192997362,
+        "target_covered_ratio": 0.0283056834950588,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.12553808310638673
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2490246199381138
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.497626582278481
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7752698724239451
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022134776192818496,
+          "ndcg@5": 0.015062974616524514,
+          "recall@10": 0.033984706881903144,
+          "ndcg@10": 0.018876900662964706
+        },
+        "exclude_seen": {
+          "recall@5": 0.02615928095514913,
+          "ndcg@5": 0.018234980018898818,
+          "recall@10": 0.03769619460716362,
+          "ndcg@10": 0.02198690344100188
+        }
+      },
+      "seconds": 4.241
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 14140,
+      "status": "ok",
+      "n_items_in_rules": 517,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 9839,
+        "users_with_rule_ratio": 0.4399678039619014,
+        "users_with_unseen_rule_item": 9688,
+        "mean_rule_items_in_top_k": 2.9758529714260162,
+        "rule_items_already_seen_ratio": 0.12380351320079941
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4399678039619014,
+        "target_covered_ratio": 0.06439207619729016,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.3053676535184046
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.47975245526705235
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.7389240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9116781157998037
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.028126816616732997,
+          "ndcg@5": 0.018556863732544917,
+          "recall@10": 0.041810132808657155,
+          "ndcg@10": 0.023003268155632386
+        },
+        "exclude_seen": {
+          "recall@5": 0.0325537718552967,
+          "ndcg@5": 0.02210832310514805,
+          "recall@10": 0.0460135044493136,
+          "ndcg@10": 0.026473331457506386
+        }
+      },
+      "seconds": 5.555
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 14089,
+      "status": "ok",
+      "n_items_in_rules": 517,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 9839,
+        "users_with_rule_ratio": 0.4399678039619014,
+        "users_with_unseen_rule_item": 9679,
+        "mean_rule_items_in_top_k": 2.8684881277109513,
+        "rule_items_already_seen_ratio": 0.12743967076136434
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4399678039619014,
+        "target_covered_ratio": 0.06349774180566113,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.3053676535184046
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.47975245526705235
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.7389240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9116781157998037
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.028082099897151543,
+          "ndcg@5": 0.01858375194456653,
+          "recall@10": 0.041854849528238605,
+          "ndcg@10": 0.023064685466937223
+        },
+        "exclude_seen": {
+          "recall@5": 0.03250905513571525,
+          "ndcg@5": 0.022126256651181283,
+          "recall@10": 0.04605822116889505,
+          "ndcg@10": 0.026530594153043242
+        }
+      },
+      "seconds": 5.963
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 13127,
+      "status": "ok",
+      "n_items_in_rules": 514,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8743,
+        "users_with_rule_ratio": 0.3909582793006305,
+        "users_with_unseen_rule_item": 8501,
+        "mean_rule_items_in_top_k": 2.520547332647677,
+        "rule_items_already_seen_ratio": 0.1405787073997197
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3909582793006305,
+        "target_covered_ratio": 0.05437553101104503,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2621453044013002
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.420018834925333
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.6882911392405063
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8802747791952895
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.027769082860081385,
+          "ndcg@5": 0.018369973602401387,
+          "recall@10": 0.04100523185619103,
+          "ndcg@10": 0.022698218383049175
+        },
+        "exclude_seen": {
+          "recall@5": 0.03246433841613379,
+          "ndcg@5": 0.022016295254075047,
+          "recall@10": 0.044135402226892634,
+          "ndcg@10": 0.025846152996319434
+        }
+      },
+      "seconds": 5.891
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 7571,
+      "status": "ok",
+      "n_items_in_rules": 474,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 6800,
+        "users_with_rule_ratio": 0.30407369315387023,
+        "users_with_unseen_rule_item": 6501,
+        "mean_rule_items_in_top_k": 1.8695166122613245,
+        "rule_items_already_seen_ratio": 0.1691542288557214
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.30407369315387023,
+        "target_covered_ratio": 0.038545812279211195,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.18510058859703066
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.32570967307951026
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5712025316455697
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8125613346418057
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02463891248937978,
+          "ndcg@5": 0.016723116065703706,
+          "recall@10": 0.03550507534767249,
+          "ndcg@10": 0.020231352757653767
+        },
+        "exclude_seen": {
+          "recall@5": 0.028126816616732997,
+          "ndcg@5": 0.019788921386447486,
+          "recall@10": 0.03876939587711845,
+          "ndcg@10": 0.023237366933822678
+        }
+      },
+      "seconds": 4.719
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 3596,
+      "status": "ok",
+      "n_items_in_rules": 392,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4693,
+        "users_with_rule_ratio": 0.20985556499575192,
+        "users_with_unseen_rule_item": 4322,
+        "mean_rule_items_in_top_k": 1.2509949470106874,
+        "rule_items_already_seen_ratio": 0.20742779525307406
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.20985556499575192,
+        "target_covered_ratio": 0.025130796404775745,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10498111218483704
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.21552535988160904
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.45292721518987344
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7369970559371933
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02137459195993382,
+          "ndcg@5": 0.01442305316085198,
+          "recall@10": 0.032732638733622504,
+          "ndcg@10": 0.018059676641581878
+        },
+        "exclude_seen": {
+          "recall@5": 0.024683629208961232,
+          "ndcg@5": 0.017194255083113612,
+          "recall@10": 0.03546035862809104,
+          "ndcg@10": 0.020690803614163762
+        }
+      },
+      "seconds": 5.135
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 7580,
+      "status": "ok",
+      "n_items_in_rules": 377,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8141,
+        "users_with_rule_ratio": 0.3640388141125967,
+        "users_with_unseen_rule_item": 7952,
+        "mean_rule_items_in_top_k": 2.447390779412422,
+        "rule_items_already_seen_ratio": 0.13655880579561858
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3640388141125967,
+        "target_covered_ratio": 0.04847292402629343,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2396556268119125
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.38974841921162384
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.649129746835443
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.858684985279686
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.024773062648124133,
+          "ndcg@5": 0.016344453824199284,
+          "recall@10": 0.03791977820507088,
+          "ndcg@10": 0.02061002126417488
+        },
+        "exclude_seen": {
+          "recall@5": 0.029021151008362025,
+          "ndcg@5": 0.019491075958632684,
+          "recall@10": 0.04145239905200555,
+          "ndcg@10": 0.02355167412106036
+        }
+      },
+      "seconds": 6.22
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 7576,
+      "status": "ok",
+      "n_items_in_rules": 377,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8141,
+        "users_with_rule_ratio": 0.3640388141125967,
+        "users_with_unseen_rule_item": 7952,
+        "mean_rule_items_in_top_k": 2.447390779412422,
+        "rule_items_already_seen_ratio": 0.1364857210721529
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3640388141125967,
+        "target_covered_ratio": 0.04807047355006037,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2396556268119125
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.38974841921162384
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.649129746835443
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.858684985279686
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.024773062648124133,
+          "ndcg@5": 0.016344453824199284,
+          "recall@10": 0.03796449492465233,
+          "ndcg@10": 0.020623592775485512
+        },
+        "exclude_seen": {
+          "recall@5": 0.029021151008362025,
+          "ndcg@5": 0.019491075958632684,
+          "recall@10": 0.04154183249116845,
+          "ndcg@10": 0.023579241749395102
+        }
+      },
+      "seconds": 5.116
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 7299,
+      "status": "ok",
+      "n_items_in_rules": 376,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 7337,
+        "users_with_rule_ratio": 0.3280865715691097,
+        "users_with_unseen_rule_item": 7117,
+        "mean_rule_items_in_top_k": 2.209944998434915,
+        "rule_items_already_seen_ratio": 0.14744744137107707
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3280865715691097,
+        "target_covered_ratio": 0.04400125206814828,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.21110427830976017
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.34656262612673217
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5996835443037974
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8263002944062807
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.024817779367705586,
+          "ndcg@5": 0.016321381080850513,
+          "recall@10": 0.0370701605330233,
+          "ndcg@10": 0.020326358596510143
+        },
+        "exclude_seen": {
+          "recall@5": 0.029244734606269283,
+          "ndcg@5": 0.01953608232080623,
+          "recall@10": 0.03988731386665474,
+          "ndcg@10": 0.023031771746096937
+        }
+      },
+      "seconds": 4.696
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 5088,
+      "status": "ok",
+      "n_items_in_rules": 363,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 6171,
+        "users_with_rule_ratio": 0.27594687653713723,
+        "users_with_unseen_rule_item": 5894,
+        "mean_rule_items_in_top_k": 1.7178822161606224,
+        "rule_items_already_seen_ratio": 0.1725277871775516
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.27594687653713723,
+        "target_covered_ratio": 0.03309037249027411,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.16331371343231135
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2905959908516077
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5352056962025317
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7841020608439647
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02200062603407414,
+          "ndcg@5": 0.015050848620035293,
+          "recall@10": 0.032911505611948305,
+          "ndcg@10": 0.018586818350873606
+        },
+        "exclude_seen": {
+          "recall@5": 0.025443813441845906,
+          "ndcg@5": 0.017817015154873127,
+          "recall@10": 0.03590752582390556,
+          "ndcg@10": 0.021208348853290704
+        }
+      },
+      "seconds": 5.23
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 2587,
+      "status": "ok",
+      "n_items_in_rules": 325,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4405,
+        "users_with_rule_ratio": 0.19697714975629388,
+        "users_with_unseen_rule_item": 4060,
+        "mean_rule_items_in_top_k": 1.1942941465814068,
+        "rule_items_already_seen_ratio": 0.21072337876291747
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19697714975629388,
+        "target_covered_ratio": 0.021866475875329784,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.09725028551348502
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19884299744383155
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.4295886075949367
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7203140333660452
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.0193623395787685,
+          "ndcg@5": 0.013022451378120936,
+          "recall@10": 0.030720386352457184,
+          "ndcg@10": 0.016663632181671346
+        },
+        "exclude_seen": {
+          "recall@5": 0.022447793229888654,
+          "ndcg@5": 0.01552392184918433,
+          "recall@10": 0.03335867280776282,
+          "ndcg@10": 0.019062628221865597
+        }
+      },
+      "seconds": 5.916
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 2846,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5488,
+        "mean_rule_items_in_top_k": 1.8401377274963109,
+        "rule_items_already_seen_ratio": 0.15771184175354183
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.0325537718552967,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022760810266958816,
+          "ndcg@5": 0.015153606066595411,
+          "recall@10": 0.03349282296650718,
+          "ndcg@10": 0.018663210037120834
+        },
+        "exclude_seen": {
+          "recall@5": 0.026069847515986226,
+          "ndcg@5": 0.0176080722487701,
+          "recall@10": 0.03599695926306846,
+          "ndcg@10": 0.020857161166926222
+        }
+      },
+      "seconds": 6.07
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 2846,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5488,
+        "mean_rule_items_in_top_k": 1.8401377274963109,
+        "rule_items_already_seen_ratio": 0.15771184175354183
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.0325537718552967,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022760810266958816,
+          "ndcg@5": 0.015153606066595411,
+          "recall@10": 0.03349282296650718,
+          "ndcg@10": 0.018663210037120834
+        },
+        "exclude_seen": {
+          "recall@5": 0.026069847515986226,
+          "ndcg@5": 0.0176080722487701,
+          "recall@10": 0.03599695926306846,
+          "ndcg@10": 0.020857161166926222
+        }
+      },
+      "seconds": 5.522
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 2837,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5488,
+        "mean_rule_items_in_top_k": 1.8029781335241246,
+        "rule_items_already_seen_ratio": 0.1601934523809524
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.03241962169655234,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02285024370612172,
+          "ndcg@5": 0.015193263214886543,
+          "recall@10": 0.03344810624692573,
+          "ndcg@10": 0.018668470437833644
+        },
+        "exclude_seen": {
+          "recall@5": 0.02620399767473058,
+          "ndcg@5": 0.01767090714869344,
+          "recall@10": 0.036041675982649915,
+          "ndcg@10": 0.020889452046696615
+        }
+      },
+      "seconds": 6.457
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 2289,
+      "status": "ok",
+      "n_items_in_rules": 241,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5146,
+        "users_with_rule_ratio": 0.23011223896614943,
+        "users_with_unseen_rule_item": 4997,
+        "mean_rule_items_in_top_k": 1.4548584715825248,
+        "rule_items_already_seen_ratio": 0.18377132319041034
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.23011223896614943,
+        "target_covered_ratio": 0.023744578097750747,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.12773434068347536
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.23987622763352617
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.46281645569620256
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7252208047105005
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.020390824129141887,
+          "ndcg@5": 0.014062815257726262,
+          "recall@10": 0.029647185082502348,
+          "ndcg@10": 0.017066808405665258
+        },
+        "exclude_seen": {
+          "recall@5": 0.022492509949470108,
+          "ndcg@5": 0.01593112040665258,
+          "recall@10": 0.03246433841613379,
+          "ndcg@10": 0.01915441438991825
+        }
+      },
+      "seconds": 4.982
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 1426,
+      "status": "ok",
+      "n_items_in_rules": 224,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3821,
+        "users_with_rule_ratio": 0.1708625855207262,
+        "users_with_unseen_rule_item": 3553,
+        "mean_rule_items_in_top_k": 1.041005231856191,
+        "rule_items_already_seen_ratio": 0.22555841924398626
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.1708625855207262,
+        "target_covered_ratio": 0.017394803917184634,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.07994377580602653
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.1676308354634737
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.38449367088607594
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6800785083415113
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.018691588785046728,
+          "ndcg@5": 0.012601803125710727,
+          "recall@10": 0.02888700084961767,
+          "ndcg@10": 0.01587524446504057
+        },
+        "exclude_seen": {
+          "recall@5": 0.020703841166212048,
+          "ndcg@5": 0.014396518306398494,
+          "recall@10": 0.03130170370701605,
+          "ndcg@10": 0.01782340745076432
+        }
+      },
+      "seconds": 5.152
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 672,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4253,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21079365079365078
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.020033090372490275,
+          "ndcg@5": 0.013429865767810089,
+          "recall@10": 0.02942360148459509,
+          "ndcg@10": 0.01650679945934342
+        },
+        "exclude_seen": {
+          "recall@5": 0.023520994499843493,
+          "ndcg@5": 0.015818390119102653,
+          "recall@10": 0.03179358762241202,
+          "ndcg@10": 0.018522394510850873
+        }
+      },
+      "seconds": 5.415
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 672,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4253,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21079365079365078
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.020033090372490275,
+          "ndcg@5": 0.013429865767810089,
+          "recall@10": 0.02942360148459509,
+          "ndcg@10": 0.01650679945934342
+        },
+        "exclude_seen": {
+          "recall@5": 0.023520994499843493,
+          "ndcg@5": 0.015818390119102653,
+          "recall@10": 0.03179358762241202,
+          "ndcg@10": 0.018522394510850873
+        }
+      },
+      "seconds": 5.17
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 672,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4253,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21079365079365078
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.020033090372490275,
+          "ndcg@5": 0.013429865767810089,
+          "recall@10": 0.02942360148459509,
+          "ndcg@10": 0.01650679945934342
+        },
+        "exclude_seen": {
+          "recall@5": 0.023520994499843493,
+          "ndcg@5": 0.015818390119102653,
+          "recall@10": 0.03179358762241202,
+          "ndcg@10": 0.018522394510850873
+        }
+      },
+      "seconds": 4.343
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 623,
+      "status": "ok",
+      "n_items_in_rules": 146,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4164,
+        "users_with_rule_ratio": 0.18620042033716405,
+        "users_with_unseen_rule_item": 4029,
+        "mean_rule_items_in_top_k": 0.9963779457139025,
+        "rule_items_already_seen_ratio": 0.24019387846692397
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.18620042033716405,
+        "target_covered_ratio": 0.016768769843044314,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.09558112975489766
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.187407507063097
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.39042721518987344
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6830225711481845
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.01842328846755802,
+          "ndcg@5": 0.012742794889859745,
+          "recall@10": 0.02727719894468542,
+          "ndcg@10": 0.01559719245496147
+        },
+        "exclude_seen": {
+          "recall@5": 0.020435540848723337,
+          "ndcg@5": 0.014423118044029754,
+          "recall@10": 0.029021151008362025,
+          "ndcg@10": 0.017201411619936796
+        }
+      },
+      "seconds": 4.05
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 493,
+      "status": "ok",
+      "n_items_in_rules": 140,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3161,
+        "users_with_rule_ratio": 0.14134955059696822,
+        "users_with_unseen_rule_item": 2952,
+        "mean_rule_items_in_top_k": 0.7037070160533023,
+        "rule_items_already_seen_ratio": 0.2971976869797293
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14134955059696822,
+        "target_covered_ratio": 0.012118231006573358,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.05894755336905912
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13359343468316964
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.33306962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6427870461236507
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.016858203282207218,
+          "ndcg@5": 0.011362237316962256,
+          "recall@10": 0.026338147833474938,
+          "ndcg@10": 0.014401495192829662
+        },
+        "exclude_seen": {
+          "recall@5": 0.018691588785046728,
+          "ndcg@5": 0.01293741743083722,
+          "recall@10": 0.02767964942091848,
+          "ndcg@10": 0.015850041312567
+        }
+      },
+      "seconds": 4.009
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.02,
+      "max_len": 2,
+      "n_rules": 204,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3076,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.27959680692734407
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.01605330232974109,
+          "ndcg@5": 0.010670035363563925,
+          "recall@10": 0.023923444976076555,
+          "ndcg@10": 0.01323138674096768
+        },
+        "exclude_seen": {
+          "recall@5": 0.017976121271743504,
+          "ndcg@5": 0.012122534740377838,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014282387655909223
+        }
+      },
+      "seconds": 3.888
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.05,
+      "max_len": 2,
+      "n_rules": 204,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3076,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.27959680692734407
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.01605330232974109,
+          "ndcg@5": 0.010670035363563925,
+          "recall@10": 0.023923444976076555,
+          "ndcg@10": 0.01323138674096768
+        },
+        "exclude_seen": {
+          "recall@5": 0.017976121271743504,
+          "ndcg@5": 0.012122534740377838,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014282387655909223
+        }
+      },
+      "seconds": 4.897
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.1,
+      "max_len": 2,
+      "n_rules": 204,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3076,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.27959680692734407
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.01605330232974109,
+          "ndcg@5": 0.010670035363563925,
+          "recall@10": 0.023923444976076555,
+          "ndcg@10": 0.01323138674096768
+        },
+        "exclude_seen": {
+          "recall@5": 0.017976121271743504,
+          "ndcg@5": 0.012122534740377838,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014282387655909223
+        }
+      },
+      "seconds": 4.102
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.2,
+      "max_len": 2,
+      "n_rules": 200,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3061,
+        "mean_rule_items_in_top_k": 0.6049724992174574,
+        "rule_items_already_seen_ratio": 0.29440461231428783
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.009614094710012074,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.014577650583553191,
+          "ndcg@5": 0.010000849603533852,
+          "recall@10": 0.022984393864866073,
+          "ndcg@10": 0.012720410221488508
+        },
+        "exclude_seen": {
+          "recall@5": 0.016455752805974153,
+          "ndcg@5": 0.011330562006421617,
+          "recall@10": 0.0237892948173322,
+          "ndcg@10": 0.013712994544195278
+        }
+      },
+      "seconds": 4.199
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.3,
+      "max_len": 2,
+      "n_rules": 163,
+      "status": "ok",
+      "n_items_in_rules": 60,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 2132,
+        "users_with_rule_ratio": 0.0953360461476546,
+        "users_with_unseen_rule_item": 1940,
+        "mean_rule_items_in_top_k": 0.37249027411349106,
+        "rule_items_already_seen_ratio": 0.3835534213685474
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.0953360461476546,
+        "target_covered_ratio": 0.006618074498054823,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.03531582183958535
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.08529530472218486
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.23180379746835442
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.5004906771344455
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.013280865715691098,
+          "ndcg@5": 0.00880013991944752,
+          "recall@10": 0.022134776192818496,
+          "ndcg@10": 0.011639139897235
+        },
+        "exclude_seen": {
+          "recall@5": 0.014890667620623351,
+          "ndcg@5": 0.009942407090874099,
+          "recall@10": 0.02285024370612172,
+          "ndcg@10": 0.012525957404778862
+        }
+      },
+      "seconds": 4.026
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.02,
+      "max_len": 3,
+      "n_rules": 128722,
+      "status": "ok",
+      "n_items_in_rules": 517,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 9839,
+        "users_with_rule_ratio": 0.4399678039619014,
+        "users_with_unseen_rule_item": 9659,
+        "mean_rule_items_in_top_k": 2.9758529714260162,
+        "rule_items_already_seen_ratio": 0.12178995927812589
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4399678039619014,
+        "target_covered_ratio": 0.06439207619729016,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.3053676535184046
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.47975245526705235
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.7389240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9116781157998037
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.027187765505522515,
+          "ndcg@5": 0.017976814724849972,
+          "recall@10": 0.0402003309037249,
+          "ndcg@10": 0.022203292222667627
+        },
+        "exclude_seen": {
+          "recall@5": 0.031614720744086215,
+          "ndcg@5": 0.021224612162710918,
+          "recall@10": 0.04525332021642892,
+          "ndcg@10": 0.025615390970422824
+        }
+      },
+      "seconds": 8.129
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.05,
+      "max_len": 3,
+      "n_rules": 128659,
+      "status": "ok",
+      "n_items_in_rules": 517,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 9839,
+        "users_with_rule_ratio": 0.4399678039619014,
+        "users_with_unseen_rule_item": 9650,
+        "mean_rule_items_in_top_k": 2.8684881277109513,
+        "rule_items_already_seen_ratio": 0.1253507513874166
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.4399678039619014,
+        "target_covered_ratio": 0.06349774180566113,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.3053676535184046
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.47975245526705235
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.7389240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.9116781157998037
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02714304878594106,
+          "ndcg@5": 0.018003702936871587,
+          "recall@10": 0.04024504762330636,
+          "ndcg@10": 0.02226470953397246
+        },
+        "exclude_seen": {
+          "recall@5": 0.031570004024504765,
+          "ndcg@5": 0.021242545708744152,
+          "recall@10": 0.04529803693601037,
+          "ndcg@10": 0.025672653665959676
+        }
+      },
+      "seconds": 8.014
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.1,
+      "max_len": 3,
+      "n_rules": 119967,
+      "status": "ok",
+      "n_items_in_rules": 514,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8743,
+        "users_with_rule_ratio": 0.3909582793006305,
+        "users_with_unseen_rule_item": 8472,
+        "mean_rule_items_in_top_k": 2.520547332647677,
+        "rule_items_already_seen_ratio": 0.13811272553089574
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3909582793006305,
+        "target_covered_ratio": 0.05437553101104503,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2621453044013002
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.420018834925333
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.6882911392405063
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8802747791952895
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02678531502928945,
+          "ndcg@5": 0.017772625806206036,
+          "recall@10": 0.039350713231677326,
+          "ndcg@10": 0.021882765524049788
+        },
+        "exclude_seen": {
+          "recall@5": 0.03148057058534186,
+          "ndcg@5": 0.021112185606224455,
+          "recall@10": 0.04346465143317086,
+          "ndcg@10": 0.02500803639545247
+        }
+      },
+      "seconds": 7.816
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.2,
+      "max_len": 3,
+      "n_rules": 88744,
+      "status": "ok",
+      "n_items_in_rules": 474,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 6800,
+        "users_with_rule_ratio": 0.30407369315387023,
+        "users_with_unseen_rule_item": 6480,
+        "mean_rule_items_in_top_k": 1.8770290211510083,
+        "rule_items_already_seen_ratio": 0.16685725176291213
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.30407369315387023,
+        "target_covered_ratio": 0.03952958011000313,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.18510058859703066
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.32570967307951026
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5712025316455697
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8125613346418057
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.023610427939006393,
+          "ndcg@5": 0.01607962161460907,
+          "recall@10": 0.034074140321066045,
+          "ndcg@10": 0.01946229182735146
+        },
+        "exclude_seen": {
+          "recall@5": 0.02709833206635961,
+          "ndcg@5": 0.0188434522124066,
+          "recall@10": 0.03832222868130394,
+          "ndcg@10": 0.022448592767159544
+        }
+      },
+      "seconds": 6.517
+    },
+    {
+      "min_support": 0.0005,
+      "min_confidence": 0.3,
+      "max_len": 3,
+      "n_rules": 71701,
+      "status": "ok",
+      "n_items_in_rules": 399,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4824,
+        "users_with_rule_ratio": 0.21571345526092206,
+        "users_with_unseen_rule_item": 4502,
+        "mean_rule_items_in_top_k": 1.3032240754818227,
+        "rule_items_already_seen_ratio": 0.20244304144935493
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.21571345526092206,
+        "target_covered_ratio": 0.029334168045432187,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.11016428006676623
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.22346293555764832
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.4572784810126582
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.020614407727049144,
+          "ndcg@5": 0.014119094660041851,
+          "recall@10": 0.031078120109108796,
+          "ndcg@10": 0.01749340376189769
+        },
+        "exclude_seen": {
+          "recall@5": 0.023923444976076555,
+          "ndcg@5": 0.016606415825642637,
+          "recall@10": 0.034968474712695076,
+          "ndcg@10": 0.02016031114073154
+        }
+      },
+      "seconds": 5.216
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.02,
+      "max_len": 3,
+      "n_rules": 42806,
+      "status": "ok",
+      "n_items_in_rules": 377,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8141,
+        "users_with_rule_ratio": 0.3640388141125967,
+        "users_with_unseen_rule_item": 7936,
+        "mean_rule_items_in_top_k": 2.447390779412422,
+        "rule_items_already_seen_ratio": 0.13485958597504158
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3640388141125967,
+        "target_covered_ratio": 0.04847292402629343,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2396556268119125
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.38974841921162384
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.649129746835443
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.858684985279686
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.0237892948173322,
+          "ndcg@5": 0.015904908275661156,
+          "recall@10": 0.03653355989804588,
+          "ndcg@10": 0.0200588711748303
+        },
+        "exclude_seen": {
+          "recall@5": 0.02826096677547735,
+          "ndcg@5": 0.01871539094279105,
+          "recall@10": 0.04118409873451684,
+          "ndcg@10": 0.0229171012260313
+        }
+      },
+      "seconds": 6.004
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.05,
+      "max_len": 3,
+      "n_rules": 42800,
+      "status": "ok",
+      "n_items_in_rules": 377,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8141,
+        "users_with_rule_ratio": 0.3640388141125967,
+        "users_with_unseen_rule_item": 7936,
+        "mean_rule_items_in_top_k": 2.447390779412422,
+        "rule_items_already_seen_ratio": 0.1347865012515759
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3640388141125967,
+        "target_covered_ratio": 0.04807047355006037,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2396556268119125
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.38974841921162384
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.649129746835443
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.858684985279686
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.0237892948173322,
+          "ndcg@5": 0.015904908275661156,
+          "recall@10": 0.03657827661762733,
+          "ndcg@10": 0.020072442686140925
+        },
+        "exclude_seen": {
+          "recall@5": 0.02826096677547735,
+          "ndcg@5": 0.01871539094279105,
+          "recall@10": 0.04127353217367974,
+          "ndcg@10": 0.022944668854366038
+        }
+      },
+      "seconds": 5.793
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.1,
+      "max_len": 3,
+      "n_rules": 41189,
+      "status": "ok",
+      "n_items_in_rules": 376,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 7337,
+        "users_with_rule_ratio": 0.3280865715691097,
+        "users_with_unseen_rule_item": 7101,
+        "mean_rule_items_in_top_k": 2.209944998434915,
+        "rule_items_already_seen_ratio": 0.1454240100362194
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3280865715691097,
+        "target_covered_ratio": 0.04400125206814828,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.21110427830976017
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.34656262612673217
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5996835443037974
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8263002944062807
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02383401153691365,
+          "ndcg@5": 0.015881835532312386,
+          "recall@10": 0.03581809238474266,
+          "ndcg@10": 0.019813341118972202
+        },
+        "exclude_seen": {
+          "recall@5": 0.02848455037338461,
+          "ndcg@5": 0.018760397304964593,
+          "recall@10": 0.039708446988328934,
+          "ndcg@10": 0.02242309815516631
+        }
+      },
+      "seconds": 5.416
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.2,
+      "max_len": 3,
+      "n_rules": 33094,
+      "status": "ok",
+      "n_items_in_rules": 363,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 6171,
+        "users_with_rule_ratio": 0.27594687653713723,
+        "users_with_unseen_rule_item": 5888,
+        "mean_rule_items_in_top_k": 1.7220855878012788,
+        "rule_items_already_seen_ratio": 0.17026304172833737
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.27594687653713723,
+        "target_covered_ratio": 0.03335867280776282,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.16331371343231135
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2905959908516077
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5352056962025317
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7841020608439647
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.021285158520770918,
+          "ndcg@5": 0.014695202602089088,
+          "recall@10": 0.03148057058534186,
+          "ndcg@10": 0.018004461762216217
+        },
+        "exclude_seen": {
+          "recall@5": 0.02459419576979833,
+          "ndcg@5": 0.017019606536773594,
+          "recall@10": 0.03550507534767249,
+          "ndcg@10": 0.020534100104277
+        }
+      },
+      "seconds": 5.244
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.3,
+      "max_len": 3,
+      "n_rules": 25256,
+      "status": "ok",
+      "n_items_in_rules": 329,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4487,
+        "users_with_rule_ratio": 0.2006439207619729,
+        "users_with_unseen_rule_item": 4192,
+        "mean_rule_items_in_top_k": 1.2218843625631624,
+        "rule_items_already_seen_ratio": 0.2084903934126258
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.2006439207619729,
+        "target_covered_ratio": 0.023968161695658005,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10032504612140912
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2040898695008745
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.4319620253164557
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7222767419038273
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.018691588785046728,
+          "ndcg@5": 0.01294308053155816,
+          "recall@10": 0.029334168045432187,
+          "ndcg@10": 0.016369403820519508
+        },
+        "exclude_seen": {
+          "recall@5": 0.021777042436166884,
+          "ndcg@5": 0.015028536321764098,
+          "recall@10": 0.03331395608818137,
+          "ndcg@10": 0.018740303726638367
+        }
+      },
+      "seconds": 4.495
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.02,
+      "max_len": 3,
+      "n_rules": 9026,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5470,
+        "mean_rule_items_in_top_k": 1.8401377274963109,
+        "rule_items_already_seen_ratio": 0.16089523948385215
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.0325537718552967,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02267137682779591,
+          "ndcg@5": 0.015117066065418044,
+          "recall@10": 0.034074140321066045,
+          "ndcg@10": 0.018842832692199656
+        },
+        "exclude_seen": {
+          "recall@5": 0.026561731431382195,
+          "ndcg@5": 0.017808206850855504,
+          "recall@10": 0.0356839422259983,
+          "ndcg@10": 0.020816833639127747
+        }
+      },
+      "seconds": 4.296
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.05,
+      "max_len": 3,
+      "n_rules": 9026,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5470,
+        "mean_rule_items_in_top_k": 1.8401377274963109,
+        "rule_items_already_seen_ratio": 0.16089523948385215
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.0325537718552967,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02267137682779591,
+          "ndcg@5": 0.015117066065418044,
+          "recall@10": 0.034074140321066045,
+          "ndcg@10": 0.018842832692199656
+        },
+        "exclude_seen": {
+          "recall@5": 0.026561731431382195,
+          "ndcg@5": 0.017808206850855504,
+          "recall@10": 0.0356839422259983,
+          "ndcg@10": 0.020816833639127747
+        }
+      },
+      "seconds": 4.445
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.1,
+      "max_len": 3,
+      "n_rules": 8995,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5470,
+        "mean_rule_items_in_top_k": 1.8029781335241246,
+        "rule_items_already_seen_ratio": 0.16344246031746032
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.03241962169655234,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022760810266958816,
+          "ndcg@5": 0.015156723213709172,
+          "recall@10": 0.034029423601484594,
+          "ndcg@10": 0.018848093092912466
+        },
+        "exclude_seen": {
+          "recall@5": 0.02669588159012655,
+          "ndcg@5": 0.017871041750778843,
+          "recall@10": 0.03572865894557975,
+          "ndcg@10": 0.020849124518898143
+        }
+      },
+      "seconds": 4.432
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.2,
+      "max_len": 3,
+      "n_rules": 7809,
+      "status": "ok",
+      "n_items_in_rules": 241,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5146,
+        "users_with_rule_ratio": 0.23011223896614943,
+        "users_with_unseen_rule_item": 4979,
+        "mean_rule_items_in_top_k": 1.4549031883021062,
+        "rule_items_already_seen_ratio": 0.18782271944922546
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.23011223896614943,
+        "target_covered_ratio": 0.023744578097750747,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.12773434068347536
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.23987622763352617
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.46281645569620256
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7252208047105005
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.020256673970397533,
+          "ndcg@5": 0.014005057159293953,
+          "recall@10": 0.030094352278316864,
+          "ndcg@10": 0.01719658234075521
+        },
+        "exclude_seen": {
+          "recall@5": 0.022984393864866073,
+          "ndcg@5": 0.01612733569998345,
+          "recall@10": 0.03201717122031928,
+          "ndcg@10": 0.019065872489370903
+        }
+      },
+      "seconds": 4.682
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.3,
+      "max_len": 3,
+      "n_rules": 5939,
+      "status": "ok",
+      "n_items_in_rules": 224,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3868,
+        "users_with_rule_ratio": 0.1729642713410544,
+        "users_with_unseen_rule_item": 3630,
+        "mean_rule_items_in_top_k": 1.0568796673076064,
+        "rule_items_already_seen_ratio": 0.23059022635921303
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.1729642713410544,
+        "target_covered_ratio": 0.01819970486965076,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.08178863217078099
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.17045607426341988
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3860759493670886
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6810598626104023
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.018691588785046728,
+          "ndcg@5": 0.01276958827956294,
+          "recall@10": 0.02942360148459509,
+          "ndcg@10": 0.01622659258732804
+        },
+        "exclude_seen": {
+          "recall@5": 0.021419308679515272,
+          "ndcg@5": 0.01483131124700897,
+          "recall@10": 0.03130170370701605,
+          "ndcg@10": 0.0180336967526963
+        }
+      },
+      "seconds": 4.407
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.02,
+      "max_len": 3,
+      "n_rules": 1368,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4249,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21206349206349207
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.019407056298349955,
+          "ndcg@5": 0.012980071793971483,
+          "recall@10": 0.0296919018020838,
+          "ndcg@10": 0.01635161321062967
+        },
+        "exclude_seen": {
+          "recall@5": 0.023342127621517685,
+          "ndcg@5": 0.015573880493505896,
+          "recall@10": 0.031614720744086215,
+          "ndcg@10": 0.01828004515179225
+        }
+      },
+      "seconds": 5.754
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.05,
+      "max_len": 3,
+      "n_rules": 1368,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4249,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21206349206349207
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.019407056298349955,
+          "ndcg@5": 0.012980071793971483,
+          "recall@10": 0.0296919018020838,
+          "ndcg@10": 0.01635161321062967
+        },
+        "exclude_seen": {
+          "recall@5": 0.023342127621517685,
+          "ndcg@5": 0.015573880493505896,
+          "recall@10": 0.031614720744086215,
+          "ndcg@10": 0.01828004515179225
+        }
+      },
+      "seconds": 4.996
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.1,
+      "max_len": 3,
+      "n_rules": 1368,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4249,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21206349206349207
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.019407056298349955,
+          "ndcg@5": 0.012980071793971483,
+          "recall@10": 0.0296919018020838,
+          "ndcg@10": 0.01635161321062967
+        },
+        "exclude_seen": {
+          "recall@5": 0.023342127621517685,
+          "ndcg@5": 0.015573880493505896,
+          "recall@10": 0.031614720744086215,
+          "ndcg@10": 0.01828004515179225
+        }
+      },
+      "seconds": 5.803
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.2,
+      "max_len": 3,
+      "n_rules": 1283,
+      "status": "ok",
+      "n_items_in_rules": 146,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4164,
+        "users_with_rule_ratio": 0.18620042033716405,
+        "users_with_unseen_rule_item": 4025,
+        "mean_rule_items_in_top_k": 0.9969145463488799,
+        "rule_items_already_seen_ratio": 0.24145510002691306
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.18620042033716405,
+        "target_covered_ratio": 0.017350087197603184,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.09558112975489766
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.187407507063097
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.39042721518987344
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6830225711481845
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.017752537673836246,
+          "ndcg@5": 0.0122717828187662,
+          "recall@10": 0.02763493270133703,
+          "ndcg@10": 0.015459144545743621
+        },
+        "exclude_seen": {
+          "recall@5": 0.020659124446630595,
+          "ndcg@5": 0.01433821682369117,
+          "recall@10": 0.02942360148459509,
+          "ndcg@10": 0.01717595790590548
+        }
+      },
+      "seconds": 5.783
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.3,
+      "max_len": 3,
+      "n_rules": 1065,
+      "status": "ok",
+      "n_items_in_rules": 140,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3161,
+        "users_with_rule_ratio": 0.14134955059696822,
+        "users_with_unseen_rule_item": 2949,
+        "mean_rule_items_in_top_k": 0.7073737870589814,
+        "rule_items_already_seen_ratio": 0.2998293191731462
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14134955059696822,
+        "target_covered_ratio": 0.012833698519876582,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.05894755336905912
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13359343468316964
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.33306962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6427870461236507
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.016142735768903994,
+          "ndcg@5": 0.010924843010775863,
+          "recall@10": 0.026874748468452354,
+          "ndcg@10": 0.014370636215778543
+        },
+        "exclude_seen": {
+          "recall@5": 0.01904932254169834,
+          "ndcg@5": 0.0129491292955813,
+          "recall@10": 0.028350400214640255,
+          "ndcg@10": 0.0159644256613679
+        }
+      },
+      "seconds": 4.32
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.02,
+      "max_len": 3,
+      "n_rules": 276,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010379561320593145,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012970174644869216
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      },
+      "seconds": 3.737
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.05,
+      "max_len": 3,
+      "n_rules": 276,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010379561320593145,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012970174644869216
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      },
+      "seconds": 4.358
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.1,
+      "max_len": 3,
+      "n_rules": 276,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010379561320593145,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012970174644869216
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      },
+      "seconds": 4.211
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.2,
+      "max_len": 3,
+      "n_rules": 271,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3060,
+        "mean_rule_items_in_top_k": 0.6049724992174574,
+        "rule_items_already_seen_ratio": 0.2945524429004361
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.009614094710012074,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.014398783705227385,
+          "ndcg@5": 0.009710375560563072,
+          "recall@10": 0.02289496042570317,
+          "ndcg@10": 0.012459198125390045
+        },
+        "exclude_seen": {
+          "recall@5": 0.0163216026472298,
+          "ndcg@5": 0.01105391873462262,
+          "recall@10": 0.0237892948173322,
+          "ndcg@10": 0.01348311367938771
+        }
+      },
+      "seconds": 4.404
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.3,
+      "max_len": 3,
+      "n_rules": 227,
+      "status": "ok",
+      "n_items_in_rules": 60,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 2132,
+        "users_with_rule_ratio": 0.0953360461476546,
+        "users_with_unseen_rule_item": 1944,
+        "mean_rule_items_in_top_k": 0.37392120914009747,
+        "rule_items_already_seen_ratio": 0.3836402774455872
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.0953360461476546,
+        "target_covered_ratio": 0.006707507937217726,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.03531582183958535
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.08529530472218486
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.23180379746835442
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.5004906771344455
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.013191432276528194,
+          "ndcg@5": 0.00862651724672069,
+          "recall@10": 0.022134776192818496,
+          "ndcg@10": 0.011494779171380488
+        },
+        "exclude_seen": {
+          "recall@5": 0.0148459509010419,
+          "ndcg@5": 0.00978261518931905,
+          "recall@10": 0.022939677145284623,
+          "ndcg@10": 0.012412927910215244
+        }
+      },
+      "seconds": 3.988
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.02,
+      "max_len": 4,
+      "n_rules": 153084,
+      "status": "ok",
+      "n_items_in_rules": 377,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8141,
+        "users_with_rule_ratio": 0.3640388141125967,
+        "users_with_unseen_rule_item": 7922,
+        "mean_rule_items_in_top_k": 2.447390779412422,
+        "rule_items_already_seen_ratio": 0.13297765434580036
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3640388141125967,
+        "target_covered_ratio": 0.04847292402629343,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2396556268119125
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.38974841921162384
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.649129746835443
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.858684985279686
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.023073827304028977,
+          "ndcg@5": 0.015352421557300457,
+          "recall@10": 0.03630997630013862,
+          "ndcg@10": 0.01964768553723726
+        },
+        "exclude_seen": {
+          "recall@5": 0.02736663238384832,
+          "ndcg@5": 0.018274503237017816,
+          "recall@10": 0.04100523185619103,
+          "ndcg@10": 0.022703906169432412
+        }
+      },
+      "seconds": 12.615
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.05,
+      "max_len": 4,
+      "n_rules": 153078,
+      "status": "ok",
+      "n_items_in_rules": 377,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 8141,
+        "users_with_rule_ratio": 0.3640388141125967,
+        "users_with_unseen_rule_item": 7922,
+        "mean_rule_items_in_top_k": 2.447390779412422,
+        "rule_items_already_seen_ratio": 0.13290456962233468
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3640388141125967,
+        "target_covered_ratio": 0.04807047355006037,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.2396556268119125
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.38974841921162384
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.649129746835443
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.858684985279686
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.023073827304028977,
+          "ndcg@5": 0.015352421557300457,
+          "recall@10": 0.03635469301972007,
+          "ndcg@10": 0.01966125704854789
+        },
+        "exclude_seen": {
+          "recall@5": 0.02736663238384832,
+          "ndcg@5": 0.018274503237017816,
+          "recall@10": 0.04109466529535393,
+          "ndcg@10": 0.02273147379776715
+        }
+      },
+      "seconds": 8.906
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.1,
+      "max_len": 4,
+      "n_rules": 148672,
+      "status": "ok",
+      "n_items_in_rules": 376,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 7337,
+        "users_with_rule_ratio": 0.3280865715691097,
+        "users_with_unseen_rule_item": 7087,
+        "mean_rule_items_in_top_k": 2.209944998434915,
+        "rule_items_already_seen_ratio": 0.14333987576131604
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.3280865715691097,
+        "target_covered_ratio": 0.04400125206814828,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.21110427830976017
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.34656262612673217
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5996835443037974
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.8263002944062807
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.023118544023610427,
+          "ndcg@5": 0.015329348813951683,
+          "recall@10": 0.0355945087868354,
+          "ndcg@10": 0.019402155481379166
+        },
+        "exclude_seen": {
+          "recall@5": 0.027590215981755577,
+          "ndcg@5": 0.018319509599191357,
+          "recall@10": 0.03952958011000313,
+          "ndcg@10": 0.02220990309856742
+        }
+      },
+      "seconds": 9.307
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.2,
+      "max_len": 4,
+      "n_rules": 131877,
+      "status": "ok",
+      "n_items_in_rules": 363,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 6171,
+        "users_with_rule_ratio": 0.27594687653713723,
+        "users_with_unseen_rule_item": 5874,
+        "mean_rule_items_in_top_k": 1.7220855878012788,
+        "rule_items_already_seen_ratio": 0.1675884812131599
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.27594687653713723,
+        "target_covered_ratio": 0.03335867280776282,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.16331371343231135
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2905959908516077
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.5352056962025317
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7841020608439647
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.02052497428788624,
+          "ndcg@5": 0.014125417095227983,
+          "recall@10": 0.0311675535482717,
+          "ndcg@10": 0.017560319986707963
+        },
+        "exclude_seen": {
+          "recall@5": 0.023655144658587847,
+          "ndcg@5": 0.016561420042499955,
+          "recall@10": 0.035236775030183784,
+          "ndcg@10": 0.020287948909762897
+        }
+      },
+      "seconds": 8.667
+    },
+    {
+      "min_support": 0.0007,
+      "min_confidence": 0.3,
+      "max_len": 4,
+      "n_rules": 115082,
+      "status": "ok",
+      "n_items_in_rules": 329,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4487,
+        "users_with_rule_ratio": 0.2006439207619729,
+        "users_with_unseen_rule_item": 4178,
+        "mean_rule_items_in_top_k": 1.2218843625631624,
+        "rule_items_already_seen_ratio": 0.204903934126258
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.2006439207619729,
+        "target_covered_ratio": 0.02401287841523946,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10032504612140912
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.2040898695008745
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.4319620253164557
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7222767419038273
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.017976121271743504,
+          "ndcg@5": 0.012392577681631212,
+          "recall@10": 0.02888700084961767,
+          "ndcg@10": 0.015890941337802042
+        },
+        "exclude_seen": {
+          "recall@5": 0.020882708044537852,
+          "ndcg@5": 0.014593527579122667,
+          "recall@10": 0.032911505611948305,
+          "ndcg@10": 0.01846334955643943
+        }
+      },
+      "seconds": 5.626
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.02,
+      "max_len": 4,
+      "n_rules": 20128,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5465,
+        "mean_rule_items_in_top_k": 1.8401377274963109,
+        "rule_items_already_seen_ratio": 0.1611382469441812
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.0325537718552967,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022045342753655592,
+          "ndcg@5": 0.014572023253310976,
+          "recall@10": 0.03358225640567008,
+          "ndcg@10": 0.018344686922857813
+        },
+        "exclude_seen": {
+          "recall@5": 0.026248714394312034,
+          "ndcg@5": 0.017630826488018003,
+          "recall@10": 0.03577337566516121,
+          "ndcg@10": 0.020759802768454905
+        }
+      },
+      "seconds": 4.184
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.05,
+      "max_len": 4,
+      "n_rules": 20128,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5465,
+        "mean_rule_items_in_top_k": 1.8401377274963109,
+        "rule_items_already_seen_ratio": 0.1611382469441812
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.0325537718552967,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022045342753655592,
+          "ndcg@5": 0.014572023253310976,
+          "recall@10": 0.03358225640567008,
+          "ndcg@10": 0.018344686922857813
+        },
+        "exclude_seen": {
+          "recall@5": 0.026248714394312034,
+          "ndcg@5": 0.017630826488018003,
+          "recall@10": 0.03577337566516121,
+          "ndcg@10": 0.020759802768454905
+        }
+      },
+      "seconds": 4.724
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.1,
+      "max_len": 4,
+      "n_rules": 20024,
+      "status": "ok",
+      "n_items_in_rules": 245,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5465,
+        "mean_rule_items_in_top_k": 1.8029781335241246,
+        "rule_items_already_seen_ratio": 0.1636904761904762
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.25001117917989535,
+        "target_covered_ratio": 0.03241962169655234,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.14460159887551613
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.26301627875689493
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.48931962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7389597644749755
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022134776192818496,
+          "ndcg@5": 0.014611680401602104,
+          "recall@10": 0.03353753968608863,
+          "ndcg@10": 0.01834994732357063
+        },
+        "exclude_seen": {
+          "recall@5": 0.026382864553056388,
+          "ndcg@5": 0.01769366138794134,
+          "recall@10": 0.03581809238474266,
+          "ndcg@10": 0.020792093648225294
+        }
+      },
+      "seconds": 4.175
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.2,
+      "max_len": 4,
+      "n_rules": 17979,
+      "status": "ok",
+      "n_items_in_rules": 241,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5146,
+        "users_with_rule_ratio": 0.23011223896614943,
+        "users_with_unseen_rule_item": 4974,
+        "mean_rule_items_in_top_k": 1.4549031883021062,
+        "rule_items_already_seen_ratio": 0.1881300713056307
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.23011223896614943,
+        "target_covered_ratio": 0.023744578097750747,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.12773434068347536
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.23987622763352617
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.46281645569620256
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.7252208047105005
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.01963063989625721,
+          "ndcg@5": 0.013460014347186886,
+          "recall@10": 0.029602468362920895,
+          "ndcg@10": 0.016698436571413372
+        },
+        "exclude_seen": {
+          "recall@5": 0.02267137682779591,
+          "ndcg@5": 0.01594995533714595,
+          "recall@10": 0.03210660465948218,
+          "ndcg@10": 0.019008841618698057
+        }
+      },
+      "seconds": 3.986
+    },
+    {
+      "min_support": 0.001,
+      "min_confidence": 0.3,
+      "max_len": 4,
+      "n_rules": 15316,
+      "status": "ok",
+      "n_items_in_rules": 224,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3868,
+        "users_with_rule_ratio": 0.1729642713410544,
+        "users_with_unseen_rule_item": 3625,
+        "mean_rule_items_in_top_k": 1.0568796673076064,
+        "rule_items_already_seen_ratio": 0.2309710175587053
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.1729642713410544,
+        "target_covered_ratio": 0.01819970486965076,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.08178863217078099
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.17045607426341988
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3860759493670886
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6810598626104023
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.018065554710906408,
+          "ndcg@5": 0.012218690718380552,
+          "recall@10": 0.028931717569199124,
+          "ndcg@10": 0.015722745607140355
+        },
+        "exclude_seen": {
+          "recall@5": 0.02110629164244511,
+          "ndcg@5": 0.014648076135096146,
+          "recall@10": 0.03134642042659751,
+          "ndcg@10": 0.017958684120929602
+        }
+      },
+      "seconds": 3.89
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.02,
+      "max_len": 4,
+      "n_rules": 1606,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4251,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21221288515406161
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.019272906139605597,
+          "ndcg@5": 0.012956919454787453,
+          "recall@10": 0.02946831820417654,
+          "ndcg@10": 0.016296308734396234
+        },
+        "exclude_seen": {
+          "recall@5": 0.023073827304028977,
+          "ndcg@5": 0.015451671727132063,
+          "recall@10": 0.031614720744086215,
+          "ndcg@10": 0.018251361199401284
+        }
+      },
+      "seconds": 3.699
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.05,
+      "max_len": 4,
+      "n_rules": 1606,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4251,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21221288515406161
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.019272906139605597,
+          "ndcg@5": 0.012956919454787453,
+          "recall@10": 0.02946831820417654,
+          "ndcg@10": 0.016296308734396234
+        },
+        "exclude_seen": {
+          "recall@5": 0.023073827304028977,
+          "ndcg@5": 0.015451671727132063,
+          "recall@10": 0.031614720744086215,
+          "ndcg@10": 0.018251361199401284
+        }
+      },
+      "seconds": 3.551
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.1,
+      "max_len": 4,
+      "n_rules": 1606,
+      "status": "ok",
+      "n_items_in_rules": 148,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4365,
+        "users_with_rule_ratio": 0.19518848097303582,
+        "users_with_unseen_rule_item": 4251,
+        "mean_rule_items_in_top_k": 1.197290166793364,
+        "rule_items_already_seen_ratio": 0.21221288515406161
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.19518848097303582,
+        "target_covered_ratio": 0.02137459195993382,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.10296055521391549
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.19736311045338356
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.40427215189873417
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6908734052993131
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.019272906139605597,
+          "ndcg@5": 0.012956919454787453,
+          "recall@10": 0.02946831820417654,
+          "ndcg@10": 0.016296308734396234
+        },
+        "exclude_seen": {
+          "recall@5": 0.023073827304028977,
+          "ndcg@5": 0.015451671727132063,
+          "recall@10": 0.031614720744086215,
+          "ndcg@10": 0.018251361199401284
+        }
+      },
+      "seconds": 3.549
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.2,
+      "max_len": 4,
+      "n_rules": 1502,
+      "status": "ok",
+      "n_items_in_rules": 146,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 4164,
+        "users_with_rule_ratio": 0.18620042033716405,
+        "users_with_unseen_rule_item": 4027,
+        "mean_rule_items_in_top_k": 0.9969145463488799,
+        "rule_items_already_seen_ratio": 0.24163452049878892
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.18620042033716405,
+        "target_covered_ratio": 0.017350087197603184,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.09558112975489766
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.187407507063097
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.39042721518987344
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6830225711481845
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.017618387515091892,
+          "ndcg@5": 0.012248630479582167,
+          "recall@10": 0.027411349103429773,
+          "ndcg@10": 0.015403840069510184
+        },
+        "exclude_seen": {
+          "recall@5": 0.020390824129141887,
+          "ndcg@5": 0.014216008057317337,
+          "recall@10": 0.02942360148459509,
+          "ndcg@10": 0.017147273953514515
+        }
+      },
+      "seconds": 3.682
+    },
+    {
+      "min_support": 0.0015,
+      "min_confidence": 0.3,
+      "max_len": 4,
+      "n_rules": 1261,
+      "status": "ok",
+      "n_items_in_rules": 140,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3161,
+        "users_with_rule_ratio": 0.14134955059696822,
+        "users_with_unseen_rule_item": 2951,
+        "mean_rule_items_in_top_k": 0.7073737870589814,
+        "rule_items_already_seen_ratio": 0.30008217965737405
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14134955059696822,
+        "target_covered_ratio": 0.012833698519876582,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.05894755336905912
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13359343468316964
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.33306962025316456
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.6427870461236507
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.01600858561015964,
+          "ndcg@5": 0.010901690671591831,
+          "recall@10": 0.026651164870545096,
+          "ndcg@10": 0.014315331739545103
+        },
+        "exclude_seen": {
+          "recall@5": 0.01878102222420963,
+          "ndcg@5": 0.012826920529207472,
+          "recall@10": 0.028350400214640255,
+          "ndcg@10": 0.015935741708976933
+        }
+      },
+      "seconds": 3.656
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.02,
+      "max_len": 4,
+      "n_rules": 290,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010363057709877742,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012953671034153812
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      },
+      "seconds": 3.445
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.05,
+      "max_len": 4,
+      "n_rules": 290,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010363057709877742,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012953671034153812
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      },
+      "seconds": 3.439
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.1,
+      "max_len": 4,
+      "n_rules": 290,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.011268613334525779,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010363057709877742,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012953671034153812
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      },
+      "seconds": 3.422
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.2,
+      "max_len": 4,
+      "n_rules": 284,
+      "status": "ok",
+      "n_items_in_rules": 66,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3060,
+        "mean_rule_items_in_top_k": 0.6049724992174574,
+        "rule_items_already_seen_ratio": 0.2945524429004361
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.14103653355989804,
+        "target_covered_ratio": 0.009614094710012074,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.06992884125450233
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.13749495493071437
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.3014240506329114
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.563297350343474
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.014398783705227385,
+          "ndcg@5": 0.00969387194984767,
+          "recall@10": 0.02289496042570317,
+          "ndcg@10": 0.012442694514674644
+        },
+        "exclude_seen": {
+          "recall@5": 0.0163216026472298,
+          "ndcg@5": 0.01105391873462262,
+          "recall@10": 0.0237892948173322,
+          "ndcg@10": 0.01348311367938771
+        }
+      },
+      "seconds": 3.353
+    },
+    {
+      "min_support": 0.002,
+      "min_confidence": 0.3,
+      "max_len": 4,
+      "n_rules": 239,
+      "status": "ok",
+      "n_items_in_rules": 60,
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 2132,
+        "users_with_rule_ratio": 0.0953360461476546,
+        "users_with_unseen_rule_item": 1944,
+        "mean_rule_items_in_top_k": 0.37392120914009747,
+        "rule_items_already_seen_ratio": 0.3836402774455872
+      },
+      "diagnostics": {
+        "users_with_rule_ratio": 0.0953360461476546,
+        "target_covered_ratio": 0.006707507937217726,
+        "by_history_length": {
+          "<=4": {
+            "users": 11383,
+            "users_with_rule_ratio": 0.03531582183958535
+          },
+          "5-9": {
+            "users": 7433,
+            "users_with_rule_ratio": 0.08529530472218486
+          },
+          "10-19": {
+            "users": 2528,
+            "users_with_rule_ratio": 0.23180379746835442
+          },
+          ">=20": {
+            "users": 1019,
+            "users_with_rule_ratio": 0.5004906771344455
+          }
+        }
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.013191432276528194,
+          "ndcg@5": 0.008610013636005286,
+          "recall@10": 0.022134776192818496,
+          "ndcg@10": 0.011478275560665087
+        },
+        "exclude_seen": {
+          "recall@5": 0.0148459509010419,
+          "ndcg@5": 0.00978261518931905,
+          "recall@10": 0.022939677145284623,
+          "ndcg@10": 0.012412927910215244
+        }
+      },
+      "seconds": 3.445
+    }
+  ],
+  "selected": {
+    "max_len": 2,
+    "min_support": 0.0001,
+    "min_confidence": 0.05
+  },
+  "best_by_max_len": {
+    "2": {
+      "min_support": 0.0001,
+      "min_confidence": 0.05,
+      "n_rules": 84883,
+      "ndcg@10": 0.03727830612269943
+    },
+    "3": {
+      "min_support": 0.0005,
+      "min_confidence": 0.05,
+      "n_rules": 128659,
+      "ndcg@10": 0.02226470953397246
+    },
+    "4": {
+      "min_support": 0.0007,
+      "min_confidence": 0.05,
+      "n_rules": 153078,
+      "ndcg@10": 0.01966125704854789
+    }
+  },
+  "comparison": {
+    "metric": "ndcg@10 (keep_seen)",
+    "n_users": 22363,
+    "selected_vs_popularity": {
+      "mean": 0.029429992005434363,
+      "standard_error": 0.0010537487294227607
+    },
+    "runner_up": {
+      "max_len": 2,
+      "min_support": 0.0001,
+      "min_confidence": 0.02
+    },
+    "selected_vs_runner_up": {
+      "mean": 0.00029796510774037643,
+      "standard_error": 0.0001796300524138901
+    }
+  }
+}
