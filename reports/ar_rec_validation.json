@@ -1,0 +1,87 @@
+{
+  "note": "Kết quả sơ bộ trên validation, chưa chọn cấu hình (quét và chọn: 14/11). Mức 0,0005 chưa chạy được do thiếu RAM (hơn 650.000 luật). Popularity thuần của B trên cùng split: recall@10 0,016277; ndcg@10 0,007848.",
+  "runs": [
+    {
+      "model": "ar_rec",
+      "split": "validation",
+      "config": {
+        "min_support": 0.002,
+        "min_confidence": 0.1,
+        "max_len": 4,
+        "score": "max(confidence * lift)",
+        "padding": "popularity (train)"
+      },
+      "mining": {
+        "n_transactions": 22363,
+        "n_items": 12101,
+        "n_frequent_itemsets": 716,
+        "n_rules": 290,
+        "fpgrowth_seconds": 0.882,
+        "rules_seconds": 0.006
+      },
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 3154,
+        "users_with_rule_ratio": 0.14103653355989804,
+        "users_with_unseen_rule_item": 3075,
+        "mean_rule_items_in_top_k": 0.6610025488530161,
+        "rule_items_already_seen_ratio": 0.2797321066161548
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.015874435451415283,
+          "ndcg@5": 0.010363057709877742,
+          "recall@10": 0.02383401153691365,
+          "ndcg@10": 0.012953671034153812
+        },
+        "exclude_seen": {
+          "recall@5": 0.01784197111299915,
+          "ndcg@5": 0.01184589146857884,
+          "recall@10": 0.02459419576979833,
+          "ndcg@10": 0.014052506791101654
+        }
+      }
+    },
+    {
+      "model": "ar_rec",
+      "split": "validation",
+      "config": {
+        "min_support": 0.001,
+        "min_confidence": 0.1,
+        "max_len": 4,
+        "score": "max(confidence * lift)",
+        "padding": "popularity (train)"
+      },
+      "mining": {
+        "n_transactions": 22363,
+        "n_items": 12101,
+        "n_frequent_itemsets": 4698,
+        "n_rules": 20024,
+        "fpgrowth_seconds": 1.232,
+        "rules_seconds": 0.071
+      },
+      "ranking": {
+        "users": 22363,
+        "users_with_rule": 5591,
+        "users_with_rule_ratio": 0.25001117917989535,
+        "users_with_unseen_rule_item": 5465,
+        "mean_rule_items_in_top_k": 1.8029781335241246,
+        "rule_items_already_seen_ratio": 0.1636904761904762
+      },
+      "metrics": {
+        "keep_seen": {
+          "recall@5": 0.022134776192818496,
+          "ndcg@5": 0.014611680401602104,
+          "recall@10": 0.03353753968608863,
+          "ndcg@10": 0.01834994732357063
+        },
+        "exclude_seen": {
+          "recall@5": 0.026382864553056388,
+          "ndcg@5": 0.01769366138794134,
+          "recall@10": 0.03581809238474266,
+          "ndcg@10": 0.020792093648225294
+        }
+      }
+    }
+  ]
+}
