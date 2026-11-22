@@ -9,14 +9,21 @@ import numpy as np
 
 from src.patterns import (
     build_transaction_matrix,
+    compare_sequential_unordered,
+    count_ordered_pairs,
     describe_rule,
+    direction_null_expectation,
     generate_rules,
     load_item_metadata,
+    load_train_sequences,
     load_train_transactions,
+    mine_sequential_patterns,
     pair_rules_only,
+    prefixspan_main,
     run_fpgrowth,
     summarize_itemsets,
     summarize_rules,
+    tie_statistics,
     top_rules_by_lift,
 )
 
@@ -225,6 +232,119 @@ class MetadataTests(unittest.TestCase):
         # Danh mục lá chung phải có mặt ở mọi item trong X ∪ Y: item 1 không có "Gifts".
         self.assertFalse(describe_rule(frozenset({2, 4}), frozenset({1}), metadata)["same_leaf_category"])
         self.assertTrue(describe_rule(frozenset({2}), frozenset({4}), metadata)["same_leaf_category"])
+
+
+def sequence_fixture():
+    """4 user, 3 item. Hai tập mảng song song: chuỗi item và timestamp (u2 có item 3 và 2 trùng timestamp)."""
+    sequences = [np.array([1, 2, 3]), np.array([1, 3, 2]), np.array([2, 1, 3]), np.array([1, 2])]
+    timestamps = [np.array([1, 2, 3]), np.array([1, 2, 2]), np.array([1, 2, 3]), np.array([1, 2])]
+    return sequences, timestamps
+
+
+class SequentialPatternTests(unittest.TestCase):
+    def test_sequences_keep_order_and_train_only(self):
+        with tempfile.TemporaryDirectory() as directory:
+            interactions, splits = write_fixture(Path(directory))
+            users, sequences, timestamps = load_train_sequences(interactions, splits)
+        self.assertEqual(users, [1, 2])
+        # u1 giữ nguyên lần lặp item 2 và thứ tự; không lọt item validation/test.
+        self.assertEqual([s.tolist() for s in sequences], [[1, 2, 2], [1, 3]])
+        self.assertEqual([t.tolist() for t in timestamps], [[0, 0, 0], [0, 0]])
+
+    def test_prefixspan_matches_hand_count(self):
+        sequences, _ = sequence_fixture()
+        patterns = mine_sequential_patterns(sequences, min_count=2, max_len=3)
+        # Hòa số đếm thì theo mẫu. 1->2 có ở u1, u2, u4; 1->3 ở u1, u2, u3; 2->3 ở u1, u3. 2->1 chỉ ở u3 và 3->2 chỉ ở u2.
+        self.assertEqual(
+            patterns,
+            [(4, (1,)), (4, (2,)), (3, (1, 2)), (3, (1, 3)), (3, (3,)), (2, (2, 3))],
+        )
+        # max_len cắt độ dài mẫu.
+        self.assertTrue(all(len(p) == 1 for _, p in mine_sequential_patterns(sequences, 2, max_len=1)))
+        # Mỗi user tính một lần dù mẫu xuất hiện nhiều lần.
+        self.assertEqual(mine_sequential_patterns([[1, 2, 1, 2]], 1, 2)[-1], (1, (2, 2)))
+        self.assertEqual(dict((p, c) for c, p in mine_sequential_patterns([[1, 2, 1, 2], [2, 1]], 1, 2))[(2, 1)], 2)
+
+    def test_ordered_pair_counts_and_strict_counts(self):
+        sequences, timestamps = sequence_fixture()
+        ordered = count_ordered_pairs(sequences, timestamps, n_items=3)
+        got = {(r.first, r.second): (r.count, r.count_strict) for r in ordered.itertuples(index=False)}
+        # (3, 2) của u2 trùng timestamp nên không tính vào count_strict.
+        self.assertEqual(got, {
+            (1, 2): (3, 3), (2, 1): (1, 1), (1, 3): (3, 3), (2, 3): (2, 2), (3, 2): (1, 0),
+        })
+
+    def test_direction_null_expectation(self):
+        self.assertAlmostEqual(direction_null_expectation([1]), 1.0)
+        # n = 5, hướng chiếm >= 4/5: P(K >= 4) + P(K <= 1) = 2 * (5 + 1) / 32.
+        self.assertAlmostEqual(direction_null_expectation([5]), 12 / 32)
+        # Phần tử < 1 bị bỏ.
+        self.assertAlmostEqual(direction_null_expectation([0, 5]), 12 / 32)
+
+    def test_compare_with_unordered_itemsets(self):
+        sequences, timestamps = sequence_fixture()
+        matrix = build_transaction_matrix([np.unique(s) for s in sequences], n_items=3)
+        itemsets, _ = run_fpgrowth(matrix, min_support=0.5, max_len=3)
+        summary, table, _ = compare_sequential_unordered(
+            sequences, timestamps, itemsets, n_items=3, min_count=2, min_confidence=0.6, max_len=3
+        )
+        self.assertEqual(summary["sequential_by_length"], {"1": 3, "2": 3, "3": 0})
+        self.assertEqual(summary["unordered_by_length"], {"1": 3, "2": 3, "3": 1})
+        pairs = summary["pairs"]
+        self.assertEqual(
+            (pairs["unordered_frequent"], pairs["both_directions_frequent"], pairs["one_direction_frequent"],
+             pairs["no_direction_frequent"]),
+            (3, 0, 3, 0),
+        )
+        # Số đếm cặp không thứ tự: {1,2} = 4, {1,3} = 3, {2,3} = 3; tổng 10, trong đó 9 có thứ tự chặt.
+        self.assertAlmostEqual(pairs["tied_support_share"], 0.1)
+        self.assertEqual(
+            table[["low", "high", "unordered", "low_to_high", "high_to_low"]].values.tolist(),
+            [[1, 2, 4, 3, 1], [1, 3, 3, 3, 0], [2, 3, 3, 2, 1]],
+        )
+        # Hướng chiếm ưu thế: 3/4, 3/3, 2/3 -> trung vị 0,75 và một cặp đạt >= 0,8.
+        self.assertAlmostEqual(pairs["direction_all_orders"]["share_median"], 0.75)
+        self.assertEqual(pairs["direction_all_orders"]["pairs_share_ge_threshold"], 1)
+        self.assertEqual(summary["triples"], {"unordered_frequent": 1, "with_frequent_ordering": 0, "sequential_patterns": 0})
+        # Luật 1 => 1 với min_confidence 0,6: không thứ tự 6 luật; tuần tự: 1->2 (3/4), 1->3 (3/4); 2->3 chỉ 2/4.
+        self.assertEqual(summary["rules_1_to_1"], {"min_confidence": 0.6, "unordered": 6, "sequential": 2})
+        self.assertEqual(summary["checks"], {
+            "item_counts_match_fpgrowth": True,
+            "pair_patterns_match_pair_counter": True,
+            "sequential_itemsets_frequent_violations": 0,
+            "pair_order_identity_violations": 0,
+        })
+
+    def test_tie_statistics(self):
+        sequences, timestamps = sequence_fixture()
+        self.assertEqual(
+            tie_statistics(sequences, timestamps),
+            {"rows": 11, "rows_in_tie_groups": 2, "adjacent_pairs": 7, "adjacent_ties": 1, "timestamps_whole_days": False},
+        )
+
+    def test_cli_writes_reports_from_train_sequences(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            interactions, splits = write_fixture(root)
+            items = root / "items.jsonl"
+            items.write_text(
+                "\n".join(json.dumps({"item_id": i, "metadata": {"title": f"item {i}"}}) for i in range(1, 5)) + "\n",
+                encoding="utf-8",
+            )
+            output, markdown = root / "out.json", root / "out.md"
+            code = prefixspan_main([
+                "--interactions", str(interactions), "--splits", str(splits), "--items", str(items),
+                "--supports", "0.5", "--output", str(output), "--markdown", str(markdown),
+            ])
+            self.assertEqual(code, 0)
+            payload = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(payload["n_sequences"], 2)
+            self.assertEqual(payload["levels"][0]["min_count"], 1)
+            self.assertIn("PrefixSpan", markdown.read_text(encoding="utf-8"))
+            # Train của fixture chỉ có item 1, 2, 3 (item 4 là nhãn validation/test của cả hai user).
+            self.assertEqual(payload["levels"][0]["sequential_by_length"]["1"], 3)
+            # max_len < 2 bị từ chối.
+            self.assertEqual(prefixspan_main(["--interactions", str(interactions), "--max-len", "1"]), 1)
 
 
 if __name__ == "__main__":
