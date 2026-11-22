@@ -381,6 +381,7 @@ def run_rule_sweep(matrix, supports, min_confidence, max_len, top_n, metadata):
 # --- PrefixSpan: mẫu tuần tự trên chuỗi train có thứ tự ---
 
 DIRECTION_SHARE = 0.8
+DEFAULT_ID_MAPPING = ROOT / "data" / "processed" / "id_mapping.json"
 DEFAULT_PREFIXSPAN_OUTPUT = ROOT / "reports" / "prefixspan_sweep.json"
 DEFAULT_PREFIXSPAN_MARKDOWN = ROOT / "reports" / "prefixspan_patterns.md"
 
@@ -430,6 +431,51 @@ def count_ordered_pairs(sequences, timestamps, n_items):
     })
 
 
+def shuffle_tied_order(sequences, timestamps, seed):
+    """Hoán vị ngẫu nhiên thứ tự các item trùng timestamp trong từng chuỗi; thứ tự giữa các timestamp khác nhau giữ nguyên."""
+    rng = np.random.default_rng(seed)
+    shuffled_sequences, shuffled_times = [], []
+    for sequence, times in zip(sequences, timestamps):
+        order = np.lexsort((rng.random(len(sequence)), times))
+        shuffled_sequences.append(sequence[order])
+        shuffled_times.append(times[order])
+    return shuffled_sequences, shuffled_times
+
+
+def user_pair_concentration(matrix, low, high, selected, top_fraction=0.01):
+    """Mức tập trung theo user của các cặp item phổ biến.
+
+    Lượt (user, cặp) là một user chứa cả hai item của cặp. low, high: item_id của từng cặp (cột j của matrix ứng với
+    item j + 1); selected: mảng bool chọn tập cặp con. Trả về thống kê cho mọi cặp và cho cặp được chọn: tổng số lượt,
+    số user có lượt, phần số lượt thuộc nhóm top_fraction user có nhiều lượt nhất (nhóm chọn theo chính số lượt),
+    và độ dài train trung vị của nhóm đó cùng của toàn tập.
+    """
+    csc = matrix.tocsc()
+    lengths = np.asarray(matrix.sum(axis=1)).ravel()
+    k = max(1, int(np.ceil(top_fraction * matrix.shape[0])))
+
+    def stats(mask):
+        if not np.any(mask):
+            return None
+        first = csc[:, low[mask] - 1].astype(np.int32)
+        second = csc[:, high[mask] - 1].astype(np.int32)
+        per_user = np.asarray(first.multiply(second).sum(axis=1)).ravel()
+        top = np.argsort(-per_user, kind="stable")[:k]
+        return {
+            "incidences": int(per_user.sum()),
+            "users_contributing": int(np.sum(per_user > 0)),
+            "top_users": k,
+            "top_share": float(per_user[top].sum() / per_user.sum()),
+            "top_median_length": float(np.median(lengths[top])),
+        }
+
+    return {
+        "all_pairs": stats(np.ones(len(low), dtype=bool)),
+        "selected_pairs": stats(np.asarray(selected, dtype=bool)),
+        "median_length_all": float(np.median(lengths)),
+    }
+
+
 def _lookup_ordered(ordered, first, second, n_items):
     """(count, count_strict) của các cặp có thứ tự (first[k], second[k]); 0 nếu cặp không xuất hiện."""
     wanted = np.asarray(first, dtype=np.int64) * (n_items + 1) + np.asarray(second, dtype=np.int64)
@@ -460,7 +506,9 @@ def direction_null_expectation(totals, share=DIRECTION_SHARE):
     return float(np.sum(np.minimum(probability, 1.0)))
 
 
-def compare_sequential_unordered(sequences, timestamps, itemsets, n_items, min_count, min_confidence, max_len=3):
+def compare_sequential_unordered(
+    sequences, timestamps, itemsets, n_items, min_count, min_confidence, max_len=3, shuffle_seeds=()
+):
     """So mẫu tuần tự (PrefixSpan) với tập phổ biến không thứ tự (FP-Growth) cùng ngưỡng đếm tối thiểu.
 
     itemsets: kết quả run_fpgrowth với cùng max_len và min_support tương ứng min_count. Trả về
@@ -468,6 +516,8 @@ def compare_sequential_unordered(sequences, timestamps, itemsets, n_items, min_c
     tính nhất quán giữa các thuật toán: số đếm item độ dài 1 khớp FP-Growth; mẫu độ dài 2 khớp bộ đếm cặp độc lập;
     tập item của mọi mẫu tuần tự là tập phổ biến với số đếm không nhỏ hơn; count(a->b) + count(b->a) bằng số đếm
     của {a, b} (đúng khi không user nào lặp item, như trong train Beauty).
+    shuffle_seeds: mỗi seed chạy lại PrefixSpan sau khi hoán vị ngẫu nhiên thứ tự các item trùng timestamp
+    (`tie_shuffle` trong tóm tắt), để đo độ nhạy của số mẫu với quy tắc phá hòa.
     min_count phải bằng ceil(min_support × N) của itemsets; mlxtend lọc item đơn bằng so sánh số thực nên có thể lệch
     ở các cặp (N, min_support) hiếm mà min_support × N là số nguyên, điều không xảy ra với N = 22.363.
     """
@@ -517,8 +567,11 @@ def compare_sequential_unordered(sequences, timestamps, itemsets, n_items, min_c
         total = forward + backward
         valid = total >= 1
         share = (np.maximum(forward, backward)[valid] / total[valid]).to_numpy()
+        large = total[valid].to_numpy() >= min_count
         return {
             "n_pairs": int(valid.sum()),
+            "n_pairs_total_ge_min_count": int(large.sum()),
+            "pairs_share_ge_threshold_total_ge_min_count": int(np.sum(share[large] >= DIRECTION_SHARE - 1e-9)),
             "share_median": float(np.median(share)) if share.size else None,
             "pairs_share_ge_threshold": int(np.sum(share >= DIRECTION_SHARE - 1e-9)),
             "pairs_share_ge_threshold_expected_symmetric": direction_null_expectation(total[valid].to_numpy()),
@@ -535,6 +588,17 @@ def compare_sequential_unordered(sequences, timestamps, itemsets, n_items, min_c
         + np.sum(backward_frequent & (table["high_to_low"] / high_count >= min_confidence - tolerance))
     )
 
+    tie_shuffle = []
+    for seed in shuffle_seeds:
+        shuffled, _ = shuffle_tied_order(sequences, timestamps, seed)
+        shuffled_patterns = mine_sequential_patterns(shuffled, min_count, max_len)
+        tie_shuffle.append({
+            "seed": int(seed),
+            "sequential_by_length": {
+                str(k): sum(1 for _, p in shuffled_patterns if len(p) == k) for k in range(1, max_len + 1)
+            },
+        })
+
     triples = [s for s in itemset_count if len(s) == 3]
     ordered_triples = {frozenset(p) for _, p in by_length.get(3, [])}
     summary = {
@@ -544,6 +608,8 @@ def compare_sequential_unordered(sequences, timestamps, itemsets, n_items, min_c
         "prefixspan_seconds": round(prefixspan_seconds, 3),
         "sequential_by_length": {str(k): len(v) for k, v in by_length.items()},
         "unordered_by_length": {str(k): sum(1 for s in itemset_count if len(s) == k) for k in range(1, max_len + 1)},
+        "sequential_pairs_strict": int((ordered["count_strict"] >= min_count).sum()),
+        "tie_shuffle": tie_shuffle,
         "pairs": {
             "unordered_frequent": int(len(table)),
             "both_directions_frequent": int((forward_frequent & backward_frequent).sum()),
@@ -596,7 +662,9 @@ def _top_sequential_pairs(patterns, table, metadata, n):
     return rows
 
 
-def run_sequence_sweep(sequences, timestamps, matrix, supports, min_confidence, max_len, top_n, metadata):
+def run_sequence_sweep(
+    sequences, timestamps, matrix, supports, min_confidence, max_len, top_n, metadata, shuffle_seeds=()
+):
     """Với từng min_support: FP-Growth và PrefixSpan cùng ngưỡng đếm, so sánh và lấy top mẫu tuần tự độ dài 2."""
     n_items = matrix.shape[1]
     results = []
@@ -604,9 +672,15 @@ def run_sequence_sweep(sequences, timestamps, matrix, supports, min_confidence, 
         min_count = int(np.ceil(min_support * len(sequences)))
         itemsets, fp_seconds = run_fpgrowth(matrix, min_support, max_len=max_len)
         summary, table, patterns = compare_sequential_unordered(
-            sequences, timestamps, itemsets, n_items, min_count, min_confidence, max_len
+            sequences, timestamps, itemsets, n_items, min_count, min_confidence, max_len, shuffle_seeds
         )
+        total = (table["low_to_high"] + table["high_to_low"]).to_numpy()
+        with np.errstate(divide="ignore", invalid="ignore"):
+            dominant = (np.maximum(table["low_to_high"], table["high_to_low"]).to_numpy() / total) >= DIRECTION_SHARE - 1e-9
         summary.update({
+            "concentration": user_pair_concentration(
+                matrix, table["low"].to_numpy(), table["high"].to_numpy(), dominant
+            ),
             "min_support": min_support,
             "fpgrowth_seconds": round(fp_seconds, 3),
             "top_sequential_pairs": _top_sequential_pairs(patterns, table, metadata, top_n),
@@ -616,10 +690,15 @@ def run_sequence_sweep(sequences, timestamps, matrix, supports, min_confidence, 
     return results
 
 
+def _min_max(values):
+    return "—" if not values else (f"{min(values):,}" if min(values) == max(values) else f"{min(values):,}–{max(values):,}")
+
+
 def format_sequence_markdown(levels, n_sequences, tie_stats):
-    """Báo cáo Markdown: số mẫu theo min_support, so sánh cặp có/không thứ tự, kiểm tra nhất quán và top mẫu."""
+    """Báo cáo Markdown: số mẫu theo min_support, so sánh cặp có/không thứ tự, độ nhạy, kiểm tra nhất quán, top mẫu, hạn chế."""
     first = levels[0]
     max_len = first["max_len"]
+    pct = tie_stats["rows_in_tie_groups"] / tie_stats["rows"]
     lines = [
         "# Mẫu tuần tự (PrefixSpan) so với tập phổ biến không thứ tự (FP-Growth)",
         "",
@@ -631,30 +710,53 @@ def format_sequence_markdown(levels, n_sequences, tie_stats):
         "- Số đếm của mẫu là số user có mẫu là dãy con (không cần liền kề) của chuỗi train; mỗi user tính một lần. "
         "Ngưỡng đếm tối thiểu giống FP-Growth.",
         "- Khi không user nào lặp item (đúng với train Beauty), count(a → b) + count(b → a) bằng số đếm của {a, b}: "
-        "thứ tự chia số đếm của mỗi cặp thành hai phần. Do đó số mẫu tuần tự không vượt số tập phổ biến không thứ tự, "
-        "và một cặp có số đếm dưới 2 × ngưỡng không thể có cả hai hướng đạt ngưỡng; các số này một phần là hệ quả của phép chia, "
-        "chưa tự nó cho biết thứ tự có thêm thông tin hay không.",
+        "thứ tự chia số đếm của mỗi cặp thành hai phần. Một tập có thể cho tối đa 2 mẫu độ dài 2 và 6 mẫu độ dài 3, nên số mẫu "
+        "tuần tự có thể lớn hơn hoặc nhỏ hơn số tập không thứ tự; một cặp có số đếm dưới 2 × ngưỡng không thể có cả hai hướng đạt "
+        "ngưỡng. Các số trong bảng chịu ảnh hưởng của phép chia này, nên chưa tự nó cho biết thứ tự có thêm thông tin hay không.",
+        "- Luật 1 → 1 tuần tự dùng cùng mẫu số count(a) và tử số count(a → b) ≤ count({a, b}), nên là tập con của luật 1 ⇒ 1 không "
+        "thứ tự; chênh lệch số luật giữa hai cột là hệ quả của định nghĩa, không phải bằng chứng về thông tin của thứ tự.",
         f"- Thứ tự theo `interactions.csv`: timestamp tăng dần, trùng timestamp theo số dòng gốc. "
-        f"Trong phần train, {tie_stats['rows_in_tie_groups']:,} / {tie_stats['rows']:,} tương tác "
-        f"({tie_stats['rows_in_tie_groups'] / tie_stats['rows']:.1%}) thuộc nhóm trùng (user, timestamp), "
-        f"và {tie_stats['adjacent_ties']:,} / {tie_stats['adjacent_pairs']:,} cặp liền kề trong chuỗi có cùng timestamp. "
-        f"Mọi timestamp là mốc ngày: {'có' if tie_stats['timestamps_whole_days'] else 'không'}. "
-        "Cột \"thứ tự chặt\" chỉ tính user có timestamp của hai item khác nhau.",
+        f"Trong phần train, {tie_stats['rows_in_tie_groups']:,} / {tie_stats['rows']:,} tương tác ({pct:.1%}) thuộc nhóm trùng "
+        f"(user, timestamp), và {tie_stats['adjacent_ties']:,} / {tie_stats['adjacent_pairs']:,} cặp liền kề trong chuỗi có cùng "
+        f"timestamp. Mọi timestamp là mốc ngày: {'có' if tie_stats['timestamps_whole_days'] else 'không'}. "
+        "Cột \"chặt\" chỉ tính user có timestamp của hai item khác nhau.",
         f"- Hướng chiếm ≥ {DIRECTION_SHARE:.0%} của một cặp: số cặp quan sát được so với số cặp kỳ vọng nếu mỗi user chọn thứ tự "
         "độc lập với xác suất 1/2 (phân phối nhị thức theo số user của từng cặp). Mốc chỉ cho biết kết quả khác thứ tự ngẫu nhiên "
         "hoàn toàn; không cho biết nguyên nhân (xem mục Hạn chế).",
+        "- Câu hỏi thứ tự mua có thêm thông tin hay không chưa được trả lời ở tài liệu này; phân tích sâu nằm ở kế hoạch 24/11.",
         "",
         "| min_support | Đếm tối thiểu | Item phổ biến | Cặp phổ biến (không thứ tự) | Mẫu tuần tự độ dài 2 "
-        "| Tập 3 item phổ biến | Mẫu tuần tự độ dài 3 | FP-Growth (s) | PrefixSpan (s) |",
-        "|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+        "| Mẫu độ dài 2 (thứ tự chặt) | Tập 3 item phổ biến | Mẫu tuần tự độ dài 3 | FP-Growth (s) | PrefixSpan (s) |",
+        "|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for level in levels:
         lines.append(
             f"| {level['min_support']} | {level['min_count']} | {level['sequential_by_length']['1']:,} "
             f"| {level['unordered_by_length'].get('2', 0):,} | {level['sequential_by_length'].get('2', 0):,} "
+            f"| {level['sequential_pairs_strict']:,} "
             f"| {level['unordered_by_length'].get('3', 0):,} | {level['sequential_by_length'].get('3', 0):,} "
             f"| {level['fpgrowth_seconds']:.1f} | {level['prefixspan_seconds']:.1f} |"
         )
+    if first["tie_shuffle"]:
+        seeds = ", ".join(str(t["seed"]) for t in first["tie_shuffle"])
+        lines += [
+            "",
+            "## Độ nhạy với thứ tự các item trùng ngày",
+            "",
+            f"Hoán vị ngẫu nhiên thứ tự các item trùng timestamp trong từng chuỗi (seed {seeds}) rồi chạy lại PrefixSpan; "
+            "cột khoảng là nhỏ nhất–lớn nhất qua các seed.",
+            "",
+            "| min_support | Mẫu độ dài 2: theo chuỗi | sau hoán vị | thứ tự chặt | Mẫu độ dài 3: theo chuỗi | sau hoán vị |",
+            "|---:|---:|---:|---:|---:|---:|",
+        ]
+        for level in levels:
+            shuffled = level["tie_shuffle"]
+            lines.append(
+                f"| {level['min_support']} | {level['sequential_by_length'].get('2', 0):,} "
+                f"| {_min_max([t['sequential_by_length'].get('2', 0) for t in shuffled])} "
+                f"| {level['sequential_pairs_strict']:,} | {level['sequential_by_length'].get('3', 0):,} "
+                f"| {_min_max([t['sequential_by_length'].get('3', 0) for t in shuffled])} |"
+            )
     lines += [
         "",
         "## Cặp phổ biến theo hướng",
@@ -665,19 +767,19 @@ def format_sequence_markdown(levels, n_sequences, tie_stats):
     ]
     for level in levels:
         pairs = level["pairs"]
+        tied = "—" if pairs["tied_support_share"] is None else format(pairs["tied_support_share"], ".1%")
         lines.append(
             f"| {level['min_support']} | {pairs['unordered_frequent']:,} | {pairs['both_directions_frequent']:,} "
             f"| {pairs['one_direction_frequent']:,} | {pairs['no_direction_frequent']:,} "
-            f"| {'—' if pairs['tied_support_share'] is None else format(pairs['tied_support_share'], '.1%')} "
-            f"| {level['rules_1_to_1']['unordered']:,} "
-            f"| {level['rules_1_to_1']['sequential']:,} |"
+            f"| {tied} | {level['rules_1_to_1']['unordered']:,} | {level['rules_1_to_1']['sequential']:,} |"
         )
     lines += [
         "",
         f"## Mức nghiêng về một hướng (hướng chiếm ≥ {DIRECTION_SHARE:.0%} số user của cặp)",
         "",
-        "| min_support | Cách xác định thứ tự | Cặp xét | Tỉ lệ hướng chiếm ưu thế (trung vị) | Cặp có hướng ≥ ngưỡng | Kỳ vọng nếu thứ tự ngẫu nhiên |",
-        "|---:|---|---:|---:|---:|---:|",
+        "| min_support | Cách xác định thứ tự | Cặp xét | Tỉ lệ hướng chiếm ưu thế (trung vị) | Cặp có hướng ≥ ngưỡng "
+        "| Kỳ vọng nếu thứ tự ngẫu nhiên | Cặp có tổng ≥ đếm tối thiểu: hướng ≥ ngưỡng / số cặp |",
+        "|---:|---|---:|---:|---:|---:|---:|",
     ]
     for level in levels:
         for label, key in (("theo chuỗi (trùng timestamp theo số dòng)", "direction_all_orders"),
@@ -686,7 +788,8 @@ def format_sequence_markdown(levels, n_sequences, tie_stats):
             median = "—" if stats["share_median"] is None else f"{stats['share_median']:.2f}"
             lines.append(
                 f"| {level['min_support']} | {label} | {stats['n_pairs']:,} | {median} "
-                f"| {stats['pairs_share_ge_threshold']:,} | {stats['pairs_share_ge_threshold_expected_symmetric']:.1f} |"
+                f"| {stats['pairs_share_ge_threshold']:,} | {stats['pairs_share_ge_threshold_expected_symmetric']:.1f} "
+                f"| {stats['pairs_share_ge_threshold_total_ge_min_count']:,} / {stats['n_pairs_total_ge_min_count']:,} |"
             )
     if max_len >= 3:
         lines += [
@@ -706,7 +809,8 @@ def format_sequence_markdown(levels, n_sequences, tie_stats):
         "",
         "## Kiểm tra nhất quán giữa PrefixSpan, FP-Growth và bộ đếm cặp độc lập",
         "",
-        "| min_support | Số đếm item khớp | Mẫu độ dài 2 khớp bộ đếm cặp | Mẫu có tập item không phổ biến | Cặp có count(a→b) + count(b→a) ≠ số đếm {a, b} |",
+        "| min_support | Số đếm item khớp | Mẫu độ dài 2 khớp bộ đếm cặp | Mẫu có tập item không phổ biến "
+        "| Cặp có count(a→b) + count(b→a) ≠ số đếm {a, b} |",
         "|---:|:---:|:---:|---:|---:|",
     ]
     for level in levels:
@@ -721,7 +825,8 @@ def format_sequence_markdown(levels, n_sequences, tie_stats):
             "",
             f"## min_support = {level['min_support']}: {len(level['top_sequential_pairs'])} mẫu a → b có số đếm lớn nhất",
             "",
-            "Bảng chỉ lấy mức min_support thấp nhất; mẫu của các mức cao hơn là tập con của bảng đầy đủ trong JSON.",
+            "Bảng xếp theo số đếm theo chuỗi và chỉ lấy mức min_support thấp nhất; JSON lưu top mẫu của từng mức. "
+            "Một số mẫu đổi hướng hoặc hòa khi chỉ tính thứ tự chặt (so hai cột cuối).",
             "",
             "| # | a | b | a → b | b → a | {a, b} | a → b (chặt) | b → a (chặt) |",
             "|---:|---|---|---:|---:|---:|---:|---:|",
@@ -732,43 +837,65 @@ def format_sequence_markdown(levels, n_sequences, tie_stats):
                 f"| {row['count_forward']} | {row['count_backward']} | {row['count_unordered']} "
                 f"| {row['count_forward_strict']} | {row['count_backward_strict']} |"
             )
+    lines += ["", "## Hạn chế", ""]
+    ascending = tie_stats.get("adjacent_ties_asin_ascending")
+    if ascending is not None:
+        lines.append(
+            f"- Thứ tự phá hòa theo số dòng gốc của file raw. Trong phần train, {ascending:,} / {tie_stats['adjacent_ties']:,} "
+            "cặp liền kề trùng timestamp có ASIN tăng dần, tức thứ tự \"theo chuỗi\" của các item trùng ngày trùng với thứ tự ASIN. "
+            "Hướng của một cặp tính theo cột \"theo chuỗi\" vì vậy có thể phản ánh quy tắc phá hòa; cột \"chặt\" loại ảnh hưởng này."
+        )
+    if first["tie_shuffle"]:
+        lines.append(
+            "- Số mẫu tuần tự trong bảng đầu phụ thuộc quy tắc phá hòa: xem mục \"Độ nhạy với thứ tự các item trùng ngày\"; "
+            "các cột hướng, luật 1 → 1 tuần tự và bảng top đều dùng thứ tự theo chuỗi."
+        )
+    concentration = first.get("concentration") or {}
+    selected, everything = concentration.get("selected_pairs"), concentration.get("all_pairs")
+    if selected and everything:
+        lines.append(
+            f"- Ở min_support {first['min_support']}, {first['pairs']['direction_all_orders']['pairs_share_ge_threshold']:,} cặp "
+            f"có hướng chiếm ≥ {DIRECTION_SHARE:.0%} (theo chuỗi). {selected['users_contributing']:,} user có ít nhất một cặp như vậy; "
+            f"{selected['top_users']:,} user (1%) có nhiều cặp nhất chiếm {selected['top_share']:.1%} số lượt (user, cặp) của các cặp này "
+            f"và {everything['top_share']:.1%} số lượt của mọi cặp phổ biến. Nhóm này chọn theo chính số lượt đóng góp; độ dài train "
+            f"trung vị của nhóm là {selected['top_median_length']:.0f}, của toàn tập là {concentration['median_length_all']:.0f}. "
+            f"Số đếm ≥ {first['min_count']} user vì vậy không tương đương {first['min_count']} user độc lập về hành vi."
+        )
     lines += [
-        "",
-        "## Hạn chế",
-        "",
-        "- Thứ tự phá hòa theo số dòng gốc của file raw, và file raw sắp theo ASIN: trong phần train, "
-        "57.021 / 57.021 cặp liền kề trùng timestamp có ASIN tăng dần (kiểm tra riêng, không nằm trong pipeline). "
-        "Hướng của một cặp tính theo cột \"theo chuỗi\" vì vậy có thể phản ánh quy tắc phá hòa; cột \"chặt\" loại ảnh hưởng này.",
-        "- Ở min_support 0,0005, 5.282 cặp có hướng chiếm ≥ 80%; 1% user đóng góp nhiều nhất chiếm 75,4% số lượt (user, cặp) "
-        "của các cặp này (độ dài train trung vị của nhóm đó là 41, của toàn tập là 4; kiểm tra riêng). "
-        "Số đếm ≥ 12 user vì vậy không tương đương 12 user độc lập về hành vi.",
         "- Các số trên chỉ mô tả; nguyên nhân của việc nghiêng về một hướng (thứ tự mua, thời điểm item được review, "
         "user review nhiều item, quy tắc phá hòa) chưa được tách riêng.",
         "- Train Beauty không có item lặp trong cùng một user; với dữ liệu có lặp, mẫu a → a xuất hiện và đẳng thức "
         "count(a → b) + count(b → a) = số đếm {a, b} không còn đúng.",
+        "- Chưa thực hiện: luật tuần tự với lift, và gộp item lên cấp danh mục (kế hoạch mục 3d, khi luật cấp item quá thưa).",
         "- Thời gian chạy là một lần đo, hai thư viện (mlxtend, prefixspan) không cùng điều kiện nên không dùng để so sánh tốc độ.",
     ]
     return "\n".join(lines) + "\n"
 
 
-def tie_statistics(sequences, timestamps):
+def tie_statistics(sequences, timestamps, asin=None):
     """Thống kê trùng timestamp trong chuỗi train: số dòng thuộc nhóm trùng (user, timestamp), số cặp liền kề cùng
-    timestamp và cờ mọi timestamp là mốc ngày (chia hết cho 86.400 giây)."""
+    timestamp, cờ mọi timestamp là mốc ngày (chia hết cho 86.400 giây) và, nếu có `asin` (mảng chuỗi theo item_id),
+    số cặp liền kề trùng timestamp có ASIN của item trước nhỏ hơn ASIN của item sau."""
     rows = int(sum(len(s) for s in sequences))
     in_ties = 0
     adjacent_ties = 0
+    ascending = 0
     whole_days = True
-    for times in timestamps:
+    for sequence, times in zip(sequences, timestamps):
         whole_days = whole_days and bool(np.all(times % 86400 == 0))
         _, inverse, counts = np.unique(times, return_inverse=True, return_counts=True)
         in_ties += int(np.sum(counts[inverse] > 1))
-        adjacent_ties += int(np.sum(np.diff(times) == 0))
+        tied = np.diff(times) == 0
+        adjacent_ties += int(tied.sum())
+        if asin is not None:
+            ascending += int(np.sum(asin[sequence[:-1][tied]] < asin[sequence[1:][tied]]))
     return {
         "rows": rows,
         "rows_in_tie_groups": in_ties,
         "adjacent_pairs": rows - len(sequences),
         "adjacent_ties": adjacent_ties,
         "timestamps_whole_days": whole_days,
+        "adjacent_ties_asin_ascending": None if asin is None else ascending,
     }
 
 
@@ -777,9 +904,14 @@ def prefixspan_main(argv=None):
     parser.add_argument("--interactions", type=Path, default=DEFAULT_INTERACTIONS)
     parser.add_argument("--splits", type=Path, default=DEFAULT_SPLITS)
     parser.add_argument("--items", type=Path, default=DEFAULT_ITEMS)
+    parser.add_argument("--id-mapping", type=Path, default=DEFAULT_ID_MAPPING, help="id_mapping.json (id2item -> ASIN)")
     parser.add_argument("--supports", type=float, nargs="+", default=[0.0005, 0.001, 0.002])
     parser.add_argument("--min-confidence", type=float, default=0.1)
     parser.add_argument("--max-len", type=int, default=3, help="độ dài tối đa của mẫu tuần tự và tập phổ biến")
+    parser.add_argument(
+        "--tie-shuffle-seeds", type=int, nargs="*", default=[42, 43, 44],
+        help="seed hoán vị thứ tự item trùng ngày để đo độ nhạy (rỗng = bỏ qua)",
+    )
     parser.add_argument("--top", type=int, default=20)
     parser.add_argument("--output", type=Path, default=DEFAULT_PREFIXSPAN_OUTPUT)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_PREFIXSPAN_MARKDOWN)
@@ -793,12 +925,15 @@ def prefixspan_main(argv=None):
         matrix = build_transaction_matrix([np.unique(s) for s in sequences], n_items)
         metadata = load_item_metadata(args.items)
         levels = run_sequence_sweep(
-            sequences, timestamps, matrix, args.supports, args.min_confidence, args.max_len, args.top, metadata
+            sequences, timestamps, matrix, args.supports, args.min_confidence, args.max_len, args.top, metadata,
+            args.tie_shuffle_seeds,
         )
+        id2item = json.loads(args.id_mapping.read_text(encoding="utf-8"))["id2item"]
+        asin = np.array([item or "" for item in id2item], dtype=object)
+        ties = tie_statistics(sequences, timestamps, asin)
     except (OSError, ValueError, KeyError, csv.Error, ImportError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
-    ties = tie_statistics(sequences, timestamps)
     payload = {"n_sequences": len(sequences), "n_items": n_items, "timestamp_ties": ties, "levels": levels}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

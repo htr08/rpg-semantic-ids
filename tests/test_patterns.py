@@ -21,10 +21,12 @@ from src.patterns import (
     pair_rules_only,
     prefixspan_main,
     run_fpgrowth,
+    shuffle_tied_order,
     summarize_itemsets,
     summarize_rules,
     tie_statistics,
     top_rules_by_lift,
+    user_pair_concentration,
 )
 
 
@@ -319,8 +321,61 @@ class SequentialPatternTests(unittest.TestCase):
         sequences, timestamps = sequence_fixture()
         self.assertEqual(
             tie_statistics(sequences, timestamps),
-            {"rows": 11, "rows_in_tie_groups": 2, "adjacent_pairs": 7, "adjacent_ties": 1, "timestamps_whole_days": False},
+            {"rows": 11, "rows_in_tie_groups": 2, "adjacent_pairs": 7, "adjacent_ties": 1,
+             "timestamps_whole_days": False, "adjacent_ties_asin_ascending": None},
         )
+        # Cặp trùng timestamp duy nhất là (3, 2) của u2: ASIN "a" của item 3 nhỏ hơn "b" của item 2.
+        asin = np.array(["", "x", "b", "a"], dtype=object)
+        self.assertEqual(tie_statistics(sequences, timestamps, asin)["adjacent_ties_asin_ascending"], 1)
+        asin = np.array(["", "x", "a", "b"], dtype=object)
+        self.assertEqual(tie_statistics(sequences, timestamps, asin)["adjacent_ties_asin_ascending"], 0)
+
+    def test_shuffle_tied_order_only_permutes_ties(self):
+        sequences, timestamps = sequence_fixture()
+        orders = set()
+        for seed in range(20):
+            shuffled, shuffled_times = shuffle_tied_order(sequences, timestamps, seed)
+            for original, times, new, new_times in zip(sequences, timestamps, shuffled, shuffled_times):
+                self.assertEqual(sorted(original.tolist()), sorted(new.tolist()))
+                self.assertTrue(np.all(np.diff(new_times) >= 0))
+            self.assertEqual(shuffled[0].tolist(), [1, 2, 3])
+            self.assertEqual(shuffled[2].tolist(), [2, 1, 3])
+            orders.add(tuple(shuffled[1].tolist()))
+        # u2 = [1, 3, 2] với 3 và 2 trùng timestamp: cả hai thứ tự xuất hiện, item 1 luôn đứng đầu.
+        self.assertEqual(orders, {(1, 3, 2), (1, 2, 3)})
+        again, _ = shuffle_tied_order(sequences, timestamps, 5)
+        same, _ = shuffle_tied_order(sequences, timestamps, 5)
+        self.assertEqual([s.tolist() for s in again], [s.tolist() for s in same])
+
+    def test_user_pair_concentration(self):
+        sequences, _ = sequence_fixture()
+        matrix = build_transaction_matrix([np.unique(s) for s in sequences], n_items=3)
+        low, high = np.array([1, 1, 2]), np.array([2, 3, 3])
+        result = user_pair_concentration(matrix, low, high, np.array([True, False, False]))
+        # Cặp (1,2) có ở cả 4 user; (1,3) và (2,3) ở 3 user đầu. 1% của 4 user làm tròn lên thành 1 user.
+        self.assertEqual(result["all_pairs"]["incidences"], 10)
+        self.assertEqual(result["all_pairs"]["users_contributing"], 4)
+        self.assertAlmostEqual(result["all_pairs"]["top_share"], 3 / 10)
+        self.assertEqual(result["selected_pairs"]["incidences"], 4)
+        self.assertAlmostEqual(result["selected_pairs"]["top_share"], 1 / 4)
+        self.assertEqual(result["all_pairs"]["top_median_length"], 3.0)
+        self.assertEqual(result["median_length_all"], 3.0)
+        self.assertIsNone(user_pair_concentration(matrix, low, high, np.zeros(3, dtype=bool))["selected_pairs"])
+
+    def test_compare_reports_tie_shuffle_and_strict_pairs(self):
+        sequences, timestamps = sequence_fixture()
+        matrix = build_transaction_matrix([np.unique(s) for s in sequences], n_items=3)
+        itemsets, _ = run_fpgrowth(matrix, min_support=0.5, max_len=3)
+        summary, _, _ = compare_sequential_unordered(
+            sequences, timestamps, itemsets, n_items=3, min_count=2, min_confidence=0.6, max_len=3, shuffle_seeds=(1, 2)
+        )
+        self.assertEqual(summary["sequential_pairs_strict"], 3)
+        self.assertEqual([t["seed"] for t in summary["tie_shuffle"]], [1, 2])
+        for run in summary["tie_shuffle"]:
+            self.assertEqual(run["sequential_by_length"]["1"], 3)
+            # Hoán vị chỉ đổi thứ tự của (3, 2) ở u2 nên (1,2), (1,3) không đổi số đếm: luôn >= 2 mẫu độ dài 2.
+            self.assertGreaterEqual(run["sequential_by_length"]["2"], 2)
+        self.assertEqual(summary["pairs"]["direction_all_orders"]["n_pairs_total_ge_min_count"], 3)
 
     def test_cli_writes_reports_from_train_sequences(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -331,15 +386,20 @@ class SequentialPatternTests(unittest.TestCase):
                 "\n".join(json.dumps({"item_id": i, "metadata": {"title": f"item {i}"}}) for i in range(1, 5)) + "\n",
                 encoding="utf-8",
             )
+            mapping = root / "id_mapping.json"
+            mapping.write_text(json.dumps({"id2item": [None, "A1", "A2", "A3", "A4"]}), encoding="utf-8")
             output, markdown = root / "out.json", root / "out.md"
             code = prefixspan_main([
                 "--interactions", str(interactions), "--splits", str(splits), "--items", str(items),
+                "--id-mapping", str(mapping), "--tie-shuffle-seeds", "42",
                 "--supports", "0.5", "--output", str(output), "--markdown", str(markdown),
             ])
             self.assertEqual(code, 0)
             payload = json.loads(output.read_text(encoding="utf-8"))
             self.assertEqual(payload["n_sequences"], 2)
             self.assertEqual(payload["levels"][0]["min_count"], 1)
+            self.assertEqual(len(payload["levels"][0]["tie_shuffle"]), 1)
+            self.assertIsNotNone(payload["timestamp_ties"]["adjacent_ties_asin_ascending"])
             self.assertIn("PrefixSpan", markdown.read_text(encoding="utf-8"))
             # Train của fixture chỉ có item 1, 2, 3 (item 4 là nhãn validation/test của cả hai user).
             self.assertEqual(payload["levels"][0]["sequential_by_length"]["1"], 3)

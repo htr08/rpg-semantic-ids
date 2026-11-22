@@ -5,15 +5,27 @@
 Ghi chú:
 
 - Số đếm của mẫu là số user có mẫu là dãy con (không cần liền kề) của chuỗi train; mỗi user tính một lần. Ngưỡng đếm tối thiểu giống FP-Growth.
-- Khi không user nào lặp item (đúng với train Beauty), count(a → b) + count(b → a) bằng số đếm của {a, b}: thứ tự chia số đếm của mỗi cặp thành hai phần. Do đó số mẫu tuần tự không vượt số tập phổ biến không thứ tự, và một cặp có số đếm dưới 2 × ngưỡng không thể có cả hai hướng đạt ngưỡng; các số này một phần là hệ quả của phép chia, chưa tự nó cho biết thứ tự có thêm thông tin hay không.
-- Thứ tự theo `interactions.csv`: timestamp tăng dần, trùng timestamp theo số dòng gốc. Trong phần train, 85,971 / 153,776 tương tác (55.9%) thuộc nhóm trùng (user, timestamp), và 57,021 / 131,413 cặp liền kề trong chuỗi có cùng timestamp. Mọi timestamp là mốc ngày: có. Cột "thứ tự chặt" chỉ tính user có timestamp của hai item khác nhau.
+- Khi không user nào lặp item (đúng với train Beauty), count(a → b) + count(b → a) bằng số đếm của {a, b}: thứ tự chia số đếm của mỗi cặp thành hai phần. Một tập có thể cho tối đa 2 mẫu độ dài 2 và 6 mẫu độ dài 3, nên số mẫu tuần tự có thể lớn hơn hoặc nhỏ hơn số tập không thứ tự; một cặp có số đếm dưới 2 × ngưỡng không thể có cả hai hướng đạt ngưỡng. Các số trong bảng chịu ảnh hưởng của phép chia này, nên chưa tự nó cho biết thứ tự có thêm thông tin hay không.
+- Luật 1 → 1 tuần tự dùng cùng mẫu số count(a) và tử số count(a → b) ≤ count({a, b}), nên là tập con của luật 1 ⇒ 1 không thứ tự; chênh lệch số luật giữa hai cột là hệ quả của định nghĩa, không phải bằng chứng về thông tin của thứ tự.
+- Thứ tự theo `interactions.csv`: timestamp tăng dần, trùng timestamp theo số dòng gốc. Trong phần train, 85,971 / 153,776 tương tác (55.9%) thuộc nhóm trùng (user, timestamp), và 57,021 / 131,413 cặp liền kề trong chuỗi có cùng timestamp. Mọi timestamp là mốc ngày: có. Cột "chặt" chỉ tính user có timestamp của hai item khác nhau.
 - Hướng chiếm ≥ 80% của một cặp: số cặp quan sát được so với số cặp kỳ vọng nếu mỗi user chọn thứ tự độc lập với xác suất 1/2 (phân phối nhị thức theo số user của từng cặp). Mốc chỉ cho biết kết quả khác thứ tự ngẫu nhiên hoàn toàn; không cho biết nguyên nhân (xem mục Hạn chế).
+- Câu hỏi thứ tự mua có thêm thông tin hay không chưa được trả lời ở tài liệu này; phân tích sâu nằm ở kế hoạch 24/11.
 
-| min_support | Đếm tối thiểu | Item phổ biến | Cặp phổ biến (không thứ tự) | Mẫu tuần tự độ dài 2 | Tập 3 item phổ biến | Mẫu tuần tự độ dài 3 | FP-Growth (s) | PrefixSpan (s) |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 0.0005 | 12 | 3,218 | 7,070 | 6,086 | 19,097 | 6,289 | 2.0 | 1.5 |
-| 0.001 | 23 | 1,452 | 1,423 | 936 | 1,030 | 190 | 0.9 | 0.7 |
-| 0.002 | 45 | 601 | 102 | 48 | 12 | 2 | 1.0 | 0.5 |
+| min_support | Đếm tối thiểu | Item phổ biến | Cặp phổ biến (không thứ tự) | Mẫu tuần tự độ dài 2 | Mẫu độ dài 2 (thứ tự chặt) | Tập 3 item phổ biến | Mẫu tuần tự độ dài 3 | FP-Growth (s) | PrefixSpan (s) |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.0005 | 12 | 3,218 | 7,070 | 6,086 | 5,172 | 19,097 | 6,289 | 1.9 | 1.5 |
+| 0.001 | 23 | 1,452 | 1,423 | 936 | 682 | 1,030 | 190 | 1.0 | 0.7 |
+| 0.002 | 45 | 601 | 102 | 48 | 23 | 12 | 2 | 0.8 | 0.3 |
+
+## Độ nhạy với thứ tự các item trùng ngày
+
+Hoán vị ngẫu nhiên thứ tự các item trùng timestamp trong từng chuỗi (seed 42, 43, 44) rồi chạy lại PrefixSpan; cột khoảng là nhỏ nhất–lớn nhất qua các seed.
+
+| min_support | Mẫu độ dài 2: theo chuỗi | sau hoán vị | thứ tự chặt | Mẫu độ dài 3: theo chuỗi | sau hoán vị |
+|---:|---:|---:|---:|---:|---:|
+| 0.0005 | 6,086 | 5,936–5,974 | 5,172 | 6,289 | 3,989–4,027 |
+| 0.001 | 936 | 839–844 | 682 | 190 | 91–102 |
+| 0.002 | 48 | 29–31 | 23 | 2 | 1 |
 
 ## Cặp phổ biến theo hướng
 
@@ -25,14 +37,14 @@ Ghi chú:
 
 ## Mức nghiêng về một hướng (hướng chiếm ≥ 80% số user của cặp)
 
-| min_support | Cách xác định thứ tự | Cặp xét | Tỉ lệ hướng chiếm ưu thế (trung vị) | Cặp có hướng ≥ ngưỡng | Kỳ vọng nếu thứ tự ngẫu nhiên |
-|---:|---|---:|---:|---:|---:|
-| 0.0005 | theo chuỗi (trùng timestamp theo số dòng) | 7,070 | 1.00 | 5,282 | 119.8 |
-| 0.0005 | chặt (chỉ timestamp khác nhau) | 7,048 | 1.00 | 5,205 | 242.8 |
-| 0.001 | theo chuỗi (trùng timestamp theo số dòng) | 1,423 | 0.89 | 887 | 2.1 |
-| 0.001 | chặt (chỉ timestamp khác nhau) | 1,422 | 0.89 | 859 | 15.1 |
-| 0.002 | theo chuỗi (trùng timestamp theo số dòng) | 102 | 0.86 | 63 | 0.0 |
-| 0.002 | chặt (chỉ timestamp khác nhau) | 102 | 0.75 | 45 | 0.7 |
+| min_support | Cách xác định thứ tự | Cặp xét | Tỉ lệ hướng chiếm ưu thế (trung vị) | Cặp có hướng ≥ ngưỡng | Kỳ vọng nếu thứ tự ngẫu nhiên | Cặp có tổng ≥ đếm tối thiểu: hướng ≥ ngưỡng / số cặp |
+|---:|---|---:|---:|---:|---:|---:|
+| 0.0005 | theo chuỗi (trùng timestamp theo số dòng) | 7,070 | 1.00 | 5,282 | 119.8 | 5,282 / 7,070 |
+| 0.0005 | chặt (chỉ timestamp khác nhau) | 7,048 | 1.00 | 5,205 | 242.8 | 4,798 / 6,171 |
+| 0.001 | theo chuỗi (trùng timestamp theo số dòng) | 1,423 | 0.89 | 887 | 2.1 | 887 / 1,423 |
+| 0.001 | chặt (chỉ timestamp khác nhau) | 1,422 | 0.89 | 859 | 15.1 | 720 / 968 |
+| 0.002 | theo chuỗi (trùng timestamp theo số dòng) | 102 | 0.86 | 63 | 0.0 | 63 / 102 |
+| 0.002 | chặt (chỉ timestamp khác nhau) | 102 | 0.75 | 45 | 0.7 | 29 / 40 |
 
 ## Tập 3 item phổ biến và thứ tự
 
@@ -52,7 +64,7 @@ Ghi chú:
 
 ## min_support = 0.0005: 20 mẫu a → b có số đếm lớn nhất
 
-Bảng chỉ lấy mức min_support thấp nhất; mẫu của các mức cao hơn là tập con của bảng đầy đủ trong JSON.
+Bảng xếp theo số đếm theo chuỗi và chỉ lấy mức min_support thấp nhất; JSON lưu top mẫu của từng mức. Một số mẫu đổi hướng hoặc hòa khi chỉ tính thứ tự chặt (so hai cột cuối).
 
 | # | a | b | a → b | b → a | {a, b} | a → b (chặt) | b → a (chặt) |
 |---:|---|---|---:|---:|---:|---:|---:|
@@ -79,8 +91,10 @@ Bảng chỉ lấy mức min_support thấp nhất; mẫu của các mức cao h
 
 ## Hạn chế
 
-- Thứ tự phá hòa theo số dòng gốc của file raw, và file raw sắp theo ASIN: trong phần train, 57.021 / 57.021 cặp liền kề trùng timestamp có ASIN tăng dần (kiểm tra riêng, không nằm trong pipeline). Hướng của một cặp tính theo cột "theo chuỗi" vì vậy có thể phản ánh quy tắc phá hòa; cột "chặt" loại ảnh hưởng này.
-- Ở min_support 0,0005, 5.282 cặp có hướng chiếm ≥ 80%; 1% user đóng góp nhiều nhất chiếm 75,4% số lượt (user, cặp) của các cặp này (độ dài train trung vị của nhóm đó là 41, của toàn tập là 4; kiểm tra riêng). Số đếm ≥ 12 user vì vậy không tương đương 12 user độc lập về hành vi.
+- Thứ tự phá hòa theo số dòng gốc của file raw. Trong phần train, 57,021 / 57,021 cặp liền kề trùng timestamp có ASIN tăng dần, tức thứ tự "theo chuỗi" của các item trùng ngày trùng với thứ tự ASIN. Hướng của một cặp tính theo cột "theo chuỗi" vì vậy có thể phản ánh quy tắc phá hòa; cột "chặt" loại ảnh hưởng này.
+- Số mẫu tuần tự trong bảng đầu phụ thuộc quy tắc phá hòa: xem mục "Độ nhạy với thứ tự các item trùng ngày"; các cột hướng, luật 1 → 1 tuần tự và bảng top đều dùng thứ tự theo chuỗi.
+- Ở min_support 0.0005, 5,282 cặp có hướng chiếm ≥ 80% (theo chuỗi). 2,954 user có ít nhất một cặp như vậy; 224 user (1%) có nhiều cặp nhất chiếm 75.4% số lượt (user, cặp) của các cặp này và 73.8% số lượt của mọi cặp phổ biến. Nhóm này chọn theo chính số lượt đóng góp; độ dài train trung vị của nhóm là 41, của toàn tập là 4. Số đếm ≥ 12 user vì vậy không tương đương 12 user độc lập về hành vi.
 - Các số trên chỉ mô tả; nguyên nhân của việc nghiêng về một hướng (thứ tự mua, thời điểm item được review, user review nhiều item, quy tắc phá hòa) chưa được tách riêng.
 - Train Beauty không có item lặp trong cùng một user; với dữ liệu có lặp, mẫu a → a xuất hiện và đẳng thức count(a → b) + count(b → a) = số đếm {a, b} không còn đúng.
+- Chưa thực hiện: luật tuần tự với lift, và gộp item lên cấp danh mục (kế hoạch mục 3d, khi luật cấp item quá thưa).
 - Thời gian chạy là một lần đo, hai thư viện (mlxtend, prefixspan) không cùng điều kiện nên không dùng để so sánh tốc độ.

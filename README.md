@@ -171,6 +171,14 @@ Kết quả: [reports/fpgrowth_sweep.json](reports/fpgrowth_sweep.json) (số t�
 và [reports/fpgrowth_top_rules.md](reports/fpgrowth_top_rules.md) (20 luật lift cao nhất mỗi mức, kèm tên sản phẩm).
 Chạy cả ba mức cần vài trăm MB RAM trống cho 656.681 luật ở mức 0,0005.
 
+Mẫu tuần tự (PrefixSpan) trên chuỗi train có thứ tự, so với tập phổ biến không thứ tự cùng ngưỡng đếm:
+
+```powershell
+.\venv\Scripts\python.exe -m src.patterns prefixspan            # 0,0005 / 0,001 / 0,002, độ dài mẫu ≤ 3
+```
+
+Cần thư viện `prefixspan` (có trong `requirements.txt`) và `data/processed/id_mapping.json`. Chạy khoảng 30 giây. Kết quả: [reports/prefixspan_patterns.md](reports/prefixspan_patterns.md) (số mẫu, so sánh cặp có/không thứ tự, độ nhạy với thứ tự các item trùng ngày, hạn chế) và [reports/prefixspan_sweep.json](reports/prefixspan_sweep.json). Thứ tự các item trùng timestamp theo số dòng gốc (thực tế là thứ tự ASIN), nên báo cáo có thêm biến thể thứ tự chặt.
+
 AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu dùng mặc định `--max-len 4` và `--min-confidence 0.1`, không phải cấu hình được chọn (`--max-len 2 --min-support 0.0001 --min-confidence 0.05`). Lệnh quét mặc định ghi đè `reports/ar_rec_sweep.json` và `reports/ar_rec_sweep.md`; thêm `--output` và `--markdown` để ghi nơi khác.
 
 ```powershell
