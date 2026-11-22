@@ -162,7 +162,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 | Nhóm | Chỉ số |
 |---|---|
-| **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10; xếp hạng toàn bộ item (full ranking), loại item đã xem khỏi danh sách ứng viên. Báo cáo mean ± std qua 3 seed cho cấu hình chính. |
+| **Gợi ý** | Recall@5, Recall@10, NDCG@5, NDCG@10; tập ứng viên toàn catalog (full ranking), không loại item đã xem trước khi lấy top-K. Báo cáo mean ± std qua 3 seed cho cấu hình chính. |
 | **So sánh cặp mô hình** | Paired t-test trên NDCG@10 theo user (hoặc theo seed), mức ý nghĩa p < 0,05. |
 | **Độ phổ biến và đa dạng** | Coverage (tỉ lệ item từng xuất hiện trong top-10); tỉ lệ item long-tail (ngoài 20% phổ biến nhất) trong top-10; NDCG@10 theo nhóm tần suất item [0,5], [6,10], [11,15], [16,20] (cold-start). |
 | **Luật kết hợp** | Support, confidence, lift của luật; số tập phổ biến theo min-support; Recall/NDCG@10 của AR-Rec. |
@@ -178,6 +178,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 - Leave-last-out: item cuối của mỗi user làm test, item kế cuối làm validation, phần còn lại là train; lưu file chỉ số dùng chung cho mọi mô hình và module của C.
 - Chọn checkpoint và siêu tham số trên validation; test chỉ chạy cho checkpoint đã chọn. Early stopping theo NDCG@10 trên validation, kiên nhẫn 20 epoch.
+- Không lọc item đã xem khi chọn checkpoint trên validation hoặc khi chấm test; áp dụng cùng quy tắc cho RPG, Popularity, ItemKNN, SASRec và AR-Rec. Padding ID 0 không phải ứng viên.
 - Mọi mô hình (RecBole, RPG, AR-Rec) dùng chung hàm đánh giá trong `src/evaluate.py`, có unit test với ví dụ tính tay.
 
 #### b) Semantic ID
@@ -295,7 +296,7 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 
 **Dự phòng Tuần 2:**
 
-- RPG code gốc lệch mốc → kiểm tra encoder, siêu tham số, cách loại item đã xem; vẫn lệch thì ghi nhận và đi tiếp, vì các phân tích không phụ thuộc con số tuyệt đối.
+- RPG code gốc lệch mốc → kiểm tra encoder, siêu tham số và quy tắc đánh giá không lọc item đã xem; vẫn lệch thì ghi nhận và đi tiếp, vì các phân tích không phụ thuộc con số tuyệt đối.
 - Adapter chưa chạy đến hết 18/11 → thay file embedding đầu vào để code gốc tự chạy OPQ (dùng được cho nâng cấp chính); các biến thể PQ, RQ, ngẫu nhiên chỉ đánh giá độ đo cụm, không train.
 - DBSCAN ra một cụm + nhiễu → thử eps khác và PCA-20; vẫn thế thì viết thành nhận xét về giới hạn của phân cụm mật độ trên embedding văn bản.
 
@@ -364,7 +365,7 @@ Lịch tính từ thứ Sáu 6/11. Tuần 1 giữ nguyên như đã thực hiệ
 
 ## 5. Mẫu bảng kết quả
 
-Sử dụng thống nhất cho báo cáo. Mọi số đo trên tập test với protocol leave-last-out, full ranking; cột "NDCG@10 paper" lấy từ Table 2/4 của bài báo (ghi rõ bảng nguồn).
+Sử dụng thống nhất cho báo cáo. Mọi số đo trên tập test với protocol leave-last-out, full ranking và không lọc item đã xem; cột "NDCG@10 paper" lấy từ Table 2/4 của bài báo (ghi rõ bảng nguồn). Kết quả cũ có lọc hoặc dùng quy tắc chọn checkpoint khác phải ghi rõ protocol, không ghép vào bảng như các run cùng thiết lập.
 
 | Mô hình | Recall@5 | Recall@10 | NDCG@5 | NDCG@10 (mean ± std) | NDCG@10 paper | Chênh lệch | p-value vs RPG | Kiến thức học phần |
 |---|---|---|---|---|---|---|---|---|
