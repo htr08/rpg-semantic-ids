@@ -39,8 +39,9 @@ Thư mục này đã gitignore; mỗi thành viên tự tạo lại bằng pipel
 
 `history` giữ tối đa 50 item gần nhất. `seen_item_ids` giữ mọi item đã thấy trong lịch sử tương ứng,
 kể cả ngoài cửa sổ 50, để truy vết và phân tích lịch sử. Không dùng trường này
-để loại ứng viên trước khi lấy top-K; cùng quy tắc áp dụng khi chọn checkpoint
-trên validation và khi chấm test. Giữ nguyên trường dữ liệu, mapping và bộ chia; không cần sinh lại dữ liệu.
+để loại ứng viên trước khi lấy top-K trong bộ chấm chung trên validation và test.
+SASRec-BCE chọn checkpoint bằng bộ chấm gốc S³-Rec rồi xuất ranking theo mapping chung
+để chấm lại. Xem [quy trình tái lập SASRec](evaluation.md#tái-lập-sasrec-bce).
 
 Padding ID 0 không phải ứng viên.
 
@@ -96,6 +97,24 @@ with open("data/processed/train_sequences.jsonl", encoding="utf-8") as stream:
             history, target = example["history"], example["target"]
             # Đưa từng tiền tố train vào adapter/baseline; không thêm nhãn validation/test.
 ```
+
+## Ranking và đầu ra đánh giá dùng chung
+
+Mỗi mô hình xuất JSONL, một dòng cho mỗi user của bộ chia:
+
+```json
+{"user_id": 1, "ranked_items": [103, 25, 84, 16, 92]}
+```
+
+ID là số nguyên dương theo mapping B; item theo điểm giảm dần, không trùng,
+không có padding. Khi đánh giá bằng bộ chấm chung, xuất ít nhất K item và giữ item đã xem.
+Khi chấm đối chiếu có lọc, cần thêm ứng viên để sau khi lọc `seen_item_ids`
+vẫn còn K item. Bộ chấm giữ nhãn mua lại trong cả hai chế độ.
+
+Bộ chấm mở rộng dùng `train_sequences.jsonl` để phân head/tail và `items.jsonl`
+để tính độ phủ catalog, đa dạng danh mục. CLI kiểm tra dữ liệu theo manifest,
+xuất `metrics.json` và `per_user.csv` tại thư mục kết quả do người chạy chọn.
+Công thức, quy tắc thiếu nhãn, cách dùng API và CLI: [evaluation.md](evaluation.md).
 
 ## Đối chiếu số lượng Beauty
 

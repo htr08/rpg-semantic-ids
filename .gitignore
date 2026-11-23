@@ -1,6 +1,7 @@
 # ===== Môi trường ảo =====
 venv/
 .venv/
+.venv-kaggle313/
 env/
 ENV/
 

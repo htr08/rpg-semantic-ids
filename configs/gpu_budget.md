@@ -3,6 +3,7 @@
 Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 
 - Thực tế: 1,2–1,6 giờ/lần train RPG trên Colab T4 (trung bình 1,37 giờ qua 3 seed main, 14/11); ước tính ban đầu 3–4 giờ.
+- SASRec-BCE theo S³-Rec hoàn tất 3 seed ngày 20/11 với khoảng 0,54 giờ. Tổng thời gian gồm các lần chạy thử và chạy chính là khoảng 5,98/45 giờ, còn khoảng 39,02 giờ.
 - Nền tảng: Google Colab (chính) + Kaggle (dự phòng, chạy song song từ Tuần 3). Mọi output ghi vào Drive `MyDrive/rpg/`.
 - Ngân sách trần: 45 giờ GPU. Dự kiến dùng khoảng 20–25 giờ (17 lần train nếu các biến thể RQ1 chạy 3 seed).
 - Ngưỡng cảnh báo: 80% ngân sách (36 giờ) → áp dụng danh sách cắt giảm trong `docs/project_plan.md`, mục 1.3.
@@ -15,6 +16,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 2 | `rpg_pq`, `rpg_rq`, `rpg_random` | 42 (đề xuất 42, 43, 44) | 3 (đề xuất 9) | RQ1. Đề xuất 3 seed vì chênh lệch giữa các seed của main khoảng 8%; cắt theo thứ tự: RQ trước |
 | 3 | `rpg_behavior` | 42, 43, 44 | 3 | Nâng cấp chính; giảm còn 2 seed nếu thiếu ngân sách |
 | 4 | Dự phòng | – | 2 | Chạy lại lỗi, α thứ hai hoặc encoder mới |
+| 5 | SASRec-BCE theo S³-Rec | 42, 43, 44 | 3 | **Xong 20/11**, best epoch 54/78/54 |
 
 ## Nhật ký sử dụng
 
@@ -26,3 +28,14 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 14/11 | `main_s43` | 43 | Colab / TK A | 1,27 | 3,10 | 41,90 |
 | 14/11 | `main_s44` | 44 | Colab / TK A | 1,23 | 4,33 | 40,67 |
 | 14/11 | `main_s43_salvage` (chỉ chấm test) | 43 | Colab / TK A | 0,04 | 4,37 | 40,63 |
+| 19/11 | `sasrec_ce_s42` | 42 | Kaggle / B | ≈ 0,35 | ≈ 4,72 | ≈ 40,28 |
+| 19/11 | `sasrec_ce_s43` | 43 | Kaggle / B | ≈ 0,39 | ≈ 5,11 | ≈ 39,89 |
+| 19/11 | `sasrec_ce_s44` | 44 | Kaggle / B | ≈ 0,33 | ≈ 5,44 | ≈ 39,56 |
+| 20/11 | `sasrec_paper_s42` | 42 | Kaggle / B | ≈ 0,16 | ≈ 5,60 | ≈ 39,40 |
+| 20/11 | `sasrec_paper_s43` | 43 | Kaggle / B | ≈ 0,22 | ≈ 5,82 | ≈ 39,18 |
+| 20/11 | `sasrec_paper_s44` | 44 | Kaggle / B | ≈ 0,16 | ≈ 5,98 | ≈ 39,02 |
+
+Các lượt SASRec dùng `elapsed_seconds / 3600` trong `run.json` hoặc
+`run_seconds / 3600` trong `result.json` làm ước tính thời gian chạy
+CUDA một tiến trình. Ước tính này tính từ lúc bắt đầu chạy mô hình đến lúc
+chấm xong test. Lượt S³-Rec ghi nhận Tesla T4 trong `result.json`.
