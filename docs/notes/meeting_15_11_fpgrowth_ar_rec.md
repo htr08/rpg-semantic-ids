@@ -1,6 +1,6 @@
 # Họp tuần 15/11: FP-Growth và AR-Rec (phần C)
 
-Tài liệu chuẩn bị cho nội dung họp của C trong kế hoạch tuần 2 (`docs/project_plan.md`, mục 4.2): trình bày FP-Growth và AR-Rec, và vẽ lại luồng dữ liệu của hai phần còn lại. Số liệu lấy từ `reports/` và mã trong `src/`; mọi kết quả AR-Rec là trên bộ chia validation, chưa chạy test.
+Tài liệu chuẩn bị cho nội dung họp của C trong kế hoạch tuần 2 (`docs/project_plan.md`, mục 4.2): trình bày FP-Growth và AR-Rec, và vẽ lại luồng dữ liệu của hai phần còn lại. Số liệu lấy từ `reports/` và mã trong `src/`; mọi kết quả AR-Rec là trên bộ chia validation, chưa chạy test. Nội dung cập nhật đến 23/11, nên có dẫn quyết định 19/11 và kết quả 3 seed của A.
 
 ## 1. Luồng dữ liệu phần C
 
@@ -64,6 +64,6 @@ Nhận xét:
 
 Chỉ ghi những gì đã có trong repo; kiến trúc RPG (loss MTP, giải mã đồ thị) do A trình bày từ code gốc, không suy ra ở đây.
 
-- B: `scripts/download_data.py` → `src/preprocessing.py` (5-core, sắp theo timestamp, leave-last-out) → `data/processed/*` và `data/splits/*` → `src/evaluate.py` (Recall@K, NDCG@K dùng chung); baseline Popularity, ItemKNN, SASRec (`configs/baselines_recbole.yaml`). Nguồn: `docs/data_contract.md`.
+- B: `scripts/download_data.py` → `src/preprocessing.py` (5-core, sắp theo timestamp, leave-last-out) → `data/processed/*` và `data/splits/*` → `src/evaluate.py` (Recall@K, NDCG@K dùng chung); baseline Popularity và ItemKNN bằng RecBole (`configs/baselines_recbole.yaml`), SASRec-BCE tái lập theo S³-Rec (`docs/evaluation.md`). Nguồn: `docs/data_contract.md`.
 - A: văn bản item ghép theo `_extract_meta_sentences` của code gốc → embedding `sentence-t5-base` → OPQ (m = 32, codebook 256) → semantic ID 32 token → huấn luyện RPG bằng code gốc. Hàng i của embedding và semantic ID tương ứng `item_id` i + 1 (`reports/decisions.md`, 15/11). Kết quả 3 seed (seed 42, 43, 44; `experiments/log.csv`): NDCG@10 test 0,0420 ± 0,0018.
 - Điểm giao với C: C dùng chung `interactions.csv`, bộ chia và `src/evaluate.py` của B; embedding và semantic ID của A dùng cho các bước đối chiếu luật ↔ token ở 18/11.

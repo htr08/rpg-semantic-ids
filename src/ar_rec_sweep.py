@@ -6,8 +6,8 @@ Quy ước:
 
 - Chỉ dùng bộ chia validation (luật khai phá từ train); test không được chạy trong mô-đun này.
 - Lưới gồm ba chiều: ``max_len`` (giới hạn |X ∪ Y|), min_support và min_confidence. Mỗi ``max_len`` có tập min_support riêng
-  vì số tập phổ biến và số luật tăng rất nhanh theo ``max_len`` khi support thấp (``max_len`` = 4 ở 0,0005 tạo 656.681 luật ở min_confidence 0,1, RAM đỉnh
-  khoảng 0,65 GB); lưới dừng ở 0,0005 cho ``max_len`` 3 và 4 vì ở các support dùng chung hai mức này kém ``max_len`` = 2,
+  vì số tập phổ biến và số luật tăng rất nhanh theo ``max_len`` khi support thấp (``max_len`` = 4 ở 0,0005 tạo 656.681 luật ở min_confidence 0,1, đỉnh bộ nhớ
+  của cả lưới khoảng 0,67 GB); lưới dừng ở 0,0005 cho ``max_len`` 3 và 4 vì ở các support dùng chung hai mức này kém ``max_len`` = 2,
   trừ ``max_len`` = 3 ở 0,001 (NDCG@10 cao hơn 0,00018).
 - Với mỗi cặp (``max_len``, min_support), tập phổ biến và luật được khai phá một lần ở min_confidence thấp nhất, các ngưỡng cao
   hơn lọc lại từ cùng bảng luật (kết quả giống khai phá riêng từng ngưỡng vì confidence của một luật không phụ thuộc ngưỡng).

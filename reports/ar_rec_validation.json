@@ -1,5 +1,5 @@
 {
-  "note": "Kết quả sơ bộ trên validation, chưa chọn cấu hình; việc quét và chọn nằm ở ar_rec_sweep.json (14/11). Mức 0,0005 chưa chạy được do thiếu RAM (hơn 650.000 luật). Popularity thuần của B trên cùng split: recall@10 0,016277; ndcg@10 0,007848.",
+  "note": "Kết quả sơ bộ trên validation, chưa chọn cấu hình; việc quét và chọn nằm ở ar_rec_sweep.json. Mức 0,0005 với max_len 4 (hơn 650.000 luật) chưa chạy được ở lần chạy này do thiếu RAM; lần quét sau đã chạy được. Popularity thuần của B trên cùng split: recall@10 0,016277; ndcg@10 0,007848.",
   "runs": [
     {
       "model": "ar_rec",

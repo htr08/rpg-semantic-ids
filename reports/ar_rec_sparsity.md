@@ -72,7 +72,7 @@ NDCG@10 giữ item đã xem (`exclude_seen = false`), `max_len = 2`, `min_confid
 - NDCG@10 tăng đơn điệu khi hạ min_support từ 0,002 đến 0,0001 rồi giảm ở 0,00005, nên cực đại nằm trong lưới đã quét (đếm tối thiểu 3), không ở biên.
 - Cấu hình được chọn: `max_len = 2`, `min_support = 0,0001`, `min_confidence = 0,05` (84.883 luật; 91,9% user có luật khớp): Recall@10 0,06985, NDCG@10 0,03728, cao hơn Popularity 0,02943 (sai số chuẩn 0,00105 theo user).
 - Hiệu so với cấu hình đứng thứ hai (cùng `max_len` và `min_support`, `min_confidence` 0,02) là 0,00030 (sai số chuẩn 0,00018), nên `min_confidence` trong khoảng 0,02–0,1 cho kết quả gần nhau; từ 0,2 trở lên NDCG@10 giảm rõ (0,03002 và 0,02407 ở 0,2 và 0,3).
-- Lưới của `max_len = 3` và `4` dừng ở min_support 0,0005 (`max_len = 4` ở mức này tạo 683.794 luật ở `min_confidence` 0,02, RAM đỉnh khoảng 0,65 GB); chưa quét thấp hơn. Tại các mức support dùng chung, NDCG@10 của `max_len = 2` cao hơn hoặc xấp xỉ `max_len = 3, 4` (ví dụ 0,0005: 0,02306 / 0,02226 / 0,02175; riêng 0,001 thì `max_len = 3` cao hơn `max_len = 2` 0,00018). Phần lớn mức tăng đến từ việc hạ min_support, chỉ thực hiện được với `max_len = 2`.
+- Lưới của `max_len = 3` và `4` dừng ở min_support 0,0005 (`max_len = 4` ở mức này tạo 683.794 luật ở `min_confidence` 0,02, đỉnh bộ nhớ của cả lưới khoảng 0,67 GB); chưa quét thấp hơn. Tại các mức support dùng chung, NDCG@10 của `max_len = 2` cao hơn hoặc xấp xỉ `max_len = 3, 4` (ví dụ 0,0005: 0,02306 / 0,02226 / 0,02175; riêng 0,001 thì `max_len = 3` cao hơn `max_len = 2` 0,00018). Phần lớn mức tăng đến từ việc hạ min_support, chỉ thực hiện được với `max_len = 2`.
 
 ## 5. Giới hạn của kết quả
 
@@ -88,4 +88,4 @@ NDCG@10 giữ item đã xem (`exclude_seen = false`), `max_len = 2`, `min_confid
 .\venv\Scripts\python.exe -m src.ar_rec_sweep --rankings-output experiments/ar_rec_val_selected/rankings.jsonl
 ```
 
-Lưới mặc định (105 cấu hình) chạy khoảng 15 phút trên máy 8 GB RAM (RAM trống dưới 1 GB khi chạy). `rankings.jsonl` là danh sách của cấu hình được chọn, theo định dạng bàn giao của bộ chấm chung (`user_id`, `ranked_items`, mỗi user `max(K) + len(seen_item_ids)` item).
+Lưới mặc định (105 cấu hình) chạy khoảng 17 phút trên máy 8 GB RAM (đo hai lần: 16 phút 56 giây và 17 phút 31 giây; đỉnh bộ nhớ của tiến trình 0,67 GB). `rankings.jsonl` là danh sách của cấu hình được chọn, theo định dạng bàn giao của bộ chấm chung (`user_id`, `ranked_items`, mỗi user `max(K) + len(seen_item_ids)` item).

@@ -149,14 +149,14 @@ Kết quả: [reports/fpgrowth_sweep.json](reports/fpgrowth_sweep.json) (số t�
 và [reports/fpgrowth_top_rules.md](reports/fpgrowth_top_rules.md) (20 luật lift cao nhất mỗi mức, kèm tên sản phẩm).
 Chạy cả ba mức cần vài trăm MB RAM trống cho 656.681 luật ở mức 0,0005.
 
-AR-Rec (recommender từ luật kết hợp) và quét tham số:
+AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu dùng mặc định `--max-len 4` và `--min-confidence 0.1`, không phải cấu hình được chọn (`--max-len 2 --min-support 0.0001 --min-confidence 0.05`). Lệnh quét mặc định ghi đè `reports/ar_rec_sweep.json` và `reports/ar_rec_sweep.md`; thêm `--output` và `--markdown` để ghi nơi khác.
 
 ```powershell
 .\venv\Scripts\python.exe -m src.ar_rec --split validation --min-support 0.001 --output-dir experiments/ar_rec_val
 .\venv\Scripts\python.exe -m src.ar_rec_sweep --rankings-output experiments/ar_rec_val_selected/rankings.jsonl
 ```
 
-`src.ar_rec_sweep` quét `max_len` × `min_support` × `min_confidence` trên validation (105 cấu hình, khoảng 15 phút) và chọn theo NDCG@10 không lọc item đã xem. Kết quả: [reports/ar_rec_sweep.md](reports/ar_rec_sweep.md) (bảng và cấu hình được chọn), [reports/ar_rec_sweep.json](reports/ar_rec_sweep.json) (từng cấu hình) và [reports/ar_rec_sparsity.md](reports/ar_rec_sparsity.md) (phân tích độ thưa của luật). Test chưa được chạy cho cấu hình đã chọn.
+`src.ar_rec_sweep` quét `max_len` × `min_support` × `min_confidence` trên validation (105 cấu hình, khoảng 17 phút) và chọn theo NDCG@10 không lọc item đã xem. Kết quả: [reports/ar_rec_sweep.md](reports/ar_rec_sweep.md) (bảng và cấu hình được chọn), [reports/ar_rec_sweep.json](reports/ar_rec_sweep.json) (từng cấu hình) và [reports/ar_rec_sparsity.md](reports/ar_rec_sparsity.md) (phân tích độ thưa của luật). Test chưa được chạy cho cấu hình đã chọn.
 
 ## Kiểm thử
 
