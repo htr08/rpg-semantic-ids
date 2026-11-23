@@ -196,8 +196,9 @@ Script kiểm tra SHA-256 của từng file và lưu tại `experiments/sasrec_r
 python -m scripts.reproduce_sasrec_paper --prepare-only
 ```
 
-Để tái lập điểm đã ghi, dùng đúng ZIP đầu ra Kaggle
-`sasrec_paper_beauty_outputs.zip` của B và đặt tại `experiments/sasrec_reference/`.
+Để tái lập điểm đã ghi, tải ZIP đầu ra Kaggle của B từ GitHub Release
+và đặt tại `experiments/sasrec_reference/`.
+[Tải `sasrec_paper_beauty_outputs.zip`](https://github.com/htr08/rpg-semantic-ids/releases/download/sasrec-beauty-checkpoints/sasrec_paper_beauty_outputs.zip).
 Bản gốc có SHA-256
 `566ef7d072605503759a2f0fa6150adc8eb9d087e197c2fbb8007d0b21558f76`.
 Kiểm tra bằng `sha256sum` trên Linux hoặc `Get-FileHash -Algorithm SHA256`
