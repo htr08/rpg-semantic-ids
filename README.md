@@ -20,7 +20,8 @@ Kế hoạch đầy đủ: [docs/project_plan.md](docs/project_plan.md).
 | Thành phần | Nguồn |
 |---|---|
 | `third_party/RPG_KDD2025/` | Code gốc của tác giả bài báo (git submodule, không sửa). Huấn luyện RPG chạy bằng `main.py` của repo này. |
-| RecBole | Thư viện bên ngoài, dùng cho baseline Popularity, ItemKNN, SASRec. |
+| RecBole | Thư viện bên ngoài, dùng cho baseline Popularity và ItemKNN. |
+| [S³-Rec](https://github.com/aHuiWang/CIKM2020-S3Rec/tree/49a890dcb516c9ed3126564495234ea74d5cd566) | Code gốc huấn luyện SASRec-BCE. Script tải mã đã pin và bộ chấm chung do nhóm viết. |
 | `adapters/` | Tự viết: nạp semantic ID hoặc embedding do nhóm tạo vào code gốc. |
 | `src/`, `scripts/`, `notebooks/` | Tự viết: pipeline dữ liệu, tokenizer, đánh giá, khai phá mẫu, phân cụm, phân tích đồ thị. |
 

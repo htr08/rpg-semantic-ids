@@ -1,0 +1,135 @@
+{
+  "model": "SASRec (S³-Rec, BCE)",
+  "checkpoint_selection": "S³-Rec validation NDCG@20, patience 10",
+  "evaluation": "leave-last-out, whole project catalog, keep seen items, K=5 and 10",
+  "source_revision": "49a890dcb516c9ed3126564495234ea74d5cd566",
+  "source_files": {
+    "models.py": "cdb7dd02f870b9bd16e2e6d9fb094be29ef490f5b7d19f85e2b72994761bd27a",
+    "modules.py": "348190dcfba4ded63441041deee9a3f8931bd1dedae9fc3cdd300beea89bba7d"
+  },
+  "input_files": {
+    "Beauty.txt": "226cce9c3105299ca0db9615d7d3fb32b3175e90da43100ae352599f0f0107b8",
+    "Beauty_item2attributes.json": "129e40f67486f6877eff0f5318cfa8530ee8ac23d8b0d1de04e1bb7a2ba0b2d4"
+  },
+  "archive_sha256": "566ef7d072605503759a2f0fa6150adc8eb9d087e197c2fbb8007d0b21558f76",
+  "split_manifest_sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510",
+  "users": 22363,
+  "catalog_items": 12101,
+  "paper_reproduction": {
+    "evaluation": "S³-Rec full ranking, set scores of seen items to zero before top-K",
+    "reference_ndcg@10": 0.0318,
+    "aggregate_test": {
+      "recall@5": {
+        "mean": 0.03746666666666667,
+        "sample_std": 0.0009073771725877464
+      },
+      "ndcg@5": {
+        "mean": 0.024266666666666666,
+        "sample_std": 0.00047258156262525993
+      },
+      "recall@10": {
+        "mean": 0.060533333333333335,
+        "sample_std": 0.0009291573243177572
+      },
+      "ndcg@10": {
+        "mean": 0.0317,
+        "sample_std": 9.99999999999994e-05
+      }
+    }
+  },
+  "aggregate_test": {
+    "recall@5": {
+      "mean": 0.029751524094859066,
+      "sample_std": 0.0009922007626074385
+    },
+    "recall@10": {
+      "mean": 0.051916111434065194,
+      "sample_std": 8.943343916290383e-05
+    },
+    "ndcg@5": {
+      "mean": 0.015346503375569413,
+      "sample_std": 0.0005280103331309184
+    },
+    "ndcg@10": {
+      "mean": 0.022426459255996588,
+      "sample_std": 0.00024887864025772364
+    }
+  },
+  "runs": [
+    {
+      "seed": 42,
+      "paper_test": {
+        "recall@5": 0.0371,
+        "ndcg@5": 0.0239,
+        "recall@10": 0.0616,
+        "ndcg@10": 0.0318
+      },
+      "validation": {
+        "recall@5": 0.03876939587711845,
+        "recall@10": 0.06716451281134016,
+        "ndcg@5": 0.019693800914933127,
+        "ndcg@10": 0.028784794312452604,
+        "ranking_sha256": "5eae2b37a03be8f657efa0e849329a300056386f1daebc0df6665d0db2cd5894",
+        "per_user_sha256": "d53835ccef4033c2f92159d74f826b4bcfb4af9ad12a32bd023ba3d6afac25f1"
+      },
+      "test": {
+        "recall@5": 0.028931717569199124,
+        "recall@10": 0.0520055448732281,
+        "ndcg@5": 0.014952928699585795,
+        "ndcg@10": 0.022322115241158607,
+        "ranking_sha256": "a7281d380344e6556b8933010c541acf4f7263c55d55f0e6b7a1a373ae214ff7",
+        "per_user_sha256": "3a8c046bbc28438dca018bc9d5424102422e07514207055b0a460c7600088538"
+      }
+    },
+    {
+      "seed": 43,
+      "paper_test": {
+        "recall@5": 0.0385,
+        "ndcg@5": 0.0248,
+        "recall@10": 0.0599,
+        "ndcg@10": 0.0317
+      },
+      "validation": {
+        "recall@5": 0.040647498099539416,
+        "recall@10": 0.06796941376380629,
+        "ndcg@5": 0.021011386026938417,
+        "ndcg@10": 0.029854210300647856,
+        "ranking_sha256": "7fe5c8719542b6e99709c42a26f4e8b53d08af0c343e762c774f5e2c835d5ccd",
+        "per_user_sha256": "efa5cd8fd9464ca86b31223dcc4934fe365330c482646efcba4ebc7294d3bdb9"
+      },
+      "test": {
+        "recall@5": 0.030854536511201538,
+        "recall@10": 0.051916111434065194,
+        "ndcg@5": 0.015946551352244587,
+        "ndcg@10": 0.022710525253208654,
+        "ranking_sha256": "97e7e5d99f1590707153d903e35595721d7fd992f28f2bb9b9d0352824a850d1",
+        "per_user_sha256": "dbfd77cc487e8bbba5726d5bc3a31f8096deb8a3e7c3182a30e9b86983663eef"
+      }
+    },
+    {
+      "seed": 44,
+      "paper_test": {
+        "recall@5": 0.0368,
+        "ndcg@5": 0.0241,
+        "recall@10": 0.0601,
+        "ndcg@10": 0.0316
+      },
+      "validation": {
+        "recall@5": 0.03675714349595314,
+        "recall@10": 0.06631489513929258,
+        "ndcg@5": 0.01866070005339766,
+        "ndcg@10": 0.028175817982742515,
+        "ranking_sha256": "2fafad1e9478c7ca042f3925d9e984d5d5f98256a3a99372e2c62c2a1280f3ad",
+        "per_user_sha256": "b948246208b5b63eb2e1d25d01dba55cb0eb7a4ca89899b3d595da07f13ae8a1"
+      },
+      "test": {
+        "recall@5": 0.02946831820417654,
+        "recall@10": 0.051826677994902294,
+        "ndcg@5": 0.015140030074877856,
+        "ndcg@10": 0.0222467372736225,
+        "ranking_sha256": "5eaf87afdd07146437a14008b887ee364c68b79fdc80e9092f9a00a38a407a9f",
+        "per_user_sha256": "378d3d2ed055e3d90ed2e5961078f174897b237ee37d76dfb788f33f47ba1348"
+      }
+    }
+  ]
+}

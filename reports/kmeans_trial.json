@@ -1,0 +1,33 @@
+{
+  "n_items": 12101,
+  "input_dim": 768,
+  "pca_dim": 50,
+  "pca_explained_variance_ratio": 0.69474,
+  "k": 256,
+  "n_init": 5,
+  "seed": 42,
+  "silhouette_sample_size": 5000,
+  "silhouette_metric": "cosine",
+  "kmeans_pca": {
+    "dim": 50,
+    "inertia": 533.9719,
+    "seconds": 4.041,
+    "silhouette": 0.123398,
+    "n_clusters": 256,
+    "size_min": 9,
+    "size_median": 43.0,
+    "size_max": 151,
+    "n_singletons": 0
+  },
+  "kmeans_original": {
+    "dim": 768,
+    "inertia": 1114.9263,
+    "seconds": 72.26,
+    "silhouette": 0.092443,
+    "n_clusters": 256,
+    "size_min": 3,
+    "size_median": 43.0,
+    "size_max": 135,
+    "n_singletons": 0
+  }
+}
