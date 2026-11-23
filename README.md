@@ -186,7 +186,7 @@ AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu 
 .\venv\Scripts\python.exe -m src.semantic_alignment
 ```
 
-Điều kiện đầu vào (đều không commit, tạo lại theo [docs/data_contract.md](docs/data_contract.md)): `data/processed/semantic_ids_opq.npy`
+Điều kiện đầu vào (đều không commit, tạo lại theo [docs/data_contract.md](docs/data_contract.md)): `data/processed/semantic_ids.npy`
 (12.101 × 32, giá trị 0–255, hàng j ứng với `item_id` j + 1), `data/processed/item_embeddings.npy` (12.101 × 768), `interactions.csv`
 và `data/splits/leave_last_out.csv`. Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
 lấy 200 cặp có lift cao nhất, đếm số vị trí token trùng nhau của mỗi cặp rồi so với cặp ngẫu nhiên; đồng thời tính ARI giữa k-means (PCA 50 chiều, k = 256, seed 42–44)

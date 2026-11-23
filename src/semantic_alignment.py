@@ -21,7 +21,7 @@ from sklearn.metrics import adjusted_rand_score
 from src.clustering import fit_pca, l2_normalize, load_embeddings, run_kmeans
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_IDS = ROOT / "data" / "processed" / "semantic_ids_opq.npy"
+DEFAULT_IDS = ROOT / "data" / "processed" / "semantic_ids.npy"
 DEFAULT_EMBEDDINGS = ROOT / "data" / "processed" / "item_embeddings.npy"
 DEFAULT_OUTPUT = ROOT / "reports" / "semantic_alignment.json"
 DEFAULT_MARKDOWN = ROOT / "reports" / "semantic_alignment.md"
