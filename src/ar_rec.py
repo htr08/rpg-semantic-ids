@@ -19,6 +19,10 @@ Quy ước dữ liệu:
 - Theo quyết định 19/11 (``reports/decisions.md``) mô hình không tự loại item đã thấy; ứng viên là toàn catalog.
   Mô-đun xuất ``max_k + len(seen_item_ids)`` item cho mỗi user (như baseline của B), để bộ chấm chung
   vẫn dùng được chế độ ``--exclude-seen`` khi cần đối chiếu.
+- Luật khai phá từ ``interactions.csv`` theo bộ chia, còn Popularity đếm từ ``train_sequences.jsonl``; hai nguồn phải cùng
+  một lần chia, nên ``check_train_sequences`` so từng user trước khi dựng mô hình. ``validation.jsonl`` và ``test.jsonl``
+  (nguồn của ``seen_item_ids``) không được đối chiếu; chúng chỉ ảnh hưởng việc khớp luật và độ dài ranking, không vào luật hay Popularity.
+- Bộ luật rỗng (ngưỡng quá cao) vẫn hợp lệ: mô hình khi đó trả Popularity thuần cho mọi user.
 """
 
 import argparse
@@ -70,6 +74,31 @@ def load_train_counts(train_sequences_path):
             for item in json.loads(line)["item_ids"]:
                 counts[item] = counts.get(item, 0) + 1
     return counts
+
+
+def check_train_sequences(train_sequences_path, interactions_path, splits_path):
+    """Báo ``ValueError`` nếu ``train_sequences.jsonl`` không khớp từng user với ``interactions.csv`` theo bộ chia.
+
+    Luật lấy từ ``interactions.csv`` và ``splits_path`` còn Popularity lấy từ ``train_sequences.jsonl``; nếu hai nguồn
+    thuộc hai lần chia khác nhau thì mô hình vẫn cho điểm nhưng trộn dữ liệu (ví dụ item validation vào Popularity).
+    """
+    items = pd.read_csv(interactions_path, usecols=["item_id"])["item_id"].to_numpy()
+    splits = pd.read_csv(splits_path, usecols=["user_id", "train_start", "train_stop"])
+    expected = {int(user): items[start:stop].tolist()
+                for user, start, stop in zip(splits["user_id"], splits["train_start"], splits["train_stop"])}
+    seen_users = set()
+    with Path(train_sequences_path).open(encoding="utf-8") as stream:
+        for line in stream:
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            user = int(record["user_id"])
+            if user in seen_users or user not in expected or list(record["item_ids"]) != expected[user]:
+                raise ValueError(f"{Path(train_sequences_path).name} không khớp interactions.csv và bộ chia "
+                                 f"(user {user}); dữ liệu thuộc hai lần chia khác nhau")
+            seen_users.add(user)
+    if seen_users != expected.keys():
+        raise ValueError(f"{Path(train_sequences_path).name} thiếu {len(expected.keys() - seen_users)} user so với bộ chia")
 
 
 class ARRecommender:
@@ -193,7 +222,11 @@ def write_rankings(path, rankings):
 
 
 def build_recommender(interactions, splits, train_sequences, min_support, min_confidence, max_len):
-    """Khai phá luật từ train rồi dựng ARRecommender; trả về (recommender, thống kê khai phá)."""
+    """Khai phá luật từ train rồi dựng ARRecommender; trả về (recommender, thống kê khai phá).
+
+    Không có luật nào thỏa ngưỡng thì recommender chỉ còn Popularity (``n_rules`` = 0), không báo lỗi.
+    """
+    check_train_sequences(train_sequences, interactions, splits)
     n_items = int(pd.read_csv(interactions, usecols=["item_id"])["item_id"].max())
     _, transactions = load_train_transactions(interactions, splits)
     matrix = build_transaction_matrix(transactions, n_items)
@@ -201,8 +234,6 @@ def build_recommender(interactions, splits, train_sequences, min_support, min_co
     start = time.perf_counter()
     rules = generate_rules(itemsets, matrix.shape[0], min_confidence=min_confidence, max_rule_len=max_len)
     rules_seconds = time.perf_counter() - start
-    if rules.empty:
-        raise ValueError("Không có luật nào thỏa ngưỡng; giảm min_support hoặc min_confidence")
     order = popularity_order(load_train_counts(train_sequences), n_items)
     recommender = ARRecommender(rules, n_items, order)
     return recommender, {

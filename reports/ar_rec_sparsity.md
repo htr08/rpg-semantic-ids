@@ -77,7 +77,7 @@ NDCG@10 giữ item đã xem (`exclude_seen = false`), `max_len = 2`, `min_confid
 ## 5. Giới hạn của kết quả
 
 - Cấu hình được chọn bằng argmax trên 105 cấu hình ở cùng tập validation; mức cải thiện so với Popularity và sai số chuẩn chưa hiệu chỉnh cho việc chọn (winner's curse). Ước lượng không chệch cần chạy test một lần cho cấu hình đã chọn.
-- Với đếm tối thiểu 3, mỗi luật dựa trên ba giao dịch; luật khi đó gần với thống kê đồng xuất hiện item–item hơn là luật mua kèm bền vững. Điểm `confidence × lift` ở support thấp bị chi phối bởi cặp hiếm (lift ≤ 1 / max(sup(X), sup(Y))).
+- Với đếm tối thiểu 3, mỗi luật dựa trên ít nhất ba giao dịch. Trong 84.883 luật của cấu hình được chọn (cột `count` của `patterns.generate_rules`), 22.011 luật (25,9%) có đúng 3 giao dịch, trung vị là 5, 80,4% có không quá 10 và lớn nhất là 88. Phần lớn luật vì vậy dựa trên ít giao dịch, gần với thống kê đồng xuất hiện item–item hơn là luật mua kèm bền vững. Điểm `confidence × lift` ở support thấp bị chi phối bởi cặp hiếm (lift ≤ 1 / max(sup(X), sup(Y))).
 - Lưới của `max_len` khác nhau không cùng tập min_support (xem `DEFAULT_GRID` trong `src/ar_rec_sweep.py`); so sánh giữa các `max_len` chỉ có ý nghĩa tại các mức support dùng chung.
 - Chia dữ liệu là leave-last-out theo từng user, không theo thời gian toàn cục; luật được khai phá từ train của mọi user nên có thể chứa tương tác xảy ra sau thời điểm nhãn của một user khác. Quy ước này giống các mô hình khác trong nhóm.
 - 11.383 / 22.363 user có ≤ 4 item trong lịch sử; với nhóm này, tỉ lệ có luật khớp ở các mức support của kế hoạch từ 7,0% đến 30,5%, phần còn lại được bổ sung bằng Popularity.

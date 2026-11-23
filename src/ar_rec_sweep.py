@@ -6,8 +6,9 @@ Quy ước:
 
 - Chỉ dùng bộ chia validation (luật khai phá từ train); test không được chạy trong mô-đun này.
 - Lưới gồm ba chiều: ``max_len`` (giới hạn |X ∪ Y|), min_support và min_confidence. Mỗi ``max_len`` có tập min_support riêng
-  vì số tập phổ biến và số luật tăng rất nhanh theo ``max_len`` khi support thấp (``max_len`` = 4 ở 0,0005 tạo 656.681 luật, RAM đỉnh
-  khoảng 0,65 GB); lưới dừng ở 0,0005 cho ``max_len`` 3 và 4 vì hai mức này đã kém ``max_len`` = 2 ở các support dùng chung.
+  vì số tập phổ biến và số luật tăng rất nhanh theo ``max_len`` khi support thấp (``max_len`` = 4 ở 0,0005 tạo 656.681 luật ở min_confidence 0,1, RAM đỉnh
+  khoảng 0,65 GB); lưới dừng ở 0,0005 cho ``max_len`` 3 và 4 vì ở các support dùng chung hai mức này kém ``max_len`` = 2,
+  trừ ``max_len`` = 3 ở 0,001 (NDCG@10 cao hơn 0,00018).
 - Với mỗi cặp (``max_len``, min_support), tập phổ biến và luật được khai phá một lần ở min_confidence thấp nhất, các ngưỡng cao
   hơn lọc lại từ cùng bảng luật (kết quả giống khai phá riêng từng ngưỡng vì confidence của một luật không phụ thuộc ngưỡng).
 - Tiêu chí chọn, cố định trước khi chạy: NDCG@10 trung bình theo user ở chế độ giữ item đã xem (``exclude_seen = false``,
@@ -31,6 +32,7 @@ from src.ar_rec import (
     DEFAULT_KS,
     DEFAULT_PROCESSED,
     ARRecommender,
+    check_train_sequences,
     load_train_counts,
     popularity_order,
     rank_users,
@@ -192,6 +194,7 @@ def run_sweep(interactions, splits_path, processed_dir, grid, confidences, ks=DE
     confidences = sorted(set(confidences))
     if not confidences or not any(grid.values()):
         raise ValueError("lưới phải có ít nhất một min_support và một min_confidence")
+    check_train_sequences(Path(processed_dir) / "train_sequences.jsonl", interactions, splits_path)
     n_items = int(pd.read_csv(interactions, usecols=["item_id"])["item_id"].max())
     _, transactions = load_train_transactions(interactions, splits_path)
     matrix = build_transaction_matrix(transactions, n_items)
@@ -251,7 +254,8 @@ def run_sweep(interactions, splits_path, processed_dir, grid, confidences, ks=DE
 
     evaluated = sorted((r for r in runs if r["status"] == "ok"), key=selection_key)
     if not evaluated:
-        raise ValueError("Không cấu hình nào chạy được; tăng min_support hoặc giảm max_len")
+        raise ValueError("Không cấu hình nào chạy được: giảm min_support hoặc min_confidence nếu không có luật nào, "
+                         "tăng min_support hoặc giảm max_len nếu hết bộ nhớ")
     best = evaluated[0]
     best_scores = per_user[config_key(best)]
     comparison = {"metric": f"{SELECT_METRIC} (keep_seen)", "n_users": len(split),

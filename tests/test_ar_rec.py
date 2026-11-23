@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.ar_rec import ARRecommender, load_train_counts, popularity_order, rank_users, write_rankings
+from src.ar_rec import ARRecommender, check_train_sequences, load_train_counts, popularity_order, rank_users, write_rankings
 from src.ar_rec import main as ar_rec_main
 from src.evaluate import evaluate
 
@@ -249,9 +249,48 @@ class ARRecCliTests(unittest.TestCase):
                 ar_rec_main([flag, value, "--output-dir", directory])
             self.assertEqual(raised.exception.code, 2)
 
-    def test_cli_fails_cleanly_when_no_rules(self):
+    def test_cli_without_rules_falls_back_to_popularity_for_every_user(self):
         with tempfile.TemporaryDirectory() as directory:
-            self.assertEqual(self.run_cli(Path(directory), "--min-support", "0.99", "--min-confidence", "0.99"), 1)
+            root = Path(directory)
+            self.assertEqual(self.run_cli(root, "--min-support", "0.99", "--min-confidence", "0.99"), 0)
+            metrics = json.loads((root / "out" / "ar_rec_metrics.json").read_text(encoding="utf-8"))
+            self.assertEqual(metrics["mining"]["n_rules"], 0)
+            self.assertEqual(metrics["ranking"]["users_with_rule"], 0)
+            popularity = [2, 1, 3, 4, 5, 6, 7, 8]
+            for line in (root / "out" / "rankings.jsonl").read_text(encoding="utf-8").splitlines():
+                row = json.loads(line)
+                length = min(2 + len(USERS[row["user_id"]][0]), len(popularity))
+                self.assertEqual(row["ranked_items"], popularity[:length])
+
+    def test_check_train_sequences_accepts_consistent_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            check_train_sequences(root / "train_sequences.jsonl", root / "interactions.csv", root / "splits.csv")
+
+    def test_check_train_sequences_rejects_mixed_splits(self):
+        # Một item validation lọt vào train_sequences (như khi file đến từ lần chia khác) sẽ kéo item đó lên Popularity.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            path = root / "train_sequences.jsonl"
+            records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+            variants = {
+                "extra item": [dict(records[0], item_ids=records[0]["item_ids"] + [USERS[1][1]])] + records[1:],
+                "swapped item, same length": [dict(records[0], item_ids=records[0]["item_ids"][:-1] + [USERS[1][1]])]
+                                             + records[1:],
+                "missing user": records[:-1],
+                "unknown user": records + [{"user_id": 99, "item_ids": [1]}],
+                "duplicate user": records + [records[0]],
+            }
+            for name, changed in variants.items():
+                with self.subTest(name):
+                    path.write_text("".join(json.dumps(r) + "\n" for r in changed), encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        check_train_sequences(path, root / "interactions.csv", root / "splits.csv")
+                    self.assertEqual(ar_rec_main([
+                        "--processed-dir", str(root), "--interactions", str(root / "interactions.csv"),
+                        "--splits", str(root / "splits.csv"), "--output-dir", str(root / "out")]), 1)
 
     def test_written_rankings_are_sorted_by_user(self):
         with tempfile.TemporaryDirectory() as directory:

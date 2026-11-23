@@ -55,8 +55,8 @@ Cấu hình được chọn từ lưới 105 cấu hình theo NDCG@10 không l�
 Nhận xét:
 
 - NDCG@10 tăng khi giảm min_support đến đếm tối thiểu 3, rồi giảm ở đếm tối thiểu 2. Hiệu so với Popularity là +0,02943 (sai số chuẩn 0,00105).
-- `max_len` 3 và 4 không vượt `max_len` 2 tại các mức support dùng chung; lưới của chúng chỉ xuống đến 0,0005 vì số luật.
-- Với đếm tối thiểu 3, luật gần với thống kê đồng xuất hiện item–item hơn là luật mua kèm bền vững.
+- `max_len` 3 và 4 không vượt `max_len` 2 tại các mức support dùng chung, trừ `max_len` 3 ở min_support 0,001 (NDCG@10 cao hơn 0,00018); lưới của chúng chỉ xuống đến 0,0005 vì số luật.
+- Cấu hình chọn yêu cầu ít nhất 3 giao dịch mỗi luật, không phải đúng 3: 22.011 / 84.883 luật (25,9%) có đúng 3 giao dịch, trung vị 5, lớn nhất 88. Phần lớn luật dựa trên ít giao dịch, gần với thống kê đồng xuất hiện item–item hơn là luật mua kèm bền vững.
 - Nửa số user (11.383 / 22.363) có không quá 4 item train; ở support 0,002 chỉ 7,0% nhóm này có luật khớp, phần còn lại do Popularity.
 - Giới hạn: cấu hình chọn bằng argmax trên chính validation nên mức cải thiện chưa hiệu chỉnh cho việc chọn; ước lượng không chệch cần chạy test một lần.
 

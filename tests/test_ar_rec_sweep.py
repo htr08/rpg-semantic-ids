@@ -270,6 +270,18 @@ class SelectionTests(unittest.TestCase):
         self.assertEqual([r["status"] for r in payload["runs"]], ["ok", "no_rules"])
         self.assertIn("không có luật nào thỏa ngưỡng", format_markdown(payload))
 
+    def test_rejects_train_sequences_from_another_split(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_two_level_dataset(root)
+            path = root / "train_sequences.jsonl"
+            records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+            val_item = USERS_TWO_LEVELS[records[0]["user_id"]][1]
+            records[0]["item_ids"].append(val_item)
+            path.write_text("".join(json.dumps(r) + "\n" for r in records), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "không khớp"):
+                run_sweep(root / "interactions.csv", root / "splits.csv", root, {2: (0.25,)}, (0.5,))
+
     def test_rejects_empty_grid_or_confidences(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
