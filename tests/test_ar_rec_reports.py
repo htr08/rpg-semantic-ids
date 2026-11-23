@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 
 from src import ar_rec
-from src.ar_rec import ARRecommender, check_split_file, load_train_counts, popularity_order, rank_users
+from src.ar_rec import ARRecommender, check_split_file, check_train_sequences, load_train_counts, popularity_order, rank_users
 from src.ar_rec import main as ar_rec_main
 from src.ar_rec_sweep import filter_by_confidence, format_markdown, run_sweep, selection_key
 from tests import test_ar_rec
@@ -139,6 +139,27 @@ class ARRecReportTests(unittest.TestCase):
                         check_split_file(path, split_name, root / "interactions.csv", root / "splits.csv")
             with self.assertRaises(ValueError):
                 check_split_file(validation_path, "train", root / "interactions.csv", root / "splits.csv")
+
+    def test_checks_report_value_error_for_truncated_interactions_and_unreadable_lines(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            _, test_path = self.write_test_file(root)
+            interactions = (root / "interactions.csv").read_text(encoding="utf-8").splitlines()
+            (root / "short.csv").write_text("\n".join(interactions[:6]) + "\n", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                check_train_sequences(root / "train_sequences.jsonl", root / "short.csv", root / "splits.csv")
+            with self.assertRaises(ValueError):
+                check_split_file(test_path, "test", root / "short.csv", root / "splits.csv")
+            for bad_line in ("null", "[1, 2]", '{"user_id": null}', '{"user_id": 1, "item_ids": null}',
+                             '{"user_id": 1, "seen_item_ids": [1, "a"], "target": 7}'):
+                with self.subTest(bad_line):
+                    (root / "train_sequences.jsonl").write_text(bad_line + "\n", encoding="utf-8")
+                    (root / "validation.jsonl").write_text(bad_line + "\n", encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        check_train_sequences(root / "train_sequences.jsonl", root / "interactions.csv", root / "splits.csv")
+                    with self.assertRaises(ValueError):
+                        check_split_file(root / "validation.jsonl", "validation", root / "interactions.csv", root / "splits.csv")
 
     def test_cli_rejects_validation_file_that_does_not_match_the_split(self):
         with tempfile.TemporaryDirectory() as directory:

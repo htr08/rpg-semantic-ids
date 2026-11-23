@@ -1,8 +1,10 @@
 """Kiểm tra AR-Rec trên ví dụ tính tay và trên dữ liệu giả lập qua CLI."""
 
+import io
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
 
 import pandas as pd
@@ -252,7 +254,10 @@ class ARRecCliTests(unittest.TestCase):
     def test_cli_without_rules_falls_back_to_popularity_for_every_user(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            self.assertEqual(self.run_cli(root, "--min-support", "0.99", "--min-confidence", "0.99"), 0)
+            with redirect_stderr(io.StringIO()) as err:
+                code = self.run_cli(root, "--min-support", "0.99", "--min-confidence", "0.99")
+            self.assertEqual(code, 0)
+            self.assertIn("Cảnh báo", err.getvalue())
             metrics = json.loads((root / "out" / "ar_rec_metrics.json").read_text(encoding="utf-8"))
             self.assertEqual(metrics["mining"]["n_rules"], 0)
             self.assertEqual(metrics["ranking"]["users_with_rule"], 0)

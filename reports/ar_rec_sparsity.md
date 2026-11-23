@@ -88,4 +88,4 @@ NDCG@10 giữ item đã xem (`exclude_seen = false`), `max_len = 2`, `min_confid
 .\venv\Scripts\python.exe -m src.ar_rec_sweep --rankings-output experiments/ar_rec_val_selected/rankings.jsonl
 ```
 
-Lưới mặc định (105 cấu hình) chạy khoảng 17 phút trên máy 8 GB RAM (đo hai lần: 16 phút 56 giây và 17 phút 31 giây; đỉnh bộ nhớ của tiến trình 0,67 GB). `rankings.jsonl` là danh sách của cấu hình được chọn, theo định dạng bàn giao của bộ chấm chung (`user_id`, `ranked_items`, mỗi user `max(K) + len(seen_item_ids)` item).
+Lưới mặc định (105 cấu hình) chạy khoảng 17 phút trên máy 8 GB RAM (đo được 17 phút 31 giây; đỉnh working set của tiến trình 0,67 GB, bộ nhớ commit đỉnh 1,10 GB). `rankings.jsonl` là danh sách của cấu hình được chọn, theo định dạng bàn giao của bộ chấm chung (`user_id`, `ranked_items`, mỗi user `max(K) + len(seen_item_ids)` item).

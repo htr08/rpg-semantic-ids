@@ -84,21 +84,28 @@ def check_train_sequences(train_sequences_path, interactions_path, splits_path):
     """
     items = pd.read_csv(interactions_path, usecols=["item_id"])["item_id"].to_numpy()
     splits = pd.read_csv(splits_path, usecols=["user_id", "train_start", "train_stop"])
+    if (splits["train_stop"] > len(items)).any():
+        raise ValueError(f"bộ chia vượt số dòng của interactions.csv ({len(items)}); dữ liệu thuộc hai lần chia khác nhau")
     expected = {int(user): items[start:stop].tolist()
                 for user, start, stop in zip(splits["user_id"], splits["train_start"], splits["train_stop"])}
+    name = Path(train_sequences_path).name
     seen_users = set()
     with Path(train_sequences_path).open(encoding="utf-8") as stream:
-        for line in stream:
+        for number, line in enumerate(stream, start=1):
             if not line.strip():
                 continue
-            record = json.loads(line)
-            user = int(record["user_id"])
-            if user in seen_users or user not in expected or list(record["item_ids"]) != expected[user]:
-                raise ValueError(f"{Path(train_sequences_path).name} không khớp interactions.csv và bộ chia "
-                                 f"(user {user}); dữ liệu thuộc hai lần chia khác nhau")
+            try:
+                record = json.loads(line)
+                user = int(record["user_id"])
+                matches = user not in seen_users and user in expected and list(record["item_ids"]) == expected[user]
+            except (TypeError, KeyError, ValueError) as error:
+                raise ValueError(f"{name} dòng {number} không đọc được: {error!r}") from error
+            if not matches:
+                raise ValueError(f"{name} không khớp interactions.csv và bộ chia (user {user}); "
+                                 "dữ liệu thuộc hai lần chia khác nhau")
             seen_users.add(user)
     if seen_users != expected.keys():
-        raise ValueError(f"{Path(train_sequences_path).name} thiếu {len(expected.keys() - seen_users)} user so với bộ chia")
+        raise ValueError(f"{name} thiếu {len(expected.keys() - seen_users)} user so với bộ chia")
 
 
 def check_split_file(split_path, split_name, interactions_path, splits_path):
@@ -113,19 +120,25 @@ def check_split_file(split_path, split_name, interactions_path, splits_path):
     items = pd.read_csv(interactions_path, usecols=["item_id"])["item_id"].to_numpy()
     splits = pd.read_csv(splits_path)
     label_column = f"{split_name}_index"
+    if (splits[label_column] >= len(items)).any():
+        raise ValueError(f"bộ chia vượt số dòng của interactions.csv ({len(items)}); dữ liệu thuộc hai lần chia khác nhau")
     expected = {}
     for user, start, label in zip(splits["user_id"], splits["train_start"], splits[label_column]):
         expected[int(user)] = (sorted(set(items[start:label].tolist())), int(items[label]))
     seen_users = set()
     name = Path(split_path).name
     with Path(split_path).open(encoding="utf-8") as stream:
-        for line in stream:
+        for number, line in enumerate(stream, start=1):
             if not line.strip():
                 continue
-            record = json.loads(line)
-            user = int(record["user_id"])
-            if user in seen_users or user not in expected or (
-                    sorted(record["seen_item_ids"]), record["target"]) != expected[user]:
+            try:
+                record = json.loads(line)
+                user = int(record["user_id"])
+                matches = (user not in seen_users and user in expected
+                           and (sorted(record["seen_item_ids"]), record["target"]) == expected[user])
+            except (TypeError, KeyError, ValueError) as error:
+                raise ValueError(f"{name} dòng {number} không đọc được: {error!r}") from error
+            if not matches:
                 raise ValueError(f"{name} không khớp interactions.csv và bộ chia (user {user}); "
                                  "dữ liệu thuộc hai lần chia khác nhau")
             seen_users.add(user)
@@ -318,6 +331,8 @@ def main(argv=None):
         print("Error: hết bộ nhớ khi sinh luật; tăng --min-support, giảm --max-len hoặc giải phóng RAM "
               "(mức 0,0005 với --max-len 4 tạo hơn 650.000 luật)", file=sys.stderr)
         return 1
+    if mining["n_rules"] == 0:
+        print("Cảnh báo: không có luật nào thỏa ngưỡng; ranking chỉ gồm Popularity", file=sys.stderr)
     write_rankings(args.output_dir / "rankings.jsonl", rankings)
     result = {
         "model": "ar_rec", "split": args.split,
