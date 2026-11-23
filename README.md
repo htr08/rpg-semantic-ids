@@ -180,6 +180,18 @@ AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu 
 
 `src.ar_rec_sweep` quét `max_len` × `min_support` × `min_confidence` trên validation (105 cấu hình, khoảng 17 phút) và chọn theo NDCG@10 không lọc item đã xem. Kết quả: [reports/ar_rec_sweep.md](reports/ar_rec_sweep.md) (bảng và cấu hình được chọn), [reports/ar_rec_sweep.json](reports/ar_rec_sweep.json) (từng cấu hình) và [reports/ar_rec_sparsity.md](reports/ar_rec_sparsity.md) (phân tích độ thưa của luật). Test chưa được chạy cho cấu hình đã chọn.
 
+## Đối chiếu luật và k-means với semantic ID (phần C)
+
+```powershell
+.\venv\Scripts\python.exe -m src.semantic_alignment
+```
+
+Điều kiện đầu vào (đều không commit, tạo lại theo [docs/data_contract.md](docs/data_contract.md)): `data/processed/semantic_ids_opq.npy`
+(12.101 × 32, giá trị 0–255, hàng j ứng với `item_id` j + 1), `data/processed/item_embeddings.npy` (12.101 × 768), `interactions.csv`
+và `data/splits/leave_last_out.csv`. Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
+lấy 200 cặp có lift cao nhất, đếm số vị trí token trùng nhau của mỗi cặp rồi so với cặp ngẫu nhiên; đồng thời tính ARI giữa k-means (PCA 50 chiều, k = 256, seed 42–44)
+và token OPQ. Kết quả: [reports/semantic_alignment.md](reports/semantic_alignment.md), [reports/semantic_alignment.json](reports/semantic_alignment.json).
+
 ## Kiểm thử
 
 ```bash

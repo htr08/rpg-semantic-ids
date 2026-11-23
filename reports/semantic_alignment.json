@@ -1,0 +1,329 @@
+{
+  "n_items": 12101,
+  "n_positions": 32,
+  "codebook_size": 256,
+  "n_transactions": 22363,
+  "n_null_pairs": 100000,
+  "seed": 42,
+  "rules": [
+    {
+      "min_support": 0.0005,
+      "min_count": 12,
+      "min_confidence": 0.1,
+      "top_n": 200,
+      "n_unique_pairs_available": 7015,
+      "n_pairs_used": 200,
+      "count_min": 12,
+      "count_median": 15.0,
+      "lift_min": 425.4554102259215,
+      "lift_max": 1315.4705882352941,
+      "n_items_in_pairs": 84,
+      "n_identical_id_pairs": 0,
+      "vs_random_catalog": {
+        "n_pairs": 200,
+        "mean_shared": 0.65,
+        "median_shared": 0.0,
+        "zero_shared_rate": 0.66,
+        "null_mean_shared": 0.14456,
+        "null_median_shared": 0.0,
+        "null_zero_shared_rate": 0.86612,
+        "threshold": 2,
+        "rate_at_threshold": 0.11,
+        "null_rate_at_threshold": 0.00973,
+        "rate_ratio": 11.305241521068858,
+        "rate_by_threshold": {
+          "1": 0.34,
+          "2": 0.11,
+          "3": 0.045,
+          "4": 0.025,
+          "5": 0.02,
+          "6": 0.015
+        },
+        "null_rate_by_threshold": {
+          "1": 0.13388,
+          "2": 0.00973,
+          "3": 0.00058,
+          "4": 8e-05,
+          "5": 6e-05,
+          "6": 4e-05
+        }
+      },
+      "permutation": {
+        "n_perm": 5000,
+        "threshold": 2,
+        "observed_mean_shared": 0.65,
+        "permuted_mean_shared": 0.24482399999999999,
+        "mean_ratio": 2.6549684671437443,
+        "p_value_mean": 0.0001999600079984003,
+        "observed_rate_at_threshold": 0.11,
+        "permuted_rate_at_threshold": 0.031233000000000004,
+        "p_value_rate": 0.0001999600079984003,
+        "n_items": 84
+      },
+      "by_brand": {
+        "same_brand": {
+          "n_pairs": 34,
+          "mean_shared": 0.7352941176470589,
+          "rate_at_threshold": 0.14705882352941177,
+          "permutation_within_brand": {
+            "n_perm": 5000,
+            "threshold": 2,
+            "observed_mean_shared": 0.7352941176470589,
+            "permuted_mean_shared": 0.5238941176470588,
+            "mean_ratio": 1.4035166513215513,
+            "p_value_mean": 0.1251749650069986,
+            "observed_rate_at_threshold": 0.14705882352941177,
+            "permuted_rate_at_threshold": 0.10021764705882354,
+            "p_value_rate": 0.22555488902219556,
+            "n_brands": 3
+          }
+        },
+        "different_brand": {
+          "n_pairs": 9,
+          "mean_shared": 0.4444444444444444,
+          "rate_at_threshold": 0.1111111111111111
+        },
+        "missing_brand": {
+          "n_pairs": 157,
+          "mean_shared": 0.643312101910828,
+          "rate_at_threshold": 0.10191082802547771
+        }
+      }
+    },
+    {
+      "min_support": 0.001,
+      "min_count": 23,
+      "min_confidence": 0.1,
+      "top_n": 200,
+      "n_unique_pairs_available": 1423,
+      "n_pairs_used": 200,
+      "count_min": 23,
+      "count_median": 27.0,
+      "lift_min": 130.25044802867384,
+      "lift_max": 721.3870967741935,
+      "n_items_in_pairs": 109,
+      "n_identical_id_pairs": 0,
+      "vs_random_catalog": {
+        "n_pairs": 200,
+        "mean_shared": 0.755,
+        "median_shared": 0.0,
+        "zero_shared_rate": 0.585,
+        "null_mean_shared": 0.14456,
+        "null_median_shared": 0.0,
+        "null_zero_shared_rate": 0.86612,
+        "threshold": 2,
+        "rate_at_threshold": 0.155,
+        "null_rate_at_threshold": 0.00973,
+        "rate_ratio": 15.930113052415209,
+        "rate_by_threshold": {
+          "1": 0.415,
+          "2": 0.155,
+          "3": 0.09,
+          "4": 0.04,
+          "5": 0.025,
+          "6": 0.02
+        },
+        "null_rate_by_threshold": {
+          "1": 0.13388,
+          "2": 0.00973,
+          "3": 0.00058,
+          "4": 8e-05,
+          "5": 6e-05,
+          "6": 4e-05
+        }
+      },
+      "permutation": {
+        "n_perm": 5000,
+        "threshold": 2,
+        "observed_mean_shared": 0.755,
+        "permuted_mean_shared": 0.18506199999999998,
+        "mean_ratio": 4.079713825636814,
+        "p_value_mean": 0.0001999600079984003,
+        "observed_rate_at_threshold": 0.155,
+        "permuted_rate_at_threshold": 0.018754000000000003,
+        "p_value_rate": 0.0001999600079984003,
+        "n_items": 109
+      },
+      "by_brand": {
+        "same_brand": {
+          "n_pairs": 89,
+          "mean_shared": 1.1123595505617978,
+          "rate_at_threshold": 0.24719101123595505,
+          "permutation_within_brand": {
+            "n_perm": 5000,
+            "threshold": 2,
+            "observed_mean_shared": 1.1123595505617978,
+            "permuted_mean_shared": 0.5296719101123596,
+            "mean_ratio": 2.1000916403624883,
+            "p_value_mean": 0.0015996800639872025,
+            "observed_rate_at_threshold": 0.24719101123595505,
+            "permuted_rate_at_threshold": 0.09129438202247192,
+            "p_value_rate": 0.0001999600079984003,
+            "n_brands": 11
+          }
+        },
+        "different_brand": {
+          "n_pairs": 19,
+          "mean_shared": 0.3684210526315789,
+          "rate_at_threshold": 0.05263157894736842
+        },
+        "missing_brand": {
+          "n_pairs": 92,
+          "mean_shared": 0.4891304347826087,
+          "rate_at_threshold": 0.08695652173913043
+        }
+      }
+    },
+    {
+      "min_support": 0.002,
+      "min_count": 45,
+      "min_confidence": 0.1,
+      "top_n": 200,
+      "n_unique_pairs_available": 102,
+      "n_pairs_used": 102,
+      "count_min": 45,
+      "count_median": 52.0,
+      "lift_min": 13.599021746315024,
+      "lift_max": 275.1052487698196,
+      "n_items_in_pairs": 66,
+      "n_identical_id_pairs": 0,
+      "vs_random_catalog": {
+        "n_pairs": 102,
+        "mean_shared": 0.8725490196078431,
+        "median_shared": 0.0,
+        "zero_shared_rate": 0.5686274509803921,
+        "null_mean_shared": 0.14456,
+        "null_median_shared": 0.0,
+        "null_zero_shared_rate": 0.86612,
+        "threshold": 2,
+        "rate_at_threshold": 0.17647058823529413,
+        "null_rate_at_threshold": 0.00973,
+        "rate_ratio": 18.136751103319025,
+        "rate_by_threshold": {
+          "1": 0.43137254901960786,
+          "2": 0.17647058823529413,
+          "3": 0.09803921568627451,
+          "4": 0.0784313725490196,
+          "5": 0.0392156862745098,
+          "6": 0.029411764705882353
+        },
+        "null_rate_by_threshold": {
+          "1": 0.13388,
+          "2": 0.00973,
+          "3": 0.00058,
+          "4": 8e-05,
+          "5": 6e-05,
+          "6": 4e-05
+        }
+      },
+      "permutation": {
+        "n_perm": 5000,
+        "threshold": 2,
+        "observed_mean_shared": 0.8725490196078431,
+        "permuted_mean_shared": 0.2265156862745098,
+        "mean_ratio": 3.8520467785635764,
+        "p_value_mean": 0.0001999600079984003,
+        "observed_rate_at_threshold": 0.17647058823529413,
+        "permuted_rate_at_threshold": 0.027956862745098038,
+        "p_value_rate": 0.0001999600079984003,
+        "n_items": 66
+      },
+      "by_brand": {
+        "same_brand": {
+          "n_pairs": 37,
+          "mean_shared": 1.6756756756756757,
+          "rate_at_threshold": 0.3783783783783784,
+          "permutation_within_brand": {
+            "n_perm": 5000,
+            "threshold": 2,
+            "observed_mean_shared": 1.6756756756756757,
+            "permuted_mean_shared": 0.7410864864864865,
+            "mean_ratio": 2.2611067752970437,
+            "p_value_mean": 0.0005998800239952009,
+            "observed_rate_at_threshold": 0.3783783783783784,
+            "permuted_rate_at_threshold": 0.14823783783783787,
+            "p_value_rate": 0.0007998400319936012,
+            "n_brands": 12
+          }
+        },
+        "different_brand": {
+          "n_pairs": 17,
+          "mean_shared": 0.29411764705882354,
+          "rate_at_threshold": 0.058823529411764705
+        },
+        "missing_brand": {
+          "n_pairs": 48,
+          "mean_shared": 0.4583333333333333,
+          "rate_at_threshold": 0.0625
+        }
+      }
+    }
+  ],
+  "kmeans": {
+    "k": 256,
+    "pca_dim": 50,
+    "pca_explained_variance_ratio": 0.69474,
+    "n_init": 5,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "ari_first_token_by_seed": [
+      0.011056671242630664,
+      0.010946636860862531,
+      0.011166552606989384
+    ],
+    "ari_first_token_mean": 0.011056620236827526,
+    "ari_by_position_mean": [
+      0.011056620236827526,
+      0.009814641661571788,
+      0.010433071821260964,
+      0.010571420289736934,
+      0.010696692003358836,
+      0.009895723301309809,
+      0.012095696040801332,
+      0.011141344597172543,
+      0.009613797255986918,
+      0.010503486323577518,
+      0.010054883985925035,
+      0.010557765817691444,
+      0.010628055030622136,
+      0.01026341800537952,
+      0.009426981996623233,
+      0.011205794180262449,
+      0.010827256602504954,
+      0.012250497778927547,
+      0.010526659927592953,
+      0.012407129100367975,
+      0.010788535576837394,
+      0.011045353932742077,
+      0.010872388338507838,
+      0.010661072094229937,
+      0.01066260315951459,
+      0.011452178357532187,
+      0.011863753476107871,
+      0.01128599723577127,
+      0.013640076162722019,
+      0.01039602608841702,
+      0.01013060682997781,
+      0.0120202286028991
+    ],
+    "ari_other_positions": {
+      "min": 0.009426981996623233,
+      "median": 0.01066260315951459,
+      "max": 0.013640076162722019,
+      "argmax_position": 28
+    },
+    "ari_first_token_shuffled": {
+      "n_shuffle": 20,
+      "mean": -1.4562376589457535e-05,
+      "std": 9.892754127693966e-05
+    },
+    "ari_first_token_vs_other_tokens": {
+      "mean": 0.0012721574415027062,
+      "max": 0.0016673341074054185
+    },
+    "ari_between_kmeans_seeds": 0.5392996953559455
+  }
+}
