@@ -186,9 +186,10 @@ AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu 
 .\venv\Scripts\python.exe -m src.semantic_alignment
 ```
 
-Điều kiện đầu vào (đều không commit, tạo lại theo [docs/data_contract.md](docs/data_contract.md)): `data/processed/semantic_ids.npy`
-(12.101 × 32, giá trị 0–255, hàng j ứng với `item_id` j + 1), `data/processed/item_embeddings.npy` (12.101 × 768), `interactions.csv`
-và `data/splits/leave_last_out.csv`. Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
+Điều kiện đầu vào (không commit `data/processed/*`): `data/processed/semantic_ids.npy` (12.101 × 32, giá trị 0–255) và
+`data/processed/item_embeddings.npy` (12.101 × 768) do A tạo, hàng j ứng với `item_id` j + 1 (quy ước ở
+[docs/data_contract.md](docs/data_contract.md) và [reports/decisions.md](reports/decisions.md), dòng 15/11); `interactions.csv` do pipeline
+dữ liệu tạo; `data/splits/leave_last_out.csv` có trong repo. Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
 lấy 200 cặp có lift cao nhất, đếm số vị trí token trùng nhau của mỗi cặp rồi so với cặp ngẫu nhiên; đồng thời tính ARI giữa k-means (PCA 50 chiều, k = 256, seed 42–44)
 và token OPQ. Kết quả: [reports/semantic_alignment.md](reports/semantic_alignment.md), [reports/semantic_alignment.json](reports/semantic_alignment.json).
 
