@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 
 from src import ar_rec
-from src.ar_rec import ARRecommender, load_train_counts, popularity_order, rank_users
+from src.ar_rec import ARRecommender, check_split_file, load_train_counts, popularity_order, rank_users
 from src.ar_rec import main as ar_rec_main
 from src.ar_rec_sweep import filter_by_confidence, format_markdown, run_sweep, selection_key
 from tests import test_ar_rec
@@ -102,6 +102,57 @@ class ARRecReportTests(unittest.TestCase):
             self.assertEqual(code, 1)
             self.assertIn("hết bộ nhớ", err.getvalue())
 
+    def write_test_file(self, root):
+        rows = [{"user_id": u, "history": items + [val], "target": test, "seen_item_ids": sorted(items + [val]),
+                 "target_in_history": False} for u, (items, val, test) in USERS.items()]
+        path = root / "test.jsonl"
+        path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+        return rows, path
+
+    def test_check_split_file_accepts_consistent_validation_and_test_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            _, test_path = self.write_test_file(root)
+            check_split_file(root / "validation.jsonl", "validation", root / "interactions.csv", root / "splits.csv")
+            check_split_file(test_path, "test", root / "interactions.csv", root / "splits.csv")
+
+    def test_check_split_file_rejects_files_from_another_split(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            test_rows, test_path = self.write_test_file(root)
+            validation_path = root / "validation.jsonl"
+            validation_rows = [json.loads(line) for line in validation_path.read_text(encoding="utf-8").splitlines()]
+            cases = {
+                # Lịch sử của bộ test nằm trong file validation: điểm đổi dù luật và Popularity không đổi.
+                "test history in validation file": (validation_path, "validation", test_rows),
+                "validation history in test file": (test_path, "test", validation_rows),
+                "wrong target": (validation_path, "validation", [dict(validation_rows[0], target=6)] + validation_rows[1:]),
+                "missing user": (validation_path, "validation", validation_rows[:-1]),
+                "duplicate user": (validation_path, "validation", validation_rows + [validation_rows[0]]),
+            }
+            for name, (path, split_name, rows) in cases.items():
+                with self.subTest(name):
+                    path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        check_split_file(path, split_name, root / "interactions.csv", root / "splits.csv")
+            with self.assertRaises(ValueError):
+                check_split_file(validation_path, "train", root / "interactions.csv", root / "splits.csv")
+
+    def test_cli_rejects_validation_file_that_does_not_match_the_split(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            test_rows, _ = self.write_test_file(root)
+            (root / "validation.jsonl").write_text("".join(json.dumps(r) + "\n" for r in test_rows), encoding="utf-8")
+            with redirect_stderr(io.StringIO()) as err:
+                code = ar_rec_main(["--processed-dir", str(root), "--splits", str(root / "splits.csv"),
+                                    "--output-dir", str(root / "out")])
+            self.assertEqual(code, 1)
+            self.assertIn("không khớp", err.getvalue())
+            self.assertFalse((root / "out").exists())
+
 
 class SweepReportTests(unittest.TestCase):
     def run_two_level(self, grid, confidences):
@@ -117,6 +168,16 @@ class SweepReportTests(unittest.TestCase):
         root = Path(directory.name)
         write_dataset(root)
         return quiet(run_sweep, root / "interactions.csv", root / "splits.csv", root, grid, confidences)
+
+    def test_sweep_rejects_validation_file_that_does_not_match_the_split(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_dataset(root)
+            rows = [json.loads(line) for line in (root / "validation.jsonl").read_text(encoding="utf-8").splitlines()]
+            rows[0]["seen_item_ids"] = rows[0]["seen_item_ids"] + [8]
+            (root / "validation.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "không khớp"):
+                run_sweep(root / "interactions.csv", root / "splits.csv", root, {2: (0.4,)}, (0.5,))
 
     def test_each_tie_break_decides_on_its_own(self):
         pick = lambda runs: min(runs, key=selection_key)

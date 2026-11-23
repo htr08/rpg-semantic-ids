@@ -32,6 +32,7 @@ from src.ar_rec import (
     DEFAULT_KS,
     DEFAULT_PROCESSED,
     ARRecommender,
+    check_split_file,
     check_train_sequences,
     load_train_counts,
     popularity_order,
@@ -195,6 +196,7 @@ def run_sweep(interactions, splits_path, processed_dir, grid, confidences, ks=DE
     if not confidences or not any(grid.values()):
         raise ValueError("lưới phải có ít nhất một min_support và một min_confidence")
     check_train_sequences(Path(processed_dir) / "train_sequences.jsonl", interactions, splits_path)
+    check_split_file(Path(processed_dir) / "validation.jsonl", "validation", interactions, splits_path)
     n_items = int(pd.read_csv(interactions, usecols=["item_id"])["item_id"].max())
     _, transactions = load_train_transactions(interactions, splits_path)
     matrix = build_transaction_matrix(transactions, n_items)

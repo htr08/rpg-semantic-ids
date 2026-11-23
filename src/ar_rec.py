@@ -20,8 +20,8 @@ Quy ước dữ liệu:
   Mô-đun xuất ``max_k + len(seen_item_ids)`` item cho mỗi user (như baseline của B), để bộ chấm chung
   vẫn dùng được chế độ ``--exclude-seen`` khi cần đối chiếu.
 - Luật khai phá từ ``interactions.csv`` theo bộ chia, còn Popularity đếm từ ``train_sequences.jsonl``; hai nguồn phải cùng
-  một lần chia, nên ``check_train_sequences`` so từng user trước khi dựng mô hình. ``validation.jsonl`` và ``test.jsonl``
-  (nguồn của ``seen_item_ids``) không được đối chiếu; chúng chỉ ảnh hưởng việc khớp luật và độ dài ranking, không vào luật hay Popularity.
+  một lần chia, nên ``check_train_sequences`` so từng user trước khi dựng mô hình. ``check_split_file`` so tương tự
+  ``validation.jsonl`` hoặc ``test.jsonl`` (nguồn của ``seen_item_ids`` và nhãn) với ``interactions.csv`` và bộ chia.
 - Bộ luật rỗng (ngưỡng quá cao) vẫn hợp lệ: mô hình khi đó trả Popularity thuần cho mọi user.
 """
 
@@ -99,6 +99,38 @@ def check_train_sequences(train_sequences_path, interactions_path, splits_path):
             seen_users.add(user)
     if seen_users != expected.keys():
         raise ValueError(f"{Path(train_sequences_path).name} thiếu {len(expected.keys() - seen_users)} user so với bộ chia")
+
+
+def check_split_file(split_path, split_name, interactions_path, splits_path):
+    """Báo ``ValueError`` nếu ``validation.jsonl`` hoặc ``test.jsonl`` không khớp ``interactions.csv`` theo bộ chia.
+
+    Theo ``preprocessing.build_dataset``: ``seen_item_ids`` là tập item (sắp tăng dần) của mọi tương tác trước nhãn,
+    tức train với validation và train cộng nhãn validation với test; ``target`` là tương tác tại ``validation_index``
+    hoặc ``test_index``. File lệch bộ chia vẫn cho điểm nhưng khớp luật trên lịch sử và độ dài ranking sai.
+    """
+    if split_name not in ("validation", "test"):
+        raise ValueError(f"bộ chia phải là validation hoặc test, nhận {split_name!r}")
+    items = pd.read_csv(interactions_path, usecols=["item_id"])["item_id"].to_numpy()
+    splits = pd.read_csv(splits_path)
+    label_column = f"{split_name}_index"
+    expected = {}
+    for user, start, label in zip(splits["user_id"], splits["train_start"], splits[label_column]):
+        expected[int(user)] = (sorted(set(items[start:label].tolist())), int(items[label]))
+    seen_users = set()
+    name = Path(split_path).name
+    with Path(split_path).open(encoding="utf-8") as stream:
+        for line in stream:
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            user = int(record["user_id"])
+            if user in seen_users or user not in expected or (
+                    sorted(record["seen_item_ids"]), record["target"]) != expected[user]:
+                raise ValueError(f"{name} không khớp interactions.csv và bộ chia (user {user}); "
+                                 "dữ liệu thuộc hai lần chia khác nhau")
+            seen_users.add(user)
+    if seen_users != expected.keys():
+        raise ValueError(f"{name} thiếu {len(expected.keys() - seen_users)} user so với bộ chia")
 
 
 class ARRecommender:
@@ -268,6 +300,7 @@ def main(argv=None):
         parser.error("--min-confidence phải thuộc (0, 1]")
     interactions = args.interactions or args.processed_dir / "interactions.csv"
     try:
+        check_split_file(args.processed_dir / f"{args.split}.jsonl", args.split, interactions, args.splits)
         split = load_split(args.processed_dir / f"{args.split}.jsonl")
         recommender, mining = build_recommender(
             interactions, args.splits, args.processed_dir / "train_sequences.jsonl",

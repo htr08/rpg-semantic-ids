@@ -1,6 +1,6 @@
 # Họp tuần 15/11: FP-Growth và AR-Rec (phần C)
 
-Tài liệu chuẩn bị cho nội dung họp của C trong kế hoạch tuần 2 (`docs/project_plan.md`, mục 4.2): trình bày FP-Growth và AR-Rec, và vẽ lại luồng dữ liệu của hai phần còn lại. Số liệu lấy từ `reports/` và mã trong `src/`; mọi kết quả AR-Rec là trên bộ chia validation, chưa chạy test. Nội dung cập nhật đến 23/11, nên có dẫn quyết định 19/11 và kết quả 3 seed của A.
+Tài liệu chuẩn bị cho nội dung họp của C trong kế hoạch tuần 2 (`docs/project_plan.md`, mục 4.2): trình bày FP-Growth và AR-Rec, và vẽ lại luồng dữ liệu của hai phần còn lại. Số liệu lấy từ `reports/` và mã trong `src/`; mọi kết quả AR-Rec là trên bộ chia validation, chưa chạy test.
 
 ## 1. Luồng dữ liệu phần C
 
