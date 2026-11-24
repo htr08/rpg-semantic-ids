@@ -1,5 +1,5 @@
-# Cấu hình chính: RPG chạy bằng code gốc (third_party/RPG_KDD2025), siêu tham số theo paper.
-# Tên khóa cần đối chiếu với tham số của main.py trong repo gốc khi viết adapter.
+# Cấu hình chính: RPG chạy bằng code gốc RPG_KDD2025 @ 7dcf95c qua scripts/run_rpg.py, siêu tham số theo README của code gốc cho Beauty.
+# scripts/run_rpg.py (build_config) phải khớp file này; tests/test_run_rpg.py kiểm tra.
 run_name: rpg_main
 dataset: amazon_beauty_2014
 
@@ -8,6 +8,7 @@ semantic_id:
   method: opq                   # opq | pq | rq | random | behavior
   num_subspaces: 32             # m: mỗi item gồm 32 token
   codebook_size: 256            # tổng từ vựng 32 x 256 = 8192
+  pca_dim: 128                  # PCA có whiten trước OPQ, như code gốc (sent_emb_pca)
 
 model:
   hidden_dim: 448               # d
@@ -23,6 +24,11 @@ train:
   early_stopping_metric: ndcg@10   # trên validation
   seeds: [42, 43, 44]
 
+decoding:                       # giải mã trên đồ thị khi chấm test
+  num_beams: 20
+  n_edges: 200
+  propagation_steps: 3
+  
 eval:
   protocol: leave_last_out
   ranking: full

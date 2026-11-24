@@ -19,7 +19,7 @@ Kế hoạch đầy đủ: [docs/project_plan.md](docs/project_plan.md).
 
 | Thành phần | Nguồn |
 |---|---|
-| `third_party/RPG_KDD2025/` | Code gốc của tác giả bài báo (git submodule, không sửa). Huấn luyện RPG chạy bằng `main.py` của repo này. |
+| [RPG_KDD2025](https://github.com/facebookresearch/RPG_KDD2025/tree/7dcf95c) | Code gốc của tác giả bài báo, khóa ở commit `7dcf95c`, không sửa và không commit vào repo này. Clone riêng (trên Colab: `/content/RPG_KDD2025`); `scripts/run_rpg.py` gọi `genrec.pipeline.Pipeline` của nó. |
 | RecBole | Thư viện bên ngoài, dùng cho baseline Popularity và ItemKNN. |
 | [S³-Rec](https://github.com/aHuiWang/CIKM2020-S3Rec/tree/49a890dcb516c9ed3126564495234ea74d5cd566) | Code gốc huấn luyện SASRec-BCE. Script tải mã đã pin và bộ chấm chung do nhóm viết. |
 | `adapters/` | Tự viết: nạp semantic ID hoặc embedding do nhóm tạo vào code gốc. |
@@ -33,7 +33,7 @@ configs/             cấu hình từng thí nghiệm (*.yaml) và gpu_budget.md
 data/raw/            dữ liệu thô (không commit)
 data/processed/      chuỗi, embedding, semantic_ids.npy (không commit)
 data/splits/         chỉ số leave-last-out dùng chung (commit)
-third_party/         code gốc RPG_KDD2025 (submodule)
+third_party/         chỗ đặt bản clone code gốc khi chạy trên máy (không commit)
 adapters/            adapter nạp semantic ID / embedding vào code gốc
 notebooks/           EDA, semantic ID như phân cụm, khai phá mẫu, so sánh phân cụm, cold-start, hubness
 scripts/             tải dữ liệu, tạo semantic ID, chạy baseline và RPG, run_all.sh
@@ -56,12 +56,34 @@ pip install -r requirements.txt
 
 Trên Kaggle/Colab, chạy `pip install -r requirements.txt` ở cell đầu notebook.
 
-Thêm code gốc làm submodule (URL lấy từ repo của tác giả):
+## Chạy RPG bằng code gốc và adapter
+
+Code gốc không nằm trong repo này. Clone đúng commit đã kiểm tra (trên Colab dùng `/content/RPG_KDD2025`, đường dẫn mặc định của `scripts/run_rpg.py`; ở chỗ khác đặt biến `RPG_KDD2025_DIR`):
 
 ```bash
-git submodule add <URL repo RPG_KDD2025> third_party/RPG_KDD2025
-git submodule update --init --recursive
+git clone https://github.com/facebookresearch/RPG_KDD2025.git /content/RPG_KDD2025
+git -C /content/RPG_KDD2025 checkout 7dcf95c
+pip install faiss-cpu==1.12.0 sentence-transformers==5.1.0 accelerate==1.10.1 datasets==4.0.0 tiktoken==0.11.0
 ```
+
+Cấu hình chính (`configs/rpg_main.yaml`; output vào `--root`, mặc định `/content/drive/MyDrive/rpg`):
+
+```bash
+python scripts/run_rpg.py --seed=42                 # run_id main_s42; lần đầu tải dữ liệu, encode và tạo semantic ID OPQ
+```
+
+Dùng semantic ID hoặc embedding do nhóm tạo (`adapters/load_ids.py`, không sửa code gốc). Mảng `.npy` theo quy ước hàng i ↔ `item_id` i + 1:
+
+```bash
+P=/content/drive/MyDrive/rpg/cache/AmazonReviews2014/Beauty/processed
+python -m adapters.load_ids ids --processed-dir $P --npy pq.npy --name pq          # chế độ (b): semantic ID (N, 32), mã 0..255
+python scripts/run_rpg.py --sent_emb_model=x/pq --seed=42                          # run_id pq_s42
+python -m adapters.load_ids emb --processed-dir $P --npy behav.npy --name behav    # chế độ (a): embedding (N, dim)
+python scripts/run_rpg.py --sent_emb_model=x/behav --seed=42                       # code gốc tự PCA 128 + OPQ; dim lấy từ behav.adapter.json
+python scripts/run_rpg.py --checkpoint=<root>/ckpt/main_s42/<file>.pth            # chỉ chấm test, run_id main_s42_salvage
+```
+
+Mỗi lần chạy ghi `results/<run_id>.json` và một dòng `results/log.csv` dưới `--root`; script dừng trước khi train nếu `run_id` đã có kết quả. Kiểm tra adapter với hàm thật của code gốc: `RPG_KDD2025_DIR=/content/RPG_KDD2025 pytest tests/test_adapter.py`.
 
 Xóa output notebook trước khi commit:
 
