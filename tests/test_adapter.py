@@ -5,6 +5,8 @@ GPU, torch hay faiss. Kiểm tra trên dữ liệu thật (12.101 item) nằm tr
 """
 import json
 import os
+import sys
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -155,7 +157,7 @@ def test_write_ids_rejects_invalid_input(tmp_path, ids, err):
     assert not A.sem_ids_path(proc, "bad", 4, 16).exists()
 
 
-@pytest.mark.parametrize("name", ["sentence-t5-base", "x/pq", "", "../pq", "p q"])
+@pytest.mark.parametrize("name", ["sentence-t5-base", "x/pq", "", "../pq", "p q", "pq\n", "pq\nx"])
 def test_rejects_reserved_or_unsafe_names(tmp_path, name):
     proc = make_cache(tmp_path)
     with pytest.raises(ValueError):
@@ -267,3 +269,75 @@ def test_cli_emb(tmp_path, capsys):
     np.save(tmp_path / "e.npy", np.ones((len(ASINS), 9)))
     assert A.main(["emb", "--processed-dir", str(proc), "--npy", str(tmp_path / "e.npy"), "--name", "e"]) == 0
     assert "'sent_emb_dim': 9" in capsys.readouterr().out
+
+
+# --- Kiểm tra trước khi chạy code gốc ---
+
+def test_resolve_run_mode_b(tmp_path):
+    proc = make_cache(tmp_path)
+    A.write_semantic_ids(np.zeros((len(ASINS), 32), dtype=int), proc, "pq")
+    info = A.resolve_run(proc, "pq")
+    assert info["mode"] == "semantic_ids" and info["sidecar"]["n_colliding_items"] == len(ASINS)
+
+
+def test_resolve_run_mode_a_reads_dim_from_sidecar(tmp_path):
+    proc = make_cache(tmp_path)
+    A.write_embeddings(np.ones((len(ASINS), 12)), proc, "behav")
+    assert A.resolve_run(proc, "behav") == {"mode": "embeddings", "sent_emb_dim": 12,
+                                            "sidecar": A.read_sidecar(proc, "behav")}
+    assert A.resolve_run(proc, "behav", 12)["sent_emb_dim"] == 12
+
+
+def test_resolve_run_rejects_dim_different_from_sidecar(tmp_path):
+    proc = make_cache(tmp_path)
+    A.write_embeddings(np.ones((len(ASINS), 12)), proc, "behav")
+    with pytest.raises(ValueError, match="khác 12"):
+        A.resolve_run(proc, "behav", 4)
+
+
+def test_resolve_run_checks_file_size_when_dim_divides(tmp_path):
+    # 5 item x 12 số = 60 số: reshape(-1, 6) của code gốc vẫn chạy được (10 hàng) nhưng sai
+    proc = make_cache(tmp_path)
+    np.ones((len(ASINS), 12), dtype=np.float32).tofile(A.sent_emb_path(proc, "raw"))
+    with pytest.raises(ValueError, match="byte"):
+        A.resolve_run(proc, "raw", 6)
+    assert A.resolve_run(proc, "raw", 12)["sent_emb_dim"] == 12
+
+
+def test_resolve_run_needs_dim_without_sidecar(tmp_path):
+    proc = make_cache(tmp_path)
+    np.ones((len(ASINS), 12), dtype=np.float32).tofile(A.sent_emb_path(proc, "raw"))
+    with pytest.raises(ValueError, match="sent_emb_dim"):
+        A.resolve_run(proc, "raw")
+
+
+def test_resolve_run_missing_files(tmp_path):
+    proc = make_cache(tmp_path)
+    with pytest.raises(FileNotFoundError, match="adapters.load_ids"):
+        A.resolve_run(proc, "nothing")
+
+
+def test_resolve_run_validates_sem_ids_content(tmp_path):
+    proc = make_cache(tmp_path)
+    A.sem_ids_path(proc, "broken").write_text(json.dumps({a: [0] * 32 for a in ASINS[:-1]}))
+    with pytest.raises(ValueError, match="thiếu 1 item"):
+        A.resolve_run(proc, "broken")
+
+
+# --- Đối chứng với code gốc thật (chạy khi có code gốc, ví dụ trên Colab) ---
+
+def test_tokens_match_real_code_goc(tmp_path, monkeypatch):
+    """Chạy với RPG_KDD2025_DIR=/content/RPG_KDD2025; CI bỏ qua vì không có code gốc và faiss."""
+    repo = os.environ.get("RPG_KDD2025_DIR")
+    if not repo or not os.path.isdir(os.path.join(repo, "genrec")):
+        pytest.skip("cần RPG_KDD2025_DIR trỏ tới code gốc RPG_KDD2025 @ 7dcf95c")
+    monkeypatch.setattr(sys, "path", [repo] + sys.path)
+    upstream = pytest.importorskip("genrec.models.RPG.tokenizer")
+
+    proc = make_cache(tmp_path)
+    ids = np.random.default_rng(0).integers(0, 256, size=(len(ASINS), 32))
+    path = A.write_semantic_ids(ids, proc, "pq")
+    data = json.loads(path.read_text(encoding="utf-8"))               # đọc giống code gốc (dòng 290)
+    fake_self = SimpleNamespace(n_digit=32, codebook_size=256)
+    tokens = upstream.RPGTokenizer._sem_ids_to_tokens(fake_self, data)  # hàm thật của code gốc
+    np.testing.assert_array_equal(np.array([tokens[a] for a in ASINS]), A.to_tokens(ids))

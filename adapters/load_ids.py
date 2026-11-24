@@ -49,7 +49,7 @@ N_CODEBOOK = 32
 CODEBOOK_SIZE = 256
 # Tên file cache mà code gốc tự tạo; ghi đè sẽ làm hỏng cấu hình chính của nhóm.
 RESERVED_NAMES = frozenset({"sentence-t5-base", "text-embedding-3-large"})
-_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
+_NAME_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*")
 
 
 # --- Đường dẫn và tên file theo đúng quy ước của code gốc ---
@@ -147,7 +147,7 @@ def validate_embeddings(emb, n_items: int) -> np.ndarray:
 
 
 def _check_name(name: str, allow_reserved: bool = False) -> None:
-    if not isinstance(name, str) or not _NAME_RE.match(name):
+    if not isinstance(name, str) or not _NAME_RE.fullmatch(name):
         raise ValueError(f"Tên không hợp lệ: {name!r}; chỉ dùng chữ, số, '_', '-', '.', không có '/'")
     if not allow_reserved and name in RESERVED_NAMES:
         raise ValueError(f"Tên {name!r} là file cache của code gốc; chọn tên khác để không ghi đè")
@@ -279,6 +279,52 @@ def read_embeddings(proc_dir: str | Path, name: str, dim: int) -> np.ndarray:
     if arr.shape[0] != n_items:
         raise ValueError(f"{path.name} có {arr.shape[0]} hàng với dim={dim}, cần {n_items}")
     return arr
+
+
+# --- Kiểm tra trước khi chạy code gốc ---
+
+def read_sidecar(proc_dir: str | Path, name: str) -> dict | None:
+    """Nội dung ``<name>.adapter.json`` nếu có."""
+    path = sidecar_path(proc_dir, name)
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+
+def resolve_run(proc_dir: str | Path, name: str, sent_emb_dim: int | None = None, *,
+                n_codebook: int = N_CODEBOOK, codebook_size: int = CODEBOOK_SIZE) -> dict:
+    """Xác định code gốc sẽ dùng file nào cho ``sent_emb_model = x/<name>`` và kiểm tra trước khi train.
+
+    - Có ``.sem_ids``: chế độ (b), code gốc nạp thẳng ID; kiểm tra file đủ item và mã hợp lệ.
+    - Chỉ có ``.sent_emb``: chế độ (a). ``sent_emb_dim`` lấy từ tham số hoặc từ ``.adapter.json``;
+      báo lỗi nếu hai nguồn khác nhau hoặc kích thước file khác ``số item × dim × 4`` byte. Code gốc
+      đọc bằng ``reshape(-1, dim)`` (tokenizer.py dòng 273) nên dim sai mà chia hết vẫn chạy được, ra
+      embedding sai mà không báo lỗi.
+    - Không có file nào: báo lỗi ngay, thay vì để code gốc thử tải model tên ``x/<name>``.
+
+    Trả về ``{"mode": "semantic_ids" | "embeddings", "sent_emb_dim": int | None, "sidecar": dict | None}``.
+    """
+    _check_name(name, allow_reserved=True)
+    proc_dir = Path(proc_dir)
+    sidecar = read_sidecar(proc_dir, name)
+    if sem_ids_path(proc_dir, name, n_codebook, codebook_size).exists():
+        read_semantic_ids(proc_dir, name, n_codebook=n_codebook, codebook_size=codebook_size)
+        return {"mode": "semantic_ids", "sent_emb_dim": sent_emb_dim, "sidecar": sidecar}
+
+    emb = sent_emb_path(proc_dir, name)
+    if not emb.exists():
+        raise FileNotFoundError(
+            f"Không có {sem_ids_path(proc_dir, name, n_codebook, codebook_size).name} hay {emb.name} trong "
+            f"{proc_dir}; ghi trước bằng python -m adapters.load_ids ids|emb --name {name} ...")
+    recorded = sidecar.get("sent_emb_dim") if sidecar else None
+    if sent_emb_dim is not None and recorded is not None and int(sent_emb_dim) != int(recorded):
+        raise ValueError(f"--sent_emb_dim={sent_emb_dim} khác {recorded} ghi trong {sidecar_path(proc_dir, name).name}")
+    dim = sent_emb_dim if sent_emb_dim is not None else recorded
+    if dim is None:
+        raise ValueError(f"Không biết số chiều của {emb.name}: truyền --sent_emb_dim hoặc ghi file bằng adapter")
+    n_items = len(load_id2item(proc_dir))
+    expected = n_items * int(dim) * 4
+    if emb.stat().st_size != expected:
+        raise ValueError(f"{emb.name} có {emb.stat().st_size} byte, cần {n_items} item x {dim} chiều x 4 = {expected}")
+    return {"mode": "embeddings", "sent_emb_dim": int(dim), "sidecar": sidecar}
 
 
 # --- CLI ---
