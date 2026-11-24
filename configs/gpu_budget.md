@@ -4,6 +4,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 
 - Thực tế: 1,2–1,6 giờ/lần train RPG trên Colab T4 (trung bình 1,37 giờ qua 3 seed main, 14/11); ước tính ban đầu 3–4 giờ.
 - SASRec-BCE theo S³-Rec hoàn tất 3 seed ngày 20/11 với khoảng 0,54 giờ. Tổng thời gian gồm các lần chạy thử và chạy chính là khoảng 5,98/45 giờ, còn khoảng 39,02 giờ.
+- Kiểm tra adapter ngày 23/11 (chế độ a 0,11 giờ; Cổng 2 1,71 giờ; chấm lại 0,05 giờ) nâng tổng lên khoảng 7,85/45 giờ, còn khoảng 37,15 giờ.
 - Nền tảng: Google Colab (chính) + Kaggle (dự phòng, chạy song song từ Tuần 3). Mọi output ghi vào Drive `MyDrive/rpg/`.
 - Ngân sách trần: 45 giờ GPU. Dự kiến dùng khoảng 20–25 giờ (17 lần train nếu các biến thể RQ1 chạy 3 seed).
 - Ngưỡng cảnh báo: 80% ngân sách (36 giờ) → áp dụng danh sách cắt giảm trong `docs/project_plan.md`, mục 1.3.
@@ -17,6 +18,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 3 | `rpg_behavior` | 42, 43, 44 | 3 | Nâng cấp chính; giảm còn 2 seed nếu thiếu ngân sách |
 | 4 | Dự phòng | – | 2 | Chạy lại lỗi, α thứ hai hoặc encoder mới |
 | 5 | SASRec-BCE theo S³-Rec | 42, 43, 44 | 3 | **Xong 20/11**, best epoch 54/78/54 |
+| 6 | Kiểm tra adapter (Cổng 2) | 42 | 1 + 1 thử chế độ (a) | **Xong 23/11**, kết quả giống hệt `main_s42` |
 
 ## Nhật ký sử dụng
 
@@ -34,6 +36,9 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 20/11 | `sasrec_paper_s42` | 42 | Kaggle / B | ≈ 0,16 | ≈ 5,60 | ≈ 39,40 |
 | 20/11 | `sasrec_paper_s43` | 43 | Kaggle / B | ≈ 0,22 | ≈ 5,82 | ≈ 39,18 |
 | 20/11 | `sasrec_paper_s44` | 44 | Kaggle / B | ≈ 0,16 | ≈ 5,98 | ≈ 39,02 |
+| 23/11 | `adapter_emb_smoke` (chế độ a, 1 epoch) | 42 | Colab / TK A | 0,11 | ≈ 6,09 | ≈ 38,91 |
+| 23/11 | `adapter_opq_s42` (Cổng 2) | 42 | Colab / TK A | 1,71 | ≈ 7,80 | ≈ 37,20 |
+| 23/11 | `adapter_opq_s42_salvage` (chỉ chấm test) | 42 | Colab / TK A | 0,05 | ≈ 7,85 | ≈ 37,15 |
 
 Các lượt SASRec dùng `elapsed_seconds / 3600` trong `run.json` hoặc
 `run_seconds / 3600` trong `result.json` làm ước tính thời gian chạy
