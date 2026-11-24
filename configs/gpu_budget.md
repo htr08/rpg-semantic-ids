@@ -5,6 +5,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 - Thực tế: 1,2–1,6 giờ/lần train RPG trên Colab T4 (trung bình 1,37 giờ qua 3 seed main, 14/11); ước tính ban đầu 3–4 giờ.
 - SASRec-BCE theo S³-Rec hoàn tất 3 seed ngày 20/11 với khoảng 0,54 giờ. Tổng thời gian gồm các lần chạy thử và chạy chính là khoảng 5,98/45 giờ, còn khoảng 39,02 giờ.
 - Kiểm tra adapter ngày 23/11 (chế độ a 0,11 giờ; Cổng 2 1,71 giờ; chấm lại 0,05 giờ) nâng tổng lên khoảng 7,85/45 giờ, còn khoảng 37,15 giờ.
+- RQ1 ngày 24/11 trên Kaggle (PQ và ngẫu nhiên, mỗi biến thể 3 seed, 8,66 giờ) nâng tổng lên khoảng 16,51/45 giờ, còn khoảng 28,49 giờ.
 - Nền tảng: Google Colab (chính) + Kaggle (dự phòng, chạy song song từ Tuần 3). Mọi output ghi vào Drive `MyDrive/rpg/`.
 - Ngân sách trần: 45 giờ GPU. Dự kiến dùng khoảng 20–25 giờ (17 lần train nếu các biến thể RQ1 chạy 3 seed).
 - Ngưỡng cảnh báo: 80% ngân sách (36 giờ) → áp dụng danh sách cắt giảm trong `docs/project_plan.md`, mục 1.3.
@@ -39,6 +40,12 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 23/11 | `adapter_emb_smoke` (chế độ a, 1 epoch) | 42 | Colab / TK A | 0,11 | ≈ 6,09 | ≈ 38,91 |
 | 23/11 | `adapter_opq_s42` (Cổng 2) | 42 | Colab / TK A | 1,71 | ≈ 7,80 | ≈ 37,20 |
 | 23/11 | `adapter_opq_s42_salvage` (chỉ chấm test) | 42 | Colab / TK A | 0,05 | ≈ 7,85 | ≈ 37,15 |
+| 24/11 | `pq_s42` (RQ1) | 42 | Kaggle / TK A | 1,63 | ≈ 9,48 | ≈ 35,52 |
+| 24/11 | `random_s42` (RQ1) | 42 | Kaggle / TK A | 1,41 | ≈ 10,89 | ≈ 34,11 |
+| 24/11 | `pq_s43` (RQ1) | 43 | Kaggle / TK A | 1,41 | ≈ 12,30 | ≈ 32,70 |
+| 24/11 | `random_s43` (RQ1) | 43 | Kaggle / TK A | 1,22 | ≈ 13,52 | ≈ 31,48 |
+| 24/11 | `pq_s44` (RQ1) | 44 | Kaggle / TK A | 1,49 | ≈ 15,01 | ≈ 29,99 |
+| 24/11 | `random_s44` (RQ1) | 44 | Kaggle / TK A | 1,50 | ≈ 16,51 | ≈ 28,49 |
 
 Các lượt SASRec dùng `elapsed_seconds / 3600` trong `run.json` hoặc
 `run_seconds / 3600` trong `result.json` làm ước tính thời gian chạy
