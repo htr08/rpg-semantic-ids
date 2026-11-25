@@ -25,10 +25,16 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IDS = ROOT / "data" / "processed" / "semantic_ids.npy"
 DEFAULT_EMBEDDINGS = ROOT / "data" / "processed" / "item_embeddings.npy"
 DEFAULT_ID_MAPPING = ROOT / "data" / "processed" / "id_mapping.json"
+DEFAULT_ASIN_SEM_IDS = ROOT / "data" / "processed" / "sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids"
 DEFAULT_OUTPUT = ROOT / "reports" / "semantic_alignment.json"
 DEFAULT_MARKDOWN = ROOT / "reports" / "semantic_alignment.md"
 MAX_SHOWN_THRESHOLD = 6
 FREQUENCY_BINS = 3
+EMBEDDING_CHECK_SAMPLE = 1500
+EMBEDDING_CHECK_RANDOM_PAIRS = 20_000
+# Dữ liệu thật (Beauty, 12.101 item): láng giềng gần nhất theo embedding chung trung bình 3,08 token, cặp ngẫu nhiên 0,14
+# (tỉ số ≈ 21); hoán vị toàn bộ hàng embedding đưa tỉ số về ≈ 1. Ngưỡng 5 nằm giữa hai mức.
+MIN_EMBEDDING_COUPLING_RATIO = 5.0
 
 
 def load_semantic_ids(path, n_items=None, codebook_size=256):
@@ -100,6 +106,70 @@ def file_sha256(path):
         for block in iter(lambda: stream.read(1 << 20), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def verify_embedding_alignment(embeddings, ids, n_sample=EMBEDDING_CHECK_SAMPLE, seed=42,
+                               min_ratio=MIN_EMBEDDING_COUPLING_RATIO):
+    """Kiểm bằng nội dung rằng hàng embedding và hàng semantic ID cùng chỉ một item.
+
+    Semantic ID là mã lượng tử hóa của chính embedding, nên láng giềng gần nhất theo cosine của một item phải chung
+    nhiều token hơn hẳn cặp ngẫu nhiên. Nếu hai file lệch thứ tự hàng, mức chung này về bằng mức ngẫu nhiên. Hàm lấy
+    ngẫu nhiên n_sample item, tìm láng giềng gần nhất của từng item trong toàn bộ embedding rồi so số token chung
+    trung bình với cặp ngẫu nhiên; dừng bằng ValueError nếu tỉ số nhỏ hơn min_ratio.
+
+    Đây là kiểm tra thống kê, chỉ bắt được lệch thứ tự trên diện rộng (đo trên dữ liệu thật: hoán vị 10% số hàng vẫn
+    còn tỉ số ≈ 17 nên không bị bắt); không thay cho kiểm từng hàng theo asin của verify_row_order.
+    """
+    embeddings, ids = np.asarray(embeddings, dtype=np.float32), np.asarray(ids)
+    if embeddings.ndim != 2 or embeddings.shape[0] != ids.shape[0]:
+        raise ValueError(f"số hàng embedding {embeddings.shape[0]} khác semantic ID {ids.shape[0]}")
+    if len(ids) < 3:
+        raise ValueError("cần ít nhất 3 item để kiểm embedding với semantic ID")
+    unit = l2_normalize(embeddings)
+    rng = np.random.default_rng(seed)
+    sample = np.sort(rng.choice(len(ids), size=min(n_sample, len(ids)), replace=False))
+    nearest = np.empty(len(sample), dtype=np.int64)
+    for start in range(0, len(sample), 256):
+        chunk = sample[start:start + 256]
+        similarity = unit[chunk] @ unit.T
+        similarity[np.arange(len(chunk)), chunk] = -np.inf  # bỏ chính item đó
+        nearest[start:start + len(chunk)] = similarity.argmax(axis=1)
+    neighbour_mean = float((ids[sample] == ids[nearest]).sum(axis=1).mean())
+    random_pairs = random_item_pairs(np.arange(1, len(ids) + 1), EMBEDDING_CHECK_RANDOM_PAIRS, seed)
+    random_mean = float(shared_token_counts(ids, random_pairs).mean())
+    ratio = neighbour_mean / random_mean if random_mean > 0 else None
+    result = {
+        "n_sample": int(len(sample)),
+        "neighbour_mean_shared": neighbour_mean,
+        "random_mean_shared": random_mean,
+        "ratio": ratio,
+        "min_ratio": float(min_ratio),
+        "status": "passed",
+    }
+    if neighbour_mean <= 0 or (ratio is not None and ratio < min_ratio):
+        shown = "—" if ratio is None else f"{ratio:.2f}"
+        raise ValueError(
+            f"embedding không khớp thứ tự hàng với semantic ID: láng giềng gần nhất chung trung bình {neighbour_mean:.3f} "
+            f"token, cặp ngẫu nhiên {random_mean:.3f} (tỉ số {shown} < {min_ratio:g})"
+        )
+    return result
+
+
+def check_input_alignment(ids, embeddings, asins, asin_sem_ids, skip=False):
+    """Hai kiểm tra thứ tự hàng trước khi tính: semantic ID theo asin (chính xác) và embedding theo semantic ID (thống kê).
+
+    Mặc định bắt buộc: thiếu file ``.sem_ids`` là lỗi, vì khi thiếu thì ID đảo hàng vẫn chạy ra kết quả. skip=True chỉ
+    dùng khi cố ý chạy bộ ID không sinh từ embedding này; cả hai kiểm tra bị bỏ và báo cáo ghi rõ. Trả về
+    (kết quả kiểm theo asin, kết quả kiểm embedding); cả hai là None khi skip.
+    """
+    if skip:
+        return None, None
+    if asin_sem_ids is None or not Path(asin_sem_ids).is_file():
+        raise ValueError(
+            f"không có file .sem_ids để kiểm thứ tự hàng ({asin_sem_ids}); truyền --asin-sem-ids <file> "
+            "hoặc --no-row-order-check nếu cố ý bỏ kiểm"
+        )
+    return verify_row_order(ids, asins, asin_sem_ids), verify_embedding_alignment(embeddings, ids)
 
 
 def shared_token_counts(ids, pairs):
@@ -541,12 +611,20 @@ def format_markdown(result):
         if order:
             order_text = (
                 f"Thứ tự hàng của semantic ID đã kiểm: {order['n_items_checked']} hàng khớp từng hàng với `{order['file']}` "
-                "(khóa theo asin) xếp theo `id_mapping.json`. Thứ tự hàng của embedding không kiểm được vì `.npy` không chứa asin."
+                "(khóa theo asin) xếp theo `id_mapping.json`."
             )
         else:
             order_text = (
-                "Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) không kiểm được từ nội dung file vì "
-                "`.npy` không chứa asin (không truyền `--asin-sem-ids`)."
+                "Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) **chưa được kiểm** "
+                "(chạy với `--no-row-order-check`); kết quả chỉ đáng tin nếu hai file đúng quy ước thứ tự."
+            )
+        coupling = result.get("embedding_alignment")
+        if coupling:
+            order_text += (
+                f" Embedding so với semantic ID: láng giềng gần nhất theo cosine của {coupling['n_sample']} item ngẫu nhiên "
+                f"chung trung bình {coupling['neighbour_mean_shared']:.2f} token, cặp ngẫu nhiên "
+                f"{coupling['random_mean_shared']:.2f} (tỉ số {_fmt(coupling['ratio'], 1)}, ngưỡng {coupling['min_ratio']:g}). "
+                "Đây là kiểm thống kê, chỉ bắt được lệch thứ tự trên diện rộng và không chỉ ra từng hàng."
             )
         lines += [
             "",
@@ -592,8 +670,11 @@ def main(argv=None):
     parser.add_argument("--n-init", type=int, default=5)
     parser.add_argument("--kmeans-seeds", type=int, nargs="+", default=[42, 43, 44])
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--asin-sem-ids", type=Path, default=None,
-                        help="file .sem_ids {asin: mã} để kiểm thứ tự hàng của semantic ID theo id_mapping.json")
+    parser.add_argument("--asin-sem-ids", type=Path, default=DEFAULT_ASIN_SEM_IDS,
+                        help="file .sem_ids {asin: mã} để kiểm thứ tự hàng của semantic ID theo id_mapping.json "
+                             "(bắt buộc có, trừ khi dùng --no-row-order-check)")
+    parser.add_argument("--no-row-order-check", action="store_true",
+                        help="bỏ kiểm thứ tự hàng của semantic ID và embedding; chỉ dùng khi cố ý chạy bộ ID khác")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     args = parser.parse_args(argv)
@@ -608,10 +689,11 @@ def main(argv=None):
         asins = load_item_order(DEFAULT_ID_MAPPING, DEFAULT_ITEMS)
         n_items = len(asins)
         ids = load_semantic_ids(args.semantic_ids, n_items)
-        row_order = verify_row_order(ids, asins, args.asin_sem_ids) if args.asin_sem_ids else None
         embeddings = load_embeddings(args.embeddings)
         if embeddings.shape[0] != n_items:
             raise ValueError(f"số hàng embedding {embeddings.shape[0]} khác số item {n_items}")
+        row_order, embedding_alignment = check_input_alignment(ids, embeddings, asins, args.asin_sem_ids,
+                                                                args.no_row_order_check)
         _, transactions = load_train_transactions(DEFAULT_INTERACTIONS, DEFAULT_SPLITS)
         matrix = build_transaction_matrix(transactions, n_items)
         metadata = load_item_metadata(DEFAULT_ITEMS)
@@ -623,6 +705,7 @@ def main(argv=None):
         if row_order:
             files.append(("asin_sem_ids", args.asin_sem_ids))
             result["semantic_id_row_order"] = row_order
+            result["embedding_alignment"] = embedding_alignment
         result["inputs"] = {name: {"file": path.name, "sha256": file_sha256(path)} for name, path in files}
         for path in (args.output, args.markdown):
             path.parent.mkdir(parents=True, exist_ok=True)
