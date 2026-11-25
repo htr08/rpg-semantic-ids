@@ -41,6 +41,8 @@ DEFAULT_FIGURE = ROOT / "reports" / "figures" / "dbscan_kdistance.png"
 NOISE = -1
 # Khoảng cách cosine giữa hai bản sao float32 giống hệt có thể lệch ~1e-7 do sai số làm tròn; coi eps dưới ngưỡng này là 0.
 EPS_TOLERANCE = 1e-6
+# SHA-256 của item_emb_sentence_t5.npy trong gói chia sẻ của nhóm A; chỉ file có checksum này mới được gắn nguồn của gói.
+GROUP_A_EMBEDDING_SHA256 = "a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836"
 
 
 def k_distances(matrix, min_samples, metric="cosine"):
@@ -122,18 +124,19 @@ def run_dbscan(matrix, eps, min_samples, metric="cosine"):
 def eps_candidates(curve, quantiles):
     """eps tại điểm gãy và tại các phân vị của đường k-distance; trả về danh sách (tên quy tắc, eps).
 
-    eps của điểm gãy là None khi đường k-distance phẳng (không xác định được điểm gãy).
+    eps của điểm gãy là None khi đường k-distance phẳng hoặc có dưới 3 điểm (không xác định được điểm gãy);
+    các phân vị vẫn được tính.
     """
     knee = None
-    if len(curve) < 3 or float(curve[-1] - curve[0]) > 0:
-        knee = float(curve[knee_index(curve)])  # đường quá ngắn: để knee_index báo lỗi tham số
+    if len(curve) >= 3 and float(curve[-1] - curve[0]) > 0:
+        knee = float(curve[knee_index(curve)])
     return [("knee", knee)] + [(f"q{q:.2f}", float(np.quantile(curve, q))) for q in quantiles]
 
 
 def skip_reason(eps):
     """Lý do không chạy DBSCAN với eps này (None nếu chạy được); scikit-learn yêu cầu eps > 0."""
     if eps is None:
-        return "đường k-distance phẳng, không xác định được điểm gãy"
+        return "không xác định được điểm gãy: đường k-distance phẳng hoặc có dưới 3 điểm"
     if eps <= EPS_TOLERANCE:
         return "eps xấp xỉ 0: có ít nhất MinPts item trùng embedding"
     return None
@@ -211,15 +214,19 @@ def format_markdown(result):
         "",
     ]
     if result.get("embedding_sha256"):
-        lines += [
-            f"Nguồn embedding: `{result['embedding_file']}`, SHA-256 `{result['embedding_sha256']}`. File không nằm trong repo "
-            "(`*.npy` bị `.gitignore`). Theo `README.txt` của gói chia sẻ do nhóm A gửi (`share-20261125T050341Z-1-001.zip`), file mặc định "
-            "`data/processed/item_embeddings.npy` là `item_emb_sentence_t5.npy` của gói: code gốc `RPG_KDD2025` commit `7dcf95c`, "
-            "`sentence-t5-base`, 12101 × 768 float32 trước PCA, hàng i ứng với `item_id` i + 1 (đã đối chiếu với `items.jsonl`). "
-            "Repo chưa có script tạo lại file (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; "
-            "người tái lập cần nhận gói từ nhóm A, chép file vào đường dẫn mặc định (hoặc truyền `--embeddings`) và đối chiếu SHA-256.",
-            "",
-        ]
+        lines += [f"Nguồn embedding: `{result['embedding_file']}`, SHA-256 `{result['embedding_sha256']}`. "
+                  "File không nằm trong repo (`*.npy` bị `.gitignore`).", ""]
+        if result["embedding_sha256"] == GROUP_A_EMBEDDING_SHA256:
+            lines += [
+                "Checksum khớp `item_emb_sentence_t5.npy` trong gói chia sẻ do nhóm A gửi (`share-20261125T050341Z-1-001.zip`). "
+                "Theo `README.txt` của gói, file này là embedding từ code gốc `RPG_KDD2025` commit `7dcf95c`, "
+                "`sentence-t5-base`, 12101 × 768 float32 trước PCA, hàng i ứng với `item_id` i + 1 (đã đối chiếu với `items.jsonl`). "
+                "Repo chưa có script tạo lại file (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; "
+                "người tái lập cần nhận gói từ nhóm A, chép file vào đường dẫn mặc định (hoặc truyền `--embeddings`) và đối chiếu SHA-256.",
+                "",
+            ]
+        else:
+            lines += ["Checksum không khớp file embedding trong gói của nhóm A nên báo cáo không gắn nguồn của gói cho file này.", ""]
     lines += [
         f"## Ward và k-means trên cùng mẫu {result['sample_size']} item",
         "",

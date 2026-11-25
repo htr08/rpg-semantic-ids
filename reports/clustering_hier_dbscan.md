@@ -2,7 +2,9 @@
 
 Embedding 12101 item × 768 chiều, chuẩn hóa L2, PCA 50 chiều (giữ 0.6947 phương sai), seed 42. Silhouette dùng khoảng cách cosine; Davies–Bouldin dùng khoảng cách Euclid. Sinh bởi `python -m src.clustering_compare`.
 
-Nguồn embedding: `item_embeddings.npy`, SHA-256 `a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836`. File không nằm trong repo (`*.npy` bị `.gitignore`). Theo `README.txt` của gói chia sẻ do nhóm A gửi (`share-20261125T050341Z-1-001.zip`), file mặc định `data/processed/item_embeddings.npy` là `item_emb_sentence_t5.npy` của gói: code gốc `RPG_KDD2025` commit `7dcf95c`, `sentence-t5-base`, 12101 × 768 float32 trước PCA, hàng i ứng với `item_id` i + 1 (đã đối chiếu với `items.jsonl`). Repo chưa có script tạo lại file (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; người tái lập cần nhận gói từ nhóm A, chép file vào đường dẫn mặc định (hoặc truyền `--embeddings`) và đối chiếu SHA-256.
+Nguồn embedding: `item_embeddings.npy`, SHA-256 `a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836`. File không nằm trong repo (`*.npy` bị `.gitignore`).
+
+Checksum khớp `item_emb_sentence_t5.npy` trong gói chia sẻ do nhóm A gửi (`share-20261125T050341Z-1-001.zip`). Theo `README.txt` của gói, file này là embedding từ code gốc `RPG_KDD2025` commit `7dcf95c`, `sentence-t5-base`, 12101 × 768 float32 trước PCA, hàng i ứng với `item_id` i + 1 (đã đối chiếu với `items.jsonl`). Repo chưa có script tạo lại file (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; người tái lập cần nhận gói từ nhóm A, chép file vào đường dẫn mặc định (hoặc truyền `--embeddings`) và đối chiếu SHA-256.
 
 ## Ward và k-means trên cùng mẫu 5000 item
 

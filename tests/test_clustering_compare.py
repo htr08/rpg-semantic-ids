@@ -11,6 +11,7 @@ import numpy as np
 from sklearn.metrics import adjusted_rand_score
 
 from src.clustering_compare import (
+    GROUP_A_EMBEDDING_SHA256,
     NOISE,
     eps_candidates,
     evaluate_labels,
@@ -232,9 +233,30 @@ class ComparisonTests(unittest.TestCase):
             if row["eps"] is not None and row["eps"] < 1e-6:
                 self.assertIsNotNone(row["skipped"], row)  # không chạy DBSCAN với eps nhiễu số
 
-    def test_too_short_curve_is_a_parameter_error_not_a_flat_curve(self):
-        with self.assertRaises(ValueError):
-            eps_candidates(np.array([0.1, 0.2]), (0.5,))
+    def test_too_short_curve_skips_only_the_knee(self):
+        candidates = eps_candidates(np.array([0.1, 0.2]), (0.5,))
+        self.assertEqual(candidates[0], ("knee", None))
+        self.assertAlmostEqual(candidates[1][1], 0.15)
+        self.assertIn("dưới 3 điểm", skip_reason(None))
+
+    def test_two_items_with_min_samples_two_still_run_quantile_configs(self):
+        points = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]], dtype=np.float32)
+        result, _ = run_comparison(points, n_components=1, ks=(2,), min_samples_list=(2,), eps_quantiles=(0.5,),
+                                   extra_dbscan_dims=(), sample_size=10, n_init=1, seed=0)
+        by_rule = {r["eps_rule"]: r for r in result["dbscan"]}
+        self.assertIn("dưới 3 điểm", by_rule["knee"]["skipped"])
+        self.assertIsNone(by_rule["q0.50"]["skipped"])
+        self.assertIn("n_clusters", by_rule["q0.50"])
+
+    def test_main_succeeds_with_two_items(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            np.save(root / "two.npy", np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]], dtype=np.float32))
+            args = ["--embeddings", str(root / "two.npy"), "--components", "1", "--ks", "2", "--min-samples", "2",
+                    "--extra-dbscan-dims", "--sample-size", "10", "--n-init", "1", "--output", str(root / "r.json"),
+                    "--markdown", str(root / "r.md"), "--figure", ""]
+            self.assertEqual(main(args), 0)
+            self.assertIn("dưới 3 điểm", (root / "r.md").read_text(encoding="utf-8"))
 
     def test_flat_k_distance_curve_does_not_stop_the_run(self):
         points = np.vstack([np.zeros((40, 6)) + np.array([1, 0, 0, 0, 0, 0]), np.zeros((40, 6)) + np.array([0, 1, 0, 0, 0, 0])])
@@ -261,6 +283,18 @@ class ComparisonTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             plot_kdistance({(5, 4): curve}, rows, Path(directory) / "k.png", dim=5)
             self.assertTrue((Path(directory) / "k.png").exists())
+
+    def test_package_provenance_only_when_checksum_matches(self):
+        base = {"n_items": 10, "input_dim": 4, "pca_dim": 2, "pca_explained_variance_ratio": 0.5, "seed": 0, "sample_size": 10,
+                "sample_algorithms": [], "dbscan": [], "embedding_file": "item_embeddings.npy"}
+        known = format_markdown({**base, "embedding_sha256": GROUP_A_EMBEDDING_SHA256})
+        self.assertIn("sentence-t5-base", known)
+        self.assertIn("share-20261125T050341Z-1-001.zip", known)
+        other = format_markdown({**base, "embedding_sha256": "0" * 64})
+        self.assertIn("0" * 64, other)
+        self.assertNotIn("sentence-t5-base", other)
+        self.assertNotIn("share-20261125T050341Z-1-001.zip", other)
+        self.assertIn("không khớp", other)
 
     def test_main_writes_outputs_and_reports_missing_file(self):
         with tempfile.TemporaryDirectory() as directory:
