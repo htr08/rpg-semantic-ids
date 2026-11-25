@@ -69,13 +69,17 @@
             "n_perm": 5000,
             "threshold": 2,
             "observed_mean_shared": 0.7352941176470589,
-            "permuted_mean_shared": 0.5238941176470588,
-            "mean_ratio": 1.4035166513215513,
-            "p_value_mean": 0.1251749650069986,
+            "permuted_mean_shared": 0.7047,
+            "mean_ratio": 1.0434143857628195,
+            "p_value_mean": 0.41051789642071584,
             "observed_rate_at_threshold": 0.14705882352941177,
-            "permuted_rate_at_threshold": 0.10021764705882354,
-            "p_value_rate": 0.22555488902219556,
-            "n_brands": 3
+            "permuted_rate_at_threshold": 0.13648823529411763,
+            "p_value_rate": 0.4833033393321336,
+            "n_brands": 3,
+            "n_strata": 7,
+            "n_freq_bins": 3,
+            "n_pair_items": 20,
+            "n_pairs_null_fixed": 2
           }
         },
         "different_brand": {
@@ -153,13 +157,17 @@
             "n_perm": 5000,
             "threshold": 2,
             "observed_mean_shared": 1.1123595505617978,
-            "permuted_mean_shared": 0.5296719101123596,
-            "mean_ratio": 2.1000916403624883,
-            "p_value_mean": 0.0015996800639872025,
+            "permuted_mean_shared": 0.6038719101123595,
+            "mean_ratio": 1.8420455264342839,
+            "p_value_mean": 0.0001999600079984003,
             "observed_rate_at_threshold": 0.24719101123595505,
-            "permuted_rate_at_threshold": 0.09129438202247192,
-            "p_value_rate": 0.0001999600079984003,
-            "n_brands": 11
+            "permuted_rate_at_threshold": 0.12408764044943821,
+            "p_value_rate": 0.0023995200959808036,
+            "n_brands": 11,
+            "n_strata": 16,
+            "n_freq_bins": 3,
+            "n_pair_items": 61,
+            "n_pairs_null_fixed": 0
           }
         },
         "different_brand": {
@@ -237,13 +245,17 @@
             "n_perm": 5000,
             "threshold": 2,
             "observed_mean_shared": 1.6756756756756757,
-            "permuted_mean_shared": 0.7410864864864865,
-            "mean_ratio": 2.2611067752970437,
-            "p_value_mean": 0.0005998800239952009,
+            "permuted_mean_shared": 1.0880270270270271,
+            "mean_ratio": 1.5401048264898027,
+            "p_value_mean": 0.0033993201359728054,
             "observed_rate_at_threshold": 0.3783783783783784,
-            "permuted_rate_at_threshold": 0.14823783783783787,
-            "p_value_rate": 0.0007998400319936012,
-            "n_brands": 12
+            "permuted_rate_at_threshold": 0.2270324324324324,
+            "p_value_rate": 0.011197760447910418,
+            "n_brands": 12,
+            "n_strata": 13,
+            "n_freq_bins": 3,
+            "n_pair_items": 42,
+            "n_pairs_null_fixed": 2
           }
         },
         "different_brand": {
@@ -325,5 +337,31 @@
       "max": 0.0016673341074054185
     },
     "ari_between_kmeans_seeds": 0.5392996953559455
+  },
+  "inputs": {
+    "semantic_ids": {
+      "file": "semantic_ids.npy",
+      "sha256": "e7b2c233ff44b652e735bde04e5f844ab301bb2a6e8fa2f873ef1f11acfc503b"
+    },
+    "embeddings": {
+      "file": "item_embeddings.npy",
+      "sha256": "a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836"
+    },
+    "id_mapping": {
+      "file": "id_mapping.json",
+      "sha256": "6f2a054b369e1cac8e5c9ec65b70dbdc7e60c4f04578a430b8cb818adb70f068"
+    },
+    "items": {
+      "file": "items.jsonl",
+      "sha256": "6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378"
+    },
+    "interactions": {
+      "file": "interactions.csv",
+      "sha256": "ca7536f499b5b752a13531197ccfa2e7accafe34331b5083c8979ee72a0db400"
+    },
+    "splits": {
+      "file": "leave_last_out.csv",
+      "sha256": "76e6952986ac268e2ecf4d68475e3aaf24f7700b86ee5a26d35a18c14d101c1f"
+    }
   }
 }

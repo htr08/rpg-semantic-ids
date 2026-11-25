@@ -11,6 +11,7 @@ Luật chỉ sinh từ phần train (src/patterns.py), không dùng validation/t
 """
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -23,9 +24,11 @@ from src.clustering import fit_pca, l2_normalize, load_embeddings, run_kmeans
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IDS = ROOT / "data" / "processed" / "semantic_ids.npy"
 DEFAULT_EMBEDDINGS = ROOT / "data" / "processed" / "item_embeddings.npy"
+DEFAULT_ID_MAPPING = ROOT / "data" / "processed" / "id_mapping.json"
 DEFAULT_OUTPUT = ROOT / "reports" / "semantic_alignment.json"
 DEFAULT_MARKDOWN = ROOT / "reports" / "semantic_alignment.md"
 MAX_SHOWN_THRESHOLD = 6
+FREQUENCY_BINS = 3
 
 
 def load_semantic_ids(path, n_items=None, codebook_size=256):
@@ -42,6 +45,43 @@ def load_semantic_ids(path, n_items=None, codebook_size=256):
     if n_items is not None and ids.shape[0] != n_items:
         raise ValueError(f"số hàng semantic ID {ids.shape[0]} khác số item {n_items}")
     return ids
+
+
+def load_item_order(id_mapping_path, items_path):
+    """Danh sách asin theo item_id 1..N từ id_mapping.json, sau khi kiểm items.jsonl có cùng thứ tự asin.
+
+    File .npy của semantic ID và embedding không chứa asin nên không kiểm được thứ tự hàng của chúng từ nội dung;
+    hàng j ↔ item_id j + 1 là quy ước (docs/data_contract.md), vì vậy báo cáo ghi checksum của các file đầu vào.
+    items.jsonl (nguồn brand dùng để tách cặp) thì kiểm được: item_id, asin phải khớp từng dòng với id_mapping.
+    """
+    name = Path(items_path).name
+    mapping = json.loads(Path(id_mapping_path).read_text(encoding="utf-8"))
+    id2item = mapping.get("id2item") if isinstance(mapping, dict) else None
+    if not isinstance(id2item, list) or not id2item or id2item[0] not in ("[PAD]", None):
+        raise ValueError("id_mapping.json phải có id2item là danh sách với phần tử 0 là padding")
+    asins = id2item[1:]
+    if not all(isinstance(asin, str) and asin for asin in asins):
+        raise ValueError("id2item chỉ được chứa asin dạng chuỗi không rỗng")
+    if len(set(asins)) != len(asins):
+        raise ValueError("id2item có asin trùng nhau")
+    with open(items_path, encoding="utf-8") as stream:
+        rows = [json.loads(line) for line in stream if line.strip()]
+    if not all(isinstance(row, dict) and type(row.get("item_id")) is int and "asin" in row for row in rows):
+        raise ValueError(f"{name}: mỗi dòng phải là đối tượng có item_id nguyên và asin")
+    if [row["item_id"] for row in rows] != list(range(1, len(asins) + 1)):
+        raise ValueError(f"{name}: item_id phải là 1..{len(asins)} theo thứ tự")
+    for row in rows:
+        if row["asin"] != asins[row["item_id"] - 1]:
+            raise ValueError(f"{name}: asin của item_id {row['item_id']} khác id_mapping.json")
+    return asins
+
+
+def file_sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as stream:
+        for block in iter(lambda: stream.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def shared_token_counts(ids, pairs):
@@ -148,44 +188,83 @@ def _brand_key(metadata, item_id):
     return None if brand is None else brand.casefold()
 
 
-def within_brand_permutation_test(ids, pairs, metadata, threshold, n_perm=5000, seed=42):
-    """Kiểm định hoán vị trong từng brand cho các cặp cùng thương hiệu.
+def frequency_bin_edges(item_counts, min_count, n_bins=FREQUENCY_BINS):
+    """Biên các nhóm tần suất: phân vị đều của số đếm train của các item đạt min_count (tính trên toàn catalog, không theo brand)."""
+    eligible = np.asarray(item_counts)[np.asarray(item_counts) >= min_count]
+    if n_bins < 2 or eligible.size == 0:
+        return np.empty(0)
+    return np.unique(np.quantile(eligible, np.arange(1, n_bins) / n_bins))
 
-    Với mỗi brand có mặt trong cặp, hoán vị hàng ID giữa mọi item của brand đó trong catalog (không chỉ item có mặt
-    trong cặp). Mỗi cặp vẫn gồm hai item cùng brand, nên kiểm định trả lời: trong cùng một brand, cặp mua kèm có
-    chia sẻ nhiều token hơn cặp ngẫu nhiên không. Mọi cặp phải gồm hai item cùng brand (có brand).
+
+def frequency_bins(item_counts, min_count, n_bins=FREQUENCY_BINS):
+    """Nhóm tần suất (0..) của từng item; số đếm đúng bằng biên thuộc nhóm trên. Item dưới min_count rơi vào nhóm 0."""
+    edges = frequency_bin_edges(item_counts, min_count, n_bins)
+    return np.searchsorted(edges, np.asarray(item_counts), side="right"), len(edges) + 1
+
+
+def within_brand_permutation_test(ids, pairs, metadata, threshold, item_counts, min_count, n_perm=5000, seed=42,
+                                  n_bins=FREQUENCY_BINS):
+    """Kiểm định hoán vị trong từng brand, ghép theo tần suất train, cho các cặp cùng thương hiệu.
+
+    Chỉ item có số đếm train ≥ min_count (item có thể xuất hiện trong luật ở mức support này) mới vào đối chứng:
+    item hiếm bị loại khỏi mọi luật nên không được dùng làm mẫu ngẫu nhiên. Các item đủ điều kiện được chia theo
+    số đếm train thành n_bins nhóm (biên là phân vị số đếm của các item đủ điều kiện trong toàn catalog); hoán vị hàng ID chỉ diễn ra trong từng
+    (brand, nhóm tần suất). Mỗi item trong cặp nhận ID của một item cùng brand và cùng nhóm tần suất (có thể chính
+    nó khi nhóm chỉ có một item, khi đó đối chứng không đổi). Nhờ vậy kiểm định không nhầm khác biệt về tần suất
+    hay về khả năng đủ điều kiện với tín hiệu mua kèm. Mọi cặp phải gồm hai item cùng brand và đủ min_count.
     """
+    ids, item_counts = np.asarray(ids), np.asarray(item_counts)
     pairs = np.asarray(pairs, dtype=np.int64).reshape(-1, 2)
     if len(pairs) == 0 or n_perm < 1:
         raise ValueError("cần ít nhất một cặp và n_perm >= 1")
+    if item_counts.shape != (len(ids),):
+        raise ValueError(f"item_counts phải có {len(ids)} phần tử, nhận {item_counts.shape}")
+    pair_items = np.unique(pairs)
+    if pair_items.min() < 1 or pair_items.max() > len(ids) or (item_counts[pair_items - 1] < min_count).any():
+        raise ValueError(f"mọi item trong cặp phải nằm trong 1..{len(ids)} và có số đếm train ≥ {min_count}")
     pair_brands = [_brand_key(metadata, int(a)) for a, _ in pairs]
     if any(b is None or b != _brand_key(metadata, int(c)) for b, (_, c) in zip(pair_brands, pairs)):
         raise ValueError("mọi cặp phải gồm hai item cùng brand")
+    bins, _ = frequency_bins(item_counts, min_count, n_bins)
+
+    def stratum(item_id):
+        return _brand_key(metadata, int(item_id)), int(bins[int(item_id) - 1])
+
+    needed = {stratum(item) for item in pair_items}
     members = {}
     for item_id in metadata:
-        key = _brand_key(metadata, item_id)
-        if key is not None:
-            members.setdefault(key, []).append(int(item_id))
+        if 1 <= item_id <= len(ids) and item_counts[item_id - 1] >= min_count and stratum(item_id) in needed:
+            members.setdefault(stratum(item_id), []).append(int(item_id))
+    universe = np.array(sorted(item for group in members.values() for item in group), dtype=np.int64)
+    position = {int(item): i for i, item in enumerate(universe)}
+    groups = [np.array([position[item] for item in group]) for group in members.values() if len(group) > 1]
+    first = np.array([position[int(a)] for a in pairs[:, 0]])
+    second = np.array([position[int(b)] for b in pairs[:, 1]])
+    rows = ids[universe - 1]
     observed = shared_token_counts(ids, pairs)
-    strata = []
-    for brand in sorted(set(pair_brands)):
-        pool = np.array(sorted(members[brand]), dtype=np.int64)
-        position = {int(item): i for i, item in enumerate(pool)}
-        chosen = [i for i, b in enumerate(pair_brands) if b == brand]
-        strata.append((
-            ids[pool - 1], np.array(chosen),
-            np.array([position[int(pairs[i, 0])] for i in chosen]), np.array([position[int(pairs[i, 1])] for i in chosen]),
-        ))
     rng = np.random.default_rng(seed)
     means, rates = np.empty(n_perm), np.empty(n_perm)
-    counts = np.empty(len(pairs), dtype=np.int64)
     for i in range(n_perm):
-        for rows, chosen, first, second in strata:
-            shuffled = rows[rng.permutation(len(rows))]
-            counts[chosen] = (shuffled[first] == shuffled[second]).sum(axis=1)
+        shuffled = rows.copy()
+        for group in groups:
+            shuffled[group] = rows[group[rng.permutation(len(group))]]
+        counts = (shuffled[first] == shuffled[second]).sum(axis=1)
         means[i], rates[i] = counts.mean(), (counts >= threshold).mean()
     result = _permutation_summary(observed, means, rates, threshold)
-    result["n_brands"] = len(strata)
+    size = {key: len(group) for key, group in members.items()}
+    fixed = sum(
+        (size[stratum(x)] == 1 and size[stratum(y)] == 1) or (stratum(x) == stratum(y) and size[stratum(x)] == 2)
+        for x, y in pairs.tolist()
+    )
+    result.update({
+        "n_brands": len({brand for brand, _ in needed}),
+        "n_strata": len(needed),
+        "n_freq_bins": int(len(np.unique(bins[item_counts >= min_count]))),
+        "n_pair_items": int(len(pair_items)),
+        # Cặp có đối chứng bất biến: cả hai item không hoán vị được, hoặc hai item là toàn bộ một nhóm (hoán vị chỉ
+        # đổi chỗ, số token chung đối xứng nên không đổi). Các cặp này luôn bảo thủ (null = quan sát).
+        "n_pairs_null_fixed": int(fixed),
+    })
     return result
 
 
@@ -275,8 +354,9 @@ def rule_alignment(ids, matrix, metadata, min_support, min_confidence=0.1, top_n
             }
         same = groups == "same_brand"
         if same.any():
+            item_counts = np.asarray(matrix.sum(axis=0)).ravel()
             result["by_brand"]["same_brand"]["permutation_within_brand"] = within_brand_permutation_test(
-                ids, pairs[same], metadata, threshold, n_perm, seed
+                ids, pairs[same], metadata, threshold, item_counts, result["min_count"], n_perm, seed
             )
     return result
 
@@ -377,20 +457,26 @@ def format_markdown(result):
             "Tách theo thương hiệu. Cùng thương hiệu: cả hai item có brand và brand giống nhau (không phân biệt hoa thường); "
             "thiếu thương hiệu: ít nhất một item không có brand; khác thương hiệu: đủ brand nhưng khác nhau.",
             "",
-            "Với nhóm cùng thương hiệu, đối chứng là hoán vị hàng ID trong từng brand (giữa mọi item của brand đó trong catalog), "
-            "nên cặp ngẫu nhiên vẫn cùng brand.",
+            "Với nhóm cùng thương hiệu, đối chứng là hoán vị hàng ID trong từng (brand, nhóm tần suất train): chỉ các item "
+            "có số đếm train ≥ min_count của brand đó (item hiếm không thể vào luật nên không dùng làm mẫu), chia thành "
+            f"{FREQUENCY_BINS} nhóm theo phân vị số đếm train của các item đủ điều kiện trong toàn catalog. "
+            "Cặp ngẫu nhiên vẫn cùng brand và mỗi item giữ nhóm tần suất của nó, nên khác biệt về tần suất không bị tính là "
+            "tín hiệu mua kèm, nhưng 3 nhóm là ghép thô nên có thể còn dư tác động của tần suất; p-value mang tính mô tả. "
+            "Cặp có đối chứng bất biến (cột \"Cặp đối chứng bất biến\") là cặp mà cả hai item là phần tử "
+            "duy nhất của nhóm, hoặc hai item là toàn bộ nhóm: hoán vị không đổi số token chung nên kiểm định bảo thủ hơn.",
             "",
-            "| min_support | Nhóm | Số cặp | Trung bình token chung | Tỉ lệ ≥ t | Trung bình khi hoán vị trong brand | "
-            "Tỉ lệ ≥ t khi hoán vị trong brand | p trung bình | p tỉ lệ ≥ t |",
-            "|---:|---|---:|---:|---:|---:|---:|---:|---:|",
+            "| min_support | Nhóm | Số cặp | Trung bình token chung | Tỉ lệ ≥ t | Trung bình khi hoán vị | "
+            "Tỉ lệ ≥ t khi hoán vị | p trung bình | p tỉ lệ ≥ t | Cặp đối chứng bất biến |",
+            "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|",
         ]
         for level in result["rules"]:
             for name, group in level.get("by_brand", {}).items():
                 within = group.get("permutation_within_brand")
                 extra = (
                     f"{_fmt(within['permuted_mean_shared'])} | {_fmt(within['permuted_rate_at_threshold'])} | "
-                    f"{_p(within['p_value_mean'])} | {_p(within['p_value_rate'])}"
-                    if within else "— | — | — | —"
+                    f"{_p(within['p_value_mean'])} | {_p(within['p_value_rate'])} | "
+                    f"{within['n_pairs_null_fixed']} / {group['n_pairs']}"
+                    if within else "— | — | — | — | —"
                 )
                 lines.append(
                     f"| {level['min_support']} | {name} | {group['n_pairs']} | {_fmt(group['mean_shared'])} | "
@@ -432,6 +518,19 @@ def format_markdown(result):
         lines.append(
             f"| ARI giữa hai lần k-means khác seed (seed đầu và seed thứ hai) | {_fmt(km['ari_between_kmeans_seeds'], 4)} |"
         )
+    if result.get("inputs"):
+        lines += [
+            "",
+            "## Đầu vào",
+            "",
+            "Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) không kiểm được từ nội dung file vì `.npy` "
+            "không chứa asin; chỉ kiểm được số hàng bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. "
+            "SHA-256 dưới đây để đối chiếu đúng phiên bản file đầu vào khi tái lập.",
+            "",
+            "| Đầu vào | File | SHA-256 |",
+            "|---|---|---|",
+        ]
+        lines += [f"| {name} | `{info['file']}` | `{info['sha256']}` |" for name, info in result["inputs"].items()]
     return "\n".join(lines) + "\n"
 
 
@@ -469,20 +568,30 @@ def main(argv=None):
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     args = parser.parse_args(argv)
     try:
-        import pandas as pd
-
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")  # thông báo lỗi tiếng Việt trên console cp1252
+    except (AttributeError, ValueError):
+        pass
+    try:
         from src.patterns import (DEFAULT_INTERACTIONS, DEFAULT_ITEMS, DEFAULT_SPLITS, build_transaction_matrix,
                                   load_item_metadata, load_train_transactions)
 
-        n_items = int(pd.read_csv(DEFAULT_INTERACTIONS, usecols=["item_id"])["item_id"].max())
+        n_items = len(load_item_order(DEFAULT_ID_MAPPING, DEFAULT_ITEMS))
         ids = load_semantic_ids(args.semantic_ids, n_items)
         embeddings = load_embeddings(args.embeddings)
+        if embeddings.shape[0] != n_items:
+            raise ValueError(f"số hàng embedding {embeddings.shape[0]} khác số item {n_items}")
         _, transactions = load_train_transactions(DEFAULT_INTERACTIONS, DEFAULT_SPLITS)
         matrix = build_transaction_matrix(transactions, n_items)
         metadata = load_item_metadata(DEFAULT_ITEMS)
         result = run_alignment(ids, embeddings, matrix, metadata, args.supports, args.min_confidence, args.top,
                                args.null_pairs, args.permutations, args.k, args.components, args.n_init,
                                args.kmeans_seeds, args.seed)
+        result["inputs"] = {
+            name: {"file": path.name, "sha256": file_sha256(path)}
+            for name, path in (("semantic_ids", args.semantic_ids), ("embeddings", args.embeddings),
+                               ("id_mapping", DEFAULT_ID_MAPPING), ("items", DEFAULT_ITEMS),
+                               ("interactions", DEFAULT_INTERACTIONS), ("splits", DEFAULT_SPLITS))
+        }
         for path in (args.output, args.markdown):
             path.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -490,7 +599,7 @@ def main(argv=None):
     except (OSError, ValueError, KeyError) as error:
         print(f"Error: {type(error).__name__}: {error}", file=sys.stderr)
         return 1
-    # Không in nội dung: console Windows (cp1252) không mã hóa được tiếng Việt.
+    # Dòng này chỉ gồm đường dẫn, không in nội dung báo cáo.
     print(f"Wrote {args.output} and {args.markdown}")
     return 0
 
