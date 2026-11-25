@@ -180,6 +180,21 @@ AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu 
 
 `src.ar_rec_sweep` quét `max_len` × `min_support` × `min_confidence` trên validation (105 cấu hình, khoảng 17 phút) và chọn theo NDCG@10 không lọc item đã xem. Kết quả: [reports/ar_rec_sweep.md](reports/ar_rec_sweep.md) (bảng và cấu hình được chọn), [reports/ar_rec_sweep.json](reports/ar_rec_sweep.json) (từng cấu hình) và [reports/ar_rec_sparsity.md](reports/ar_rec_sparsity.md) (phân tích độ thưa của luật). Test chưa được chạy cho cấu hình đã chọn.
 
+## Đối chiếu luật và k-means với semantic ID (phần C)
+
+```powershell
+.\venv\Scripts\python.exe -m src.semantic_alignment
+```
+
+Điều kiện đầu vào (không commit `data/processed/*`): `data/processed/semantic_ids.npy` (12.101 × 32, giá trị 0–255) và
+`data/processed/item_embeddings.npy` (12.101 × 768) do A tạo, hàng j ứng với `item_id` j + 1 (quy ước ở
+[docs/data_contract.md](docs/data_contract.md) và [reports/decisions.md](reports/decisions.md), dòng 15/11); `interactions.csv`, `items.jsonl`
+và `id_mapping.json` do pipeline dữ liệu tạo; `data/splits/leave_last_out.csv` có trong repo. Lệnh dừng nếu số hàng hai file `.npy` khác số item của
+`id_mapping.json` hoặc `items.jsonl` không khớp mapping. File `.npy` không chứa asin nên thứ tự hàng không kiểm được từ nội dung. Truyền `--asin-sem-ids <file .sem_ids>` (định dạng `{asin: [32 mã]}` của cache code gốc RPG, ví dụ `sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids`) để lệnh đối chiếu từng hàng
+semantic ID theo `id_mapping.json` và dừng nếu lệch; embedding không có cách kiểm tương tự. Báo cáo ghi kết quả kiểm và SHA-256 của các file đầu vào (mục "Đầu vào"). Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
+lấy 200 cặp có lift cao nhất, đếm số vị trí token trùng nhau của mỗi cặp rồi so với cặp ngẫu nhiên; đồng thời tính ARI giữa k-means (PCA 50 chiều, k = 256, seed 42–44)
+và token OPQ. Với cặp cùng thương hiệu, đối chứng hoán vị chỉ dùng item đủ `min_count` và hoán vị trong từng (brand, nhóm tần suất train) để không nhầm tần suất với tín hiệu mua kèm. Kết quả: [reports/semantic_alignment.md](reports/semantic_alignment.md), [reports/semantic_alignment.json](reports/semantic_alignment.json).
+
 ## Kiểm thử
 
 ```bash
