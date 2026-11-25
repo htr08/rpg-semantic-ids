@@ -2,18 +2,18 @@
 
 Embedding 12101 item × 768 chiều, chuẩn hóa L2, PCA 50 chiều (giữ 0.6947 phương sai), seed 42. Silhouette dùng khoảng cách cosine; Davies–Bouldin dùng khoảng cách Euclid. Sinh bởi `python -m src.clustering_compare`.
 
-Nguồn embedding: `item_embeddings.npy`, SHA-256 `a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836`. File không nằm trong repo (quy ước không commit embedding). Theo tài liệu nhóm, file mặc định `data/processed/item_embeddings.npy` là embedding `sentence-t5-base` 768 chiều của nhóm A, tạo từ văn bản item ghép theo `_extract_meta_sentences` của code gốc (`configs/rpg_main.yaml`, `docs/project_plan.md`, `docs/notes/meeting_15_11_fpgrowth_ar_rec.md`, các dòng 15/11/2026 của `reports/decisions.md`). Repo chưa có bước hoặc liên kết tạo lại file này; người tái lập cần nhận file từ nhóm A, đặt vào đường dẫn mặc định này (hoặc truyền `--embeddings`) và đối chiếu SHA-256 trước khi chạy.
+Nguồn embedding: `item_embeddings.npy`, SHA-256 `a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836`. File không nằm trong repo (`*.npy` bị `.gitignore`). Theo `README.txt` của gói chia sẻ do nhóm A gửi (`share-20261125T050341Z-1-001.zip`), file mặc định `data/processed/item_embeddings.npy` là `item_emb_sentence_t5.npy` của gói: code gốc `RPG_KDD2025` commit `7dcf95c`, `sentence-t5-base`, 12101 × 768 float32 trước PCA, hàng i ứng với `item_id` i + 1 (đã đối chiếu với `items.jsonl`). Repo chưa có script tạo lại file (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; người tái lập cần nhận gói từ nhóm A, chép file vào đường dẫn mặc định (hoặc truyền `--embeddings`) và đối chiếu SHA-256.
 
 ## Ward và k-means trên cùng mẫu 5000 item
 
 | Thuật toán | k | Silhouette | Davies–Bouldin | Kích thước cụm nhỏ nhất | Cụm đơn lẻ | Giây |
 |---|---:|---:|---:|---:|---:|---:|
-| ward | 64 | 0.1123 | 2.6190 | 26 | 0 | 1.66 |
-| kmeans | 64 | 0.1583 | 2.5082 | 24 | 0 | 0.85 |
-| ward | 256 | 0.1142 | 2.3358 | 4 | 0 | 1.53 |
-| kmeans | 256 | 0.1183 | 2.4554 | 3 | 0 | 2.73 |
-| ward | 1024 | 0.1699 | 1.6063 | 1 | 14 | 1.58 |
-| kmeans | 1024 | 0.1108 | 1.6721 | 1 | 92 | 12.10 |
+| ward | 64 | 0.1123 | 2.6190 | 26 | 0 | 0.97 |
+| kmeans | 64 | 0.1583 | 2.5082 | 24 | 0 | 0.80 |
+| ward | 256 | 0.1142 | 2.3358 | 4 | 0 | 0.73 |
+| kmeans | 256 | 0.1183 | 2.4554 | 3 | 0 | 2.51 |
+| ward | 1024 | 0.1699 | 1.6063 | 1 | 14 | 1.74 |
+| kmeans | 1024 | 0.1108 | 1.6721 | 1 | 92 | 9.13 |
 
 ## DBSCAN (cosine) trên toàn bộ item
 

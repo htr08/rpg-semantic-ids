@@ -186,7 +186,16 @@ AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu 
 python -m src.clustering_compare
 ```
 
-Đầu vào: `data/processed/item_embeddings.npy` (12.101 × 768, float32, chuẩn L2; hàng j ứng với `item_id` j + 1), không commit. Đây là embedding `sentence-t5-base` do nhóm A tạo; repo chưa có bước hoặc liên kết tạo lại file, nên cần nhận file từ nhóm A và đối chiếu SHA-256 `a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836` (cũng ghi trong báo cáo). Lệnh so sánh Ward, k-means (mẫu 5.000 item, k = 64/256/1024) và DBSCAN cosine (toàn bộ item, MinPts 5/10/20, eps theo điểm gãy và phân vị của đường k-distance, PCA 50 và 20 chiều). Cấu hình có eps xấp xỉ 0 (từ MinPts item trùng embedding) hoặc đường k-distance phẳng bị bỏ qua riêng và ghi lý do, các cấu hình còn lại vẫn chạy. Kết quả: [reports/clustering_hier_dbscan.md](reports/clustering_hier_dbscan.md), [reports/clustering_hier_dbscan.json](reports/clustering_hier_dbscan.json), [reports/figures/dbscan_kdistance.png](reports/figures/dbscan_kdistance.png).
+Đầu vào: `data/processed/item_embeddings.npy` (12.101 × 768, float32, chuẩn L2; hàng j ứng với `item_id` j + 1), không commit (`*.npy` bị `.gitignore`). Nguồn: gói chia sẻ của nhóm A (`share-20261125T050341Z-1-001.zip`, file `item_emb_sentence_t5.npy`; code gốc `RPG_KDD2025` commit `7dcf95c`, `sentence-t5-base`, PCA 128 có whiten rồi OPQ 32×8 của FAISS cho các file semantic ID). Chép file trong gói vào `data/processed/` và đối chiếu SHA-256 (cũng ghi trong báo cáo):
+
+| File trong gói | Chép thành | SHA-256 |
+|---|---|---|
+| `item_emb_sentence_t5.npy` | `item_embeddings.npy` | `a2b542bdf8f34b1f6c81695b5cff7f3c3b98d75d06bab51721bd10b54628a836` |
+| `semantic_ids_opq.npy` | `semantic_ids.npy` | `e7b2c233ff44b652e735bde04e5f844ab301bb2a6e8fa2f873ef1f11acfc503b` |
+| `semantic_ids_pq.npy` | `semantic_ids_pq.npy` | `1041c36d498ce30a750c9d46ca48d7c3f1acaeea6b229183f3450eab8c2e6d90` |
+| `semantic_ids_random.npy` | `semantic_ids_random.npy` | `b8e8eab7b77d716c4b06354a675824692ec45e60fe92b162c71bfbda72faa8ab` |
+
+Repo chưa có script tạo lại các file này (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; cần nhận gói từ nhóm A. Lệnh so sánh Ward, k-means (mẫu 5.000 item, k = 64/256/1024) và DBSCAN cosine (toàn bộ item, MinPts 5/10/20, eps theo điểm gãy và phân vị của đường k-distance, PCA 50 và 20 chiều). Cấu hình có eps xấp xỉ 0 (từ MinPts item trùng embedding) hoặc đường k-distance phẳng bị bỏ qua riêng và ghi lý do, các cấu hình còn lại vẫn chạy. Kết quả: [reports/clustering_hier_dbscan.md](reports/clustering_hier_dbscan.md), [reports/clustering_hier_dbscan.json](reports/clustering_hier_dbscan.json), [reports/figures/dbscan_kdistance.png](reports/figures/dbscan_kdistance.png).
 
 ## Kiểm thử
 

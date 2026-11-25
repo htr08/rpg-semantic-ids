@@ -213,11 +213,11 @@ def format_markdown(result):
     if result.get("embedding_sha256"):
         lines += [
             f"Nguồn embedding: `{result['embedding_file']}`, SHA-256 `{result['embedding_sha256']}`. File không nằm trong repo "
-            "(quy ước không commit embedding). Theo tài liệu nhóm, file mặc định `data/processed/item_embeddings.npy` là embedding "
-            "`sentence-t5-base` 768 chiều của nhóm A, tạo từ văn bản item ghép theo `_extract_meta_sentences` của code gốc "
-            "(`configs/rpg_main.yaml`, `docs/project_plan.md`, `docs/notes/meeting_15_11_fpgrowth_ar_rec.md`, các dòng 15/11/2026 của `reports/decisions.md`). "
-            "Repo chưa có bước hoặc liên kết tạo lại file này; người tái lập cần nhận file từ nhóm A, đặt vào đường dẫn mặc định này "
-            "(hoặc truyền `--embeddings`) và đối chiếu SHA-256 trước khi chạy.",
+            "(`*.npy` bị `.gitignore`). Theo `README.txt` của gói chia sẻ do nhóm A gửi (`share-20261125T050341Z-1-001.zip`), file mặc định "
+            "`data/processed/item_embeddings.npy` là `item_emb_sentence_t5.npy` của gói: code gốc `RPG_KDD2025` commit `7dcf95c`, "
+            "`sentence-t5-base`, 12101 × 768 float32 trước PCA, hàng i ứng với `item_id` i + 1 (đã đối chiếu với `items.jsonl`). "
+            "Repo chưa có script tạo lại file (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; "
+            "người tái lập cần nhận gói từ nhóm A, chép file vào đường dẫn mặc định (hoặc truyền `--embeddings`) và đối chiếu SHA-256.",
             "",
         ]
     lines += [
