@@ -43,7 +43,7 @@ k-means k = 256 trên PCA 50 chiều (giữ 0.69474 phương sai; PCA fit một 
 
 ## Đầu vào
 
-Thứ tự hàng của semantic ID đã kiểm: 12101 hàng khớp từng hàng với `sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids` (khóa theo asin) xếp theo `id_mapping.json`. Embedding so với semantic ID: láng giềng gần nhất theo cosine của 1500 item ngẫu nhiên chung trung bình 2.93 token, cặp ngẫu nhiên 0.14 (tỉ số 20.7, ngưỡng 5). Đây là kiểm thống kê, chỉ bắt được lệch thứ tự trên diện rộng và không chỉ ra từng hàng. Số hàng được kiểm bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. SHA-256 dưới đây để đối chiếu đúng phiên bản file đầu vào khi tái lập.
+Thứ tự hàng của semantic ID đã kiểm: 12101 hàng khớp từng hàng với `sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids` (khóa theo asin) xếp theo `id_mapping.json`. Thứ tự hàng của embedding không kiểm được vì `.npy` không chứa asin. Số hàng được kiểm bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. SHA-256 dưới đây để đối chiếu đúng phiên bản file đầu vào khi tái lập.
 
 | Đầu vào | File | SHA-256 |
 |---|---|---|

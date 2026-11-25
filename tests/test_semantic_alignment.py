@@ -342,7 +342,7 @@ class VerifyRowOrderTests(unittest.TestCase):
                        "ari_first_token_by_seed": [0.1], "ari_first_token_mean": 0.1, "ari_other_positions": None,
                        "ari_first_token_shuffled": {"n_shuffle": 2, "mean": 0.0, "std": 0.0}}}
         without = format_markdown(base)
-        self.assertIn("chưa được kiểm", without)
+        self.assertIn("không kiểm được", without)
         with_check = format_markdown({**base, "semantic_id_row_order": {
             "file": "ref.sem_ids", "n_items_checked": 3, "status": "verified"}})
         self.assertIn("Thứ tự hàng của semantic ID đã kiểm: 3 hàng khớp", with_check)

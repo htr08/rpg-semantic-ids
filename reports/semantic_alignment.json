@@ -372,13 +372,5 @@
       "file": "sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids",
       "sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c"
     }
-  },
-  "embedding_alignment": {
-    "n_sample": 1500,
-    "neighbour_mean_shared": 2.9346666666666668,
-    "random_mean_shared": 0.1421,
-    "ratio": 20.652122918132772,
-    "min_ratio": 5.0,
-    "status": "passed"
   }
 }
