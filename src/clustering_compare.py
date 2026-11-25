@@ -11,6 +11,7 @@ Quy trình:
 """
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -38,6 +39,8 @@ DEFAULT_OUTPUT = ROOT / "reports" / "clustering_hier_dbscan.json"
 DEFAULT_MARKDOWN = ROOT / "reports" / "clustering_hier_dbscan.md"
 DEFAULT_FIGURE = ROOT / "reports" / "figures" / "dbscan_kdistance.png"
 NOISE = -1
+# Khoảng cách cosine giữa hai bản sao float32 giống hệt có thể lệch ~1e-7 do sai số làm tròn; coi eps dưới ngưỡng này là 0.
+EPS_TOLERANCE = 1e-6
 
 
 def k_distances(matrix, min_samples, metric="cosine"):
@@ -117,10 +120,23 @@ def run_dbscan(matrix, eps, min_samples, metric="cosine"):
 
 
 def eps_candidates(curve, quantiles):
-    """eps tại điểm gãy và tại các phân vị của đường k-distance; trả về danh sách (tên quy tắc, eps)."""
-    candidates = [("knee", float(curve[knee_index(curve)]))]
-    candidates += [(f"q{q:.2f}", float(np.quantile(curve, q))) for q in quantiles]
-    return candidates
+    """eps tại điểm gãy và tại các phân vị của đường k-distance; trả về danh sách (tên quy tắc, eps).
+
+    eps của điểm gãy là None khi đường k-distance phẳng (không xác định được điểm gãy).
+    """
+    knee = None
+    if len(curve) < 3 or float(curve[-1] - curve[0]) > 0:
+        knee = float(curve[knee_index(curve)])  # đường quá ngắn: để knee_index báo lỗi tham số
+    return [("knee", knee)] + [(f"q{q:.2f}", float(np.quantile(curve, q))) for q in quantiles]
+
+
+def skip_reason(eps):
+    """Lý do không chạy DBSCAN với eps này (None nếu chạy được); scikit-learn yêu cầu eps > 0."""
+    if eps is None:
+        return "đường k-distance phẳng, không xác định được điểm gãy"
+    if eps <= EPS_TOLERANCE:
+        return "eps xấp xỉ 0: có ít nhất MinPts item trùng embedding"
+    return None
 
 
 def run_comparison(embeddings, n_components=50, ks=(64, 256, 1024), min_samples_list=(5, 10, 20),
@@ -158,11 +174,25 @@ def run_comparison(embeddings, n_components=50, ks=(64, 256, 1024), min_samples_
             curve = k_distances(matrix, min_samples)
             curves[(dim, min_samples)] = curve
             for rule, eps in eps_candidates(curve, eps_quantiles):
+                row = {"pca_dim": int(dim), "min_samples": int(min_samples), "eps_rule": rule,
+                       "eps": None if eps is None else round(eps, 6)}
+                reason = skip_reason(eps)
+                if reason is not None:  # bỏ qua riêng cấu hình này, các cấu hình khác vẫn chạy
+                    result["dbscan"].append({**row, "skipped": reason})
+                    continue
                 labels, seconds = run_dbscan(matrix, eps, min_samples)
-                result["dbscan"].append({
-                    "pca_dim": int(dim), "min_samples": int(min_samples), "eps_rule": rule, "eps": round(eps, 6),
-                    "seconds": round(seconds, 3), **evaluate_labels(matrix, labels, sample_size, seed)})
+                result["dbscan"].append({**row, "skipped": None, "seconds": round(seconds, 3),
+                                         **evaluate_labels(matrix, labels, sample_size, seed)})
     return result, curves
+
+
+def file_sha256(path):
+    """SHA-256 (hex) của file, đọc theo khối."""
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def _fmt(value, digits=4):
@@ -179,6 +209,18 @@ def format_markdown(result):
         "Silhouette dùng khoảng cách cosine; Davies–Bouldin dùng khoảng cách Euclid. "
         "Sinh bởi `python -m src.clustering_compare`.",
         "",
+    ]
+    if result.get("embedding_sha256"):
+        lines += [
+            f"Nguồn embedding: `{result['embedding_file']}`, SHA-256 `{result['embedding_sha256']}`. File không nằm trong repo "
+            "(quy ước không commit embedding). Theo tài liệu nhóm, file mặc định `data/processed/item_embeddings.npy` là embedding "
+            "`sentence-t5-base` 768 chiều của nhóm A, tạo từ văn bản item ghép theo `_extract_meta_sentences` của code gốc "
+            "(`configs/rpg_main.yaml`, `docs/project_plan.md`, `docs/notes/meeting_15_11_fpgrowth_ar_rec.md`, các dòng 15/11/2026 của `reports/decisions.md`). "
+            "Repo chưa có bước hoặc liên kết tạo lại file này; người tái lập cần nhận file từ nhóm A, đặt vào đường dẫn mặc định này "
+            "(hoặc truyền `--embeddings`) và đối chiếu SHA-256 trước khi chạy.",
+            "",
+        ]
+    lines += [
         f"## Ward và k-means trên cùng mẫu {result['sample_size']} item",
         "",
         "| Thuật toán | k | Silhouette | Davies–Bouldin | Kích thước cụm nhỏ nhất | Cụm đơn lẻ | Giây |",
@@ -198,23 +240,28 @@ def format_markdown(result):
         "| PCA | MinPts | eps (quy tắc) | eps | Số cụm | Tỉ lệ nhiễu | Cụm lớn nhất / mọi item | Silhouette | Davies–Bouldin |",
         "|---:|---:|---|---:|---:|---:|---:|---:|---:|",
     ]
-    for row in result["dbscan"]:
+    ran = [r for r in result["dbscan"] if not r["skipped"]]
+    skipped = [r for r in result["dbscan"] if r["skipped"]]
+    for row in ran:
         lines.append(f"| {row['pca_dim']} | {row['min_samples']} | {row['eps_rule']} | {row['eps']:.4f} | {row['n_clusters']} "
                      f"| {row['noise_ratio']:.4f} | {row['largest_cluster_fraction']:.4f} "
                      f"| {_fmt(row['silhouette'])} | {_fmt(row['davies_bouldin'])} |")
-    knee_rows = [r for r in result["dbscan"] if r["eps_rule"] == "knee"]
-    useful = [r for r in result["dbscan"] if r["n_clusters"] >= 2 and r["largest_cluster_fraction"] < 0.5]
-    lines += [
-        "",
-        "## Tóm tắt DBSCAN",
-        "",
-        f"- Tại eps ở điểm gãy ({len(knee_rows)} cấu hình): số cụm {min(r['n_clusters'] for r in knee_rows)}–"
-        f"{max(r['n_clusters'] for r in knee_rows)}, cụm lớn nhất chiếm "
-        f"{min(r['largest_cluster_fraction'] for r in knee_rows):.1%}–{max(r['largest_cluster_fraction'] for r in knee_rows):.1%} "
-        f"số item, nhiễu {min(r['noise_ratio'] for r in knee_rows):.1%}–{max(r['noise_ratio'] for r in knee_rows):.1%}.",
-        f"- Số cấu hình có ít nhất 2 cụm và cụm lớn nhất dưới 50% số item: {len(useful)} / {len(result['dbscan'])}.",
-        "",
-    ]
+    knee_rows = [r for r in ran if r["eps_rule"] == "knee"]
+    useful = [r for r in ran if r["n_clusters"] >= 2 and r["largest_cluster_fraction"] < 0.5]
+    lines += ["", "## Tóm tắt DBSCAN", ""]
+    if knee_rows:
+        lines.append(
+            f"- Tại eps ở điểm gãy ({len(knee_rows)} cấu hình): số cụm {min(r['n_clusters'] for r in knee_rows)}–"
+            f"{max(r['n_clusters'] for r in knee_rows)}, cụm lớn nhất chiếm "
+            f"{min(r['largest_cluster_fraction'] for r in knee_rows):.1%}–{max(r['largest_cluster_fraction'] for r in knee_rows):.1%} "
+            f"số item, nhiễu {min(r['noise_ratio'] for r in knee_rows):.1%}–{max(r['noise_ratio'] for r in knee_rows):.1%}.")
+    else:
+        lines.append("- Không cấu hình nào có eps ở điểm gãy chạy được.")
+    lines.append(f"- Số cấu hình có ít nhất 2 cụm và cụm lớn nhất dưới 50% số item: {len(useful)} / {len(ran)} cấu hình đã chạy.")
+    if skipped:
+        lines += ["", "Cấu hình bị bỏ qua (không chạy DBSCAN):", ""]
+        lines += [f"- PCA {r['pca_dim']}, MinPts {r['min_samples']}, eps `{r['eps_rule']}`: {r['skipped']}." for r in skipped]
+    lines.append("")
     return "\n".join(lines)
 
 
@@ -231,7 +278,8 @@ def plot_kdistance(curves, rows, path, dim=50):
             continue
         line, = axis.plot(np.arange(len(curve)), curve, label=f"MinPts = {min_samples}")
         knee = next(r for r in rows if r["pca_dim"] == dim and r["min_samples"] == min_samples and r["eps_rule"] == "knee")
-        axis.scatter([knee_index(curve)], [knee["eps"]], color=line.get_color(), zorder=3)
+        if knee["eps"] is not None:  # đường phẳng: không có điểm gãy để đánh dấu
+            axis.scatter([knee_index(curve)], [knee["eps"]], color=line.get_color(), zorder=3)
     axis.set_xlabel("Item (sắp theo k-distance tăng dần)")
     axis.set_ylabel("Khoảng cách cosine tới điểm thứ MinPts (tính cả chính nó)")
     axis.set_title(f"Đường k-distance, PCA {dim} chiều (chấm: điểm gãy)")
@@ -258,8 +306,12 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         embeddings = load_embeddings(args.embeddings)
+        checksum = file_sha256(args.embeddings)
         result, curves = run_comparison(embeddings, args.components, tuple(args.ks), tuple(args.min_samples),
                                         extra_dbscan_dims=tuple(args.extra_dbscan_dims), sample_size=args.sample_size, n_init=args.n_init, seed=args.seed)
+        resolved = args.embeddings.resolve()
+        result["embedding_file"] = resolved.relative_to(ROOT).as_posix() if resolved.is_relative_to(ROOT) else resolved.name
+        result["embedding_sha256"] = checksum
         if args.figure is not None:
             plot_kdistance(curves, result["dbscan"], args.figure, dim=args.components)
     except (OSError, ValueError, ImportError, MemoryError) as error:

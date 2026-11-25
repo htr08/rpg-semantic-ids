@@ -14,13 +14,16 @@ from src.clustering_compare import (
     NOISE,
     eps_candidates,
     evaluate_labels,
+    file_sha256,
     format_markdown,
     k_distances,
     knee_index,
     main,
+    plot_kdistance,
     run_comparison,
     run_dbscan,
     run_hierarchical,
+    skip_reason,
 )
 
 
@@ -181,6 +184,84 @@ class ComparisonTests(unittest.TestCase):
         self.assertIn("| kmeans | 3 |", text)
         self.assertIn("| 5 | 4 | knee |", text)
 
+    def test_file_sha256_matches_hashlib(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "x.bin"
+            data = os.urandom(3 * (1 << 20) + 17)  # lớn hơn một khối đọc
+            path.write_bytes(data)
+            self.assertEqual(file_sha256(path), hashlib.sha256(data).hexdigest())
+
+    def test_skip_reason(self):
+        self.assertIsNone(skip_reason(0.1))
+        self.assertIn("eps xấp xỉ 0", skip_reason(0.0))
+        self.assertIn("eps xấp xỉ 0", skip_reason(5.96e-8))  # sai số float32 của hai bản sao
+        self.assertIsNone(skip_reason(1e-3))
+        self.assertIn("phẳng", skip_reason(None))
+
+    def test_eps_candidates_flat_curve_gives_no_knee_but_keeps_quantiles(self):
+        candidates = eps_candidates(np.full(10, 0.3), (0.5,))
+        self.assertEqual(candidates, [("knee", None), ("q0.50", 0.3)])
+
+    def test_duplicate_embeddings_skip_only_zero_eps_configs(self):
+        # 3 điểm gốc, mỗi điểm lặp 30 lần: k-distance bằng 0 cho 90/180 điểm, nên phân vị 0.25 có eps = 0.
+        rng = np.random.default_rng(0)
+        base = rng.normal(size=(3, 16))
+        points = np.vstack([np.repeat(base, 30, axis=0), rng.normal(size=(90, 16))])
+        result, curves = run_comparison(points, n_components=8, ks=(4,), min_samples_list=(5,), eps_quantiles=(0.25, 0.9),
+                                        extra_dbscan_dims=(), sample_size=100, n_init=1, seed=0)
+        by_rule = {r["eps_rule"]: r for r in result["dbscan"]}
+        self.assertEqual(set(by_rule), {"knee", "q0.25", "q0.90"})
+        self.assertIn("eps xấp xỉ 0", by_rule["q0.25"]["skipped"])
+        self.assertEqual(by_rule["q0.25"]["eps"], 0.0)
+        self.assertIsNone(by_rule["q0.90"]["skipped"])  # cấu hình có eps hợp lệ vẫn chạy
+        self.assertIn("n_clusters", by_rule["q0.90"])
+        text = format_markdown(result)
+        self.assertIn("Cấu hình bị bỏ qua", text)
+        self.assertIn("eps `q0.25`", text)
+        self.assertNotIn("| 8 | 5 | q0.25 |", text)  # dòng bị bỏ qua không nằm trong bảng
+        self.assertIn("| 8 | 5 | q0.90 |", text)
+
+    def test_float32_duplicates_are_skipped_despite_rounding_noise(self):
+        rng = np.random.default_rng(1)
+        base = rng.normal(size=(4, 32)).astype(np.float32)
+        points = np.vstack([np.repeat(base, 40, axis=0), rng.normal(size=(100, 32)).astype(np.float32)])
+        result, _ = run_comparison(points, n_components=10, ks=(4,), min_samples_list=(5,), eps_quantiles=(0.25, 0.5),
+                                   extra_dbscan_dims=(), sample_size=100, n_init=1, seed=0)
+        for row in result["dbscan"]:
+            if row["eps"] is not None and row["eps"] < 1e-6:
+                self.assertIsNotNone(row["skipped"], row)  # không chạy DBSCAN với eps nhiễu số
+
+    def test_too_short_curve_is_a_parameter_error_not_a_flat_curve(self):
+        with self.assertRaises(ValueError):
+            eps_candidates(np.array([0.1, 0.2]), (0.5,))
+
+    def test_flat_k_distance_curve_does_not_stop_the_run(self):
+        points = np.vstack([np.zeros((40, 6)) + np.array([1, 0, 0, 0, 0, 0]), np.zeros((40, 6)) + np.array([0, 1, 0, 0, 0, 0])])
+        result, curves = run_comparison(points, n_components=1, ks=(2,), min_samples_list=(5,), eps_quantiles=(0.5,),
+                                        extra_dbscan_dims=(), sample_size=50, n_init=1, seed=0)
+        self.assertEqual(len(result["dbscan"]), 2)
+        by_rule = {r["eps_rule"]: r for r in result["dbscan"]}
+        self.assertIn("phẳng", by_rule["knee"]["skipped"])
+        self.assertIn("eps xấp xỉ 0", by_rule["q0.50"]["skipped"])
+        self.assertIn("Tóm tắt DBSCAN", format_markdown(result))
+
+    def test_all_dbscan_configs_skipped_still_formats_markdown(self):
+        result = {"n_items": 10, "input_dim": 4, "pca_dim": 2, "pca_explained_variance_ratio": 0.5, "seed": 0, "sample_size": 10,
+                  "sample_algorithms": [], "dbscan": [
+                      {"pca_dim": 2, "min_samples": 5, "eps_rule": "knee", "eps": None, "skipped": "đường k-distance phẳng"}]}
+        text = format_markdown(result)
+        self.assertIn("Không cấu hình nào có eps ở điểm gãy chạy được", text)
+        self.assertIn("0 / 0 cấu hình đã chạy", text)
+
+    @unittest.skipUnless(importlib.util.find_spec("matplotlib"), "CI không cài matplotlib")
+    def test_plot_tolerates_skipped_knee(self):
+        curve = np.zeros(20)
+        rows = [{"pca_dim": 5, "min_samples": 4, "eps_rule": "knee", "eps": None, "skipped": "phẳng"}]
+        with tempfile.TemporaryDirectory() as directory:
+            plot_kdistance({(5, 4): curve}, rows, Path(directory) / "k.png", dim=5)
+            self.assertTrue((Path(directory) / "k.png").exists())
+
     def test_main_writes_outputs_and_reports_missing_file(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -190,8 +271,13 @@ class ComparisonTests(unittest.TestCase):
                     "--sample-size", "60", "--n-init", "1", "--output", str(root / "out" / "r.json"),
                     "--markdown", str(root / "out" / "r.md"), "--figure", ""]
             self.assertEqual(main(args), 0)
-            self.assertEqual(json.loads((root / "out" / "r.json").read_text(encoding="utf-8"))["pca_dim"], 5)
-            self.assertTrue((root / "out" / "r.md").read_text(encoding="utf-8").startswith("# So sánh phân cụm"))
+            written = json.loads((root / "out" / "r.json").read_text(encoding="utf-8"))
+            self.assertEqual(written["pca_dim"], 5)
+            self.assertEqual(written["embedding_file"], "emb.npy")
+            self.assertEqual(written["embedding_sha256"], file_sha256(root / "emb.npy"))
+            markdown = (root / "out" / "r.md").read_text(encoding="utf-8")
+            self.assertTrue(markdown.startswith("# So sánh phân cụm"))
+            self.assertIn(written["embedding_sha256"], markdown)
             self.assertEqual(main(["--embeddings", str(root / "missing.npy"), "--figure", ""]), 1)
             self.assertEqual(sorted(os.listdir(root / "out")), ["r.json", "r.md"])  # --figure "" không sinh hình
 
