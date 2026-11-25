@@ -19,10 +19,10 @@ jobs:
 
       # Chỉ cài các gói nhẹ cần cho pytest; torch, recbole, faiss không cài trong CI.
       # Bổ sung vào danh sách khi test trong src/ bắt đầu import thêm thư viện.
-      # mlxtend: test FP-Growth trong tests/test_patterns.py.
+      # mlxtend: test FP-Growth; prefixspan: test PrefixSpan (cùng tests/test_patterns.py).
       - name: Install dependencies
         run: |
-          grep -E '^(numpy|scipy|pandas|pyyaml|scikit-learn|mlxtend|pytest)==' requirements.txt > requirements-ci.txt
+          grep -E '^(numpy|scipy|pandas|pyyaml|scikit-learn|mlxtend|prefixspan|pytest)==' requirements.txt > requirements-ci.txt
           pip install -r requirements-ci.txt
 
       - name: Run tests
