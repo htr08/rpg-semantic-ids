@@ -43,7 +43,7 @@ k-means k = 256 trên PCA 50 chiều (giữ 0.69474 phương sai; PCA fit một 
 
 ## Đầu vào
 
-Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) không kiểm được từ nội dung file vì `.npy` không chứa asin; chỉ kiểm được số hàng bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. SHA-256 dưới đây để đối chiếu đúng phiên bản file đầu vào khi tái lập.
+Thứ tự hàng của semantic ID đã kiểm: 12101 hàng khớp từng hàng với `sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids` (khóa theo asin) xếp theo `id_mapping.json`. Thứ tự hàng của embedding không kiểm được vì `.npy` không chứa asin. Số hàng được kiểm bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. SHA-256 dưới đây để đối chiếu đúng phiên bản file đầu vào khi tái lập.
 
 | Đầu vào | File | SHA-256 |
 |---|---|---|
@@ -53,3 +53,4 @@ Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) k
 | items | `items.jsonl` | `6c37776f8a25d4c63f066e6a02525e9984b71f5972033851c894d12e217f1378` |
 | interactions | `interactions.csv` | `ca7536f499b5b752a13531197ccfa2e7accafe34331b5083c8979ee72a0db400` |
 | splits | `leave_last_out.csv` | `76e6952986ac268e2ecf4d68475e3aaf24f7700b86ee5a26d35a18c14d101c1f` |
+| asin_sem_ids | `sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids` | `e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c` |

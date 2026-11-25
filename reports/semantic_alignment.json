@@ -338,6 +338,11 @@
     },
     "ari_between_kmeans_seeds": 0.5392996953559455
   },
+  "semantic_id_row_order": {
+    "file": "sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids",
+    "n_items_checked": 12101,
+    "status": "verified"
+  },
   "inputs": {
     "semantic_ids": {
       "file": "semantic_ids.npy",
@@ -362,6 +367,10 @@
     "splits": {
       "file": "leave_last_out.csv",
       "sha256": "76e6952986ac268e2ecf4d68475e3aaf24f7700b86ee5a26d35a18c14d101c1f"
+    },
+    "asin_sem_ids": {
+      "file": "sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids",
+      "sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c"
     }
   }
 }

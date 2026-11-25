@@ -76,6 +76,24 @@ def load_item_order(id_mapping_path, items_path):
     return asins
 
 
+def verify_row_order(ids, asins, sem_ids_path):
+    """Đối chiếu từng hàng semantic ID với file ``.sem_ids`` dạng ``{asin: [mã]}`` (định dạng cache của code gốc RPG).
+
+    asins là danh sách theo item_id 1..N (load_item_order). File phải có đúng tập asin đó và mã khớp từng hàng;
+    đây là cách duy nhất kiểm được thứ tự hàng của file ``.npy``, vì ``.npy`` không chứa asin.
+    """
+    data = json.loads(Path(sem_ids_path).read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or set(data) != set(asins):
+        raise ValueError(f"{Path(sem_ids_path).name}: tập asin phải trùng id_mapping.json")
+    expected = np.array([data[asin] for asin in asins])
+    if expected.shape != ids.shape:
+        raise ValueError(f"{Path(sem_ids_path).name}: hình dạng {expected.shape} khác semantic ID {ids.shape}")
+    wrong = int((expected != ids).any(axis=1).sum())
+    if wrong:
+        raise ValueError(f"{wrong}/{len(asins)} hàng semantic ID khác {Path(sem_ids_path).name} theo thứ tự id_mapping.json")
+    return {"file": Path(sem_ids_path).name, "n_items_checked": int(len(asins)), "status": "verified"}
+
+
 def file_sha256(path):
     digest = hashlib.sha256()
     with open(path, "rb") as stream:
@@ -519,12 +537,22 @@ def format_markdown(result):
             f"| ARI giữa hai lần k-means khác seed (seed đầu và seed thứ hai) | {_fmt(km['ari_between_kmeans_seeds'], 4)} |"
         )
     if result.get("inputs"):
+        order = result.get("semantic_id_row_order")
+        if order:
+            order_text = (
+                f"Thứ tự hàng của semantic ID đã kiểm: {order['n_items_checked']} hàng khớp từng hàng với `{order['file']}` "
+                "(khóa theo asin) xếp theo `id_mapping.json`. Thứ tự hàng của embedding không kiểm được vì `.npy` không chứa asin."
+            )
+        else:
+            order_text = (
+                "Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) không kiểm được từ nội dung file vì "
+                "`.npy` không chứa asin (không truyền `--asin-sem-ids`)."
+            )
         lines += [
             "",
             "## Đầu vào",
             "",
-            "Thứ tự hàng của semantic ID và embedding (hàng j ↔ `item_id` j + 1) không kiểm được từ nội dung file vì `.npy` "
-            "không chứa asin; chỉ kiểm được số hàng bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. "
+            f"{order_text} Số hàng được kiểm bằng số item của `id_mapping.json`, và `items.jsonl` khớp mapping từng dòng. "
             "SHA-256 dưới đây để đối chiếu đúng phiên bản file đầu vào khi tái lập.",
             "",
             "| Đầu vào | File | SHA-256 |",
@@ -564,6 +592,8 @@ def main(argv=None):
     parser.add_argument("--n-init", type=int, default=5)
     parser.add_argument("--kmeans-seeds", type=int, nargs="+", default=[42, 43, 44])
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--asin-sem-ids", type=Path, default=None,
+                        help="file .sem_ids {asin: mã} để kiểm thứ tự hàng của semantic ID theo id_mapping.json")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     args = parser.parse_args(argv)
@@ -575,8 +605,10 @@ def main(argv=None):
         from src.patterns import (DEFAULT_INTERACTIONS, DEFAULT_ITEMS, DEFAULT_SPLITS, build_transaction_matrix,
                                   load_item_metadata, load_train_transactions)
 
-        n_items = len(load_item_order(DEFAULT_ID_MAPPING, DEFAULT_ITEMS))
+        asins = load_item_order(DEFAULT_ID_MAPPING, DEFAULT_ITEMS)
+        n_items = len(asins)
         ids = load_semantic_ids(args.semantic_ids, n_items)
+        row_order = verify_row_order(ids, asins, args.asin_sem_ids) if args.asin_sem_ids else None
         embeddings = load_embeddings(args.embeddings)
         if embeddings.shape[0] != n_items:
             raise ValueError(f"số hàng embedding {embeddings.shape[0]} khác số item {n_items}")
@@ -586,12 +618,12 @@ def main(argv=None):
         result = run_alignment(ids, embeddings, matrix, metadata, args.supports, args.min_confidence, args.top,
                                args.null_pairs, args.permutations, args.k, args.components, args.n_init,
                                args.kmeans_seeds, args.seed)
-        result["inputs"] = {
-            name: {"file": path.name, "sha256": file_sha256(path)}
-            for name, path in (("semantic_ids", args.semantic_ids), ("embeddings", args.embeddings),
-                               ("id_mapping", DEFAULT_ID_MAPPING), ("items", DEFAULT_ITEMS),
-                               ("interactions", DEFAULT_INTERACTIONS), ("splits", DEFAULT_SPLITS))
-        }
+        files = [("semantic_ids", args.semantic_ids), ("embeddings", args.embeddings), ("id_mapping", DEFAULT_ID_MAPPING),
+                 ("items", DEFAULT_ITEMS), ("interactions", DEFAULT_INTERACTIONS), ("splits", DEFAULT_SPLITS)]
+        if row_order:
+            files.append(("asin_sem_ids", args.asin_sem_ids))
+            result["semantic_id_row_order"] = row_order
+        result["inputs"] = {name: {"file": path.name, "sha256": file_sha256(path)} for name, path in files}
         for path in (args.output, args.markdown):
             path.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

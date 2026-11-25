@@ -23,6 +23,7 @@ from src.semantic_alignment import (
     rule_alignment,
     select_top_pairs,
     shared_token_counts,
+    verify_row_order,
     within_brand_permutation_test,
 )
 
@@ -307,6 +308,45 @@ class LoadItemOrderTests(unittest.TestCase):
                 items.write_text("", encoding="utf-8")
                 with self.assertRaises(ValueError):
                     load_item_order(path, items)
+
+
+class VerifyRowOrderTests(unittest.TestCase):
+    ASINS = ["A", "B", "C"]
+    IDS = np.array([[1, 2], [3, 4], [5, 6]], dtype=np.int16)
+
+    def _verify(self, ids, data):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "x.sem_ids"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            return verify_row_order(ids, self.ASINS, path)
+
+    def test_matching_rows_verified_even_if_json_key_order_differs(self):
+        data = {"C": [5, 6], "A": [1, 2], "B": [3, 4]}
+        self.assertEqual(self._verify(self.IDS, data)["status"], "verified")
+
+    def test_rejects_reordered_rows(self):
+        data = {"A": [1, 2], "B": [3, 4], "C": [5, 6]}
+        with self.assertRaisesRegex(ValueError, "2/3"):
+            self._verify(self.IDS[[0, 2, 1]], data)
+
+    def test_rejects_wrong_asin_set_or_shape(self):
+        for data in ({"A": [1, 2], "B": [3, 4]}, {"A": [1, 2], "B": [3, 4], "C": [5, 6], "D": [7, 8]},
+                     {"A": [1], "B": [3], "C": [5]}, [1, 2, 3]):
+            with self.subTest(data=data), self.assertRaises(ValueError):
+                self._verify(self.IDS, data)
+
+    def test_markdown_reports_row_order_check(self):
+        base = {"n_items": 3, "n_positions": 2, "codebook_size": 256, "rules": [], "inputs": {
+            "semantic_ids": {"file": "s.npy", "sha256": "00"}},
+            "kmeans": {"k": 3, "pca_dim": 2, "pca_explained_variance_ratio": 0.5, "n_init": 1, "seeds": [1],
+                       "ari_first_token_by_seed": [0.1], "ari_first_token_mean": 0.1, "ari_other_positions": None,
+                       "ari_first_token_shuffled": {"n_shuffle": 2, "mean": 0.0, "std": 0.0}}}
+        without = format_markdown(base)
+        self.assertIn("không kiểm được", without)
+        with_check = format_markdown({**base, "semantic_id_row_order": {
+            "file": "ref.sem_ids", "n_items_checked": 3, "status": "verified"}})
+        self.assertIn("Thứ tự hàng của semantic ID đã kiểm: 3 hàng khớp", with_check)
+        self.assertIn("`ref.sem_ids`", with_check)
 
 
 class FileChecksumTests(unittest.TestCase):

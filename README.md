@@ -190,8 +190,8 @@ AR-Rec (recommender từ luật kết hợp) và quét tham số. Lệnh đầu 
 `data/processed/item_embeddings.npy` (12.101 × 768) do A tạo, hàng j ứng với `item_id` j + 1 (quy ước ở
 [docs/data_contract.md](docs/data_contract.md) và [reports/decisions.md](reports/decisions.md), dòng 15/11); `interactions.csv`, `items.jsonl`
 và `id_mapping.json` do pipeline dữ liệu tạo; `data/splits/leave_last_out.csv` có trong repo. Lệnh dừng nếu số hàng hai file `.npy` khác số item của
-`id_mapping.json` hoặc `items.jsonl` không khớp mapping. File `.npy` không chứa asin nên thứ tự hàng không kiểm được từ nội dung: báo cáo ghi SHA-256 của
-các file đầu vào (mục "Đầu vào") để đối chiếu khi tái lập. Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
+`id_mapping.json` hoặc `items.jsonl` không khớp mapping. File `.npy` không chứa asin nên thứ tự hàng không kiểm được từ nội dung. Truyền `--asin-sem-ids <file .sem_ids>` (định dạng `{asin: [32 mã]}` của cache code gốc RPG, ví dụ `sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids`) để lệnh đối chiếu từng hàng
+semantic ID theo `id_mapping.json` và dừng nếu lệch; embedding không có cách kiểm tương tự. Báo cáo ghi kết quả kiểm và SHA-256 của các file đầu vào (mục "Đầu vào"). Lệnh chỉ dùng phần train để sinh luật (luật một item ⇒ một item, ba mức `min_support`, `min_confidence` 0,1),
 lấy 200 cặp có lift cao nhất, đếm số vị trí token trùng nhau của mỗi cặp rồi so với cặp ngẫu nhiên; đồng thời tính ARI giữa k-means (PCA 50 chiều, k = 256, seed 42–44)
 và token OPQ. Với cặp cùng thương hiệu, đối chứng hoán vị chỉ dùng item đủ `min_count` và hoán vị trong từng (brand, nhóm tần suất train) để không nhầm tần suất với tín hiệu mua kèm. Kết quả: [reports/semantic_alignment.md](reports/semantic_alignment.md), [reports/semantic_alignment.json](reports/semantic_alignment.json).
 
