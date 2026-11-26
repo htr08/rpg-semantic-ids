@@ -1,0 +1,14 @@
+{
+  "note": "Bản sao của Drive MyDrive/rpg/share/rq1/id_check.json (notebook rpg_colab_v9_1_ids.ipynb, bước 4, 26/11/2026)",
+  "row_match": 0.0,
+  "code_match": 0.004335901991570945,
+  "neighbour_shared_codes": {
+    "code_goc": 1.3295,
+    "nhom": 1.32945,
+    "ngau_nhien": 0.14205,
+    "ti_le_giu": 0.9999578929639144
+  },
+  "cpu": "Intel(R) Xeon(R) CPU @ 2.20GHz",
+  "versions": {"python": "3.13.18", "numpy": "2.4.6", "sklearn": "1.6.1", "faiss": "1.12.0",
+               "code_goc": "7dcf95c", "repo_nhom": "466fe9e (code nhúng trong notebook, bằng nội dung 21492dc)", "cpu": 2}
+}

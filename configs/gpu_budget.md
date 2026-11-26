@@ -8,7 +8,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 - RQ1 ngày 24/11 trên Kaggle (PQ bản đầu và ngẫu nhiên, mỗi biến thể 3 seed, 8,66 giờ) nâng tổng lên khoảng 16,51/45 giờ, còn khoảng 28,49 giờ. PQ bản đầu (4,53 giờ) bị bỏ sau review 25/11 (xem `reports/decisions.md`) nhưng giờ GPU vẫn tính.
 - RQ1 ngày 26/11 trên Colab (PQ và RQ, mỗi biến thể 3 seed, 8,54 giờ) nâng tổng lên khoảng 25,05/45 giờ, còn khoảng 19,95 giờ. RQ1 đã đủ 4 biến thể × 3 seed.
 - Nền tảng: Google Colab (chính) + Kaggle (dự phòng, chạy song song từ Tuần 3). Mọi output ghi vào Drive `MyDrive/rpg/`.
-- Ngân sách trần: 45 giờ GPU. Dự kiến dùng khoảng 20–25 giờ (17 lần train nếu các biến thể RQ1 chạy 3 seed).
+- Ngân sách trần: 45 giờ GPU. Đã dùng khoảng 25,05 giờ (26/11). Dự kiến: cộng `rpg_behavior` 3 seed (khoảng 4,5 giờ) là khoảng 29,5 giờ; dùng thêm cả 2 lần dự phòng thì khoảng 32–34 giờ, sát ngưỡng cảnh báo 36 giờ.
 - Ngưỡng cảnh báo: 80% ngân sách (36 giờ) → áp dụng danh sách cắt giảm trong `docs/project_plan.md`, mục 1.3.
 
 ## Kế hoạch các lần train
@@ -16,7 +16,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | # | Run | Seed | Số lần | Ghi chú |
 |---|---|---|---|---|
 | 1 | `rpg_main` | 42, 43, 44 | 3 | Cấu hình chính, không cắt giảm. **Xong 14/11** |
-| 2 | `pq_s*`, `rq_s*`, `random_s*` | 42, 43, 44 | 9 | RQ1. 3 seed vì chênh lệch giữa các seed của main khoảng 8%. Ngẫu nhiên xong 24/11; PQ (bản đầu bị bỏ) và RQ xong 26/11 trên Colab |
+| 2 | `pq_s*`, `rq_s*`, `random_s*` | 42, 43, 44 | 12 (9 dùng + 3 PQ bản đầu đã bỏ) | RQ1. 3 seed vì chênh lệch giữa các seed của main khoảng 8%. Ngẫu nhiên xong 24/11; PQ (bản đầu bị bỏ) và RQ xong 26/11 trên Colab |
 | 3 | `rpg_behavior` | 42, 43, 44 | 3 | Nâng cấp chính; giảm còn 2 seed nếu thiếu ngân sách |
 | 4 | Dự phòng | – | 2 | Chạy lại lỗi, α thứ hai hoặc encoder mới |
 | 5 | SASRec-BCE theo S³-Rec | 42, 43, 44 | 3 | **Xong 20/11**, best epoch 54/78/54 |

@@ -234,3 +234,19 @@ def test_cli_rejects_bad_ids_spec(tmp_path):
     path = write_items(tmp_path, [{"categories": [["Beauty", "X"]]}] * 3)
     with pytest.raises(SystemExit):
         M.main(["--items", str(path), "--ids", "no_equal_sign", "--out-dir", str(tmp_path)])
+
+
+def test_cli_prints_vietnamese_on_non_utf8_console(tmp_path, monkeypatch):
+    # Console Windows mặc định cp1252: trước đây "Đã ghi …" gây UnicodeEncodeError và mã thoát 1.
+    import io
+    import sys
+
+    ids, _, cat = structured_and_random()
+    path = write_items(tmp_path, [{"categories": [["Beauty", "X", c]], "brand": "B" + c} for c in cat])
+    np.save(tmp_path / "s.npy", ids)
+    console = io.TextIOWrapper(io.BytesIO(), encoding="cp1252")
+    monkeypatch.setattr(sys, "stdout", console)
+    assert M.main(["--items", str(path), "--ids", f"s={tmp_path / 's.npy'}", "--out-dir", str(tmp_path / "out"),
+                   "--k", "5", "--codebook-size", "16"]) == 0
+    console.flush()
+    assert "Đã ghi".encode("utf-8") in console.buffer.getvalue()

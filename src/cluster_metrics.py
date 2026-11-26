@@ -6,8 +6,9 @@ gợi ý tốt hơn không. Mọi mảng ID theo quy ước của nhóm: hàng i
 Ba nhóm độ đo cho mỗi loại nhãn (danh mục lá, danh mục cấp 3, thương hiệu):
 
 - **Từng vị trí:** coi mã ở codebook j là nhãn cụm (256 cụm), tính purity, NMI và AMI, rồi lấy trung bình 32 vị trí.
-  Với 256 cụm và hàng trăm nhãn, purity và NMI cao ngay cả khi mã gán ngẫu nhiên (thử trên 12.101 item: NMI
-  khoảng 0,31 với danh mục lá, 0,58 với thương hiệu). AMI trừ phần trùng hợp ngẫu nhiên nên ID ngẫu nhiên cho
+  Với 256 cụm và hàng trăm nhãn, purity và NMI cao ngay cả khi mã gán ngẫu nhiên (biến thể ngẫu nhiên của RQ1,
+  26/11: NMI trung bình 32 vị trí 0,215 với danh mục lá, 0,485 với thương hiệu; xem ``reports/rq1/``).
+  AMI trừ phần trùng hợp ngẫu nhiên nên ID ngẫu nhiên cho
   AMI quanh 0; dùng AMI (và độ thuần láng giềng) làm số chính, purity/NMI chỉ để đối chiếu với kế hoạch.
 - **Toàn ID:** coi cả 32 mã là một cụm. Gần như mỗi item có ID riêng nên purity toàn ID luôn gần 1 và NMI cao
   (kể cả ID ngẫu nhiên); AMI toàn ID quanh 0. Giữ lại vì kế hoạch yêu cầu, nhưng không dùng để so sánh.
@@ -39,6 +40,7 @@ import csv
 import html
 import json
 from collections import Counter
+import sys
 from pathlib import Path
 from typing import Sequence
 
@@ -279,7 +281,16 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
         w.writerows(rows)
 
 
+def _utf8_stdout() -> None:
+    """In được tiếng Việt cả trên console Windows (cp1252/cp437); bỏ qua nếu luồng không đổi được mã hóa."""
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError, OSError):
+        pass
+
+
 def main(argv: Sequence[str] | None = None) -> int:
+    _utf8_stdout()
     parser = argparse.ArgumentParser(prog="python -m src.cluster_metrics", description=__doc__.split("\n")[0])
     parser.add_argument("--items", required=True, help="data/processed/items.jsonl của pipeline B")
     parser.add_argument("--ids", nargs="+", required=True, metavar="TÊN=FILE.npy",

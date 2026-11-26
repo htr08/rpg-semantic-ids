@@ -41,6 +41,7 @@ import argparse
 import json
 import math
 import os
+import sys
 from pathlib import Path
 from typing import Sequence
 
@@ -304,7 +305,16 @@ def library_versions() -> dict:
 
 # --- CLI ---
 
+def _utf8_stdout() -> None:
+    """In được tiếng Việt cả trên console Windows (cp1252/cp437); bỏ qua nếu luồng không đổi được mã hóa."""
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError, OSError):
+        pass
+
+
 def main(argv: Sequence[str] | None = None) -> int:
+    _utf8_stdout()
     parser = argparse.ArgumentParser(prog="python -m src.tokenizer", description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="method", required=True)
     parsers = {}

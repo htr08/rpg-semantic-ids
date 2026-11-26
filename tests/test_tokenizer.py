@@ -289,3 +289,20 @@ def test_cli_pq_with_faiss(tmp_path, capsys):
                    "--n-codebook", "4", "--codebook-size", "16", "--threads", "1"]) == 0
     assert np.load(out).shape == (n, 4)
     assert f"item dùng để học tâm cụm: {n - 10} / {n}" in capsys.readouterr().out
+
+
+def test_cli_prints_vietnamese_on_non_utf8_console(tmp_path, monkeypatch):
+    # Console Windows mặc định cp1252: trước đây "Đã ghi …" gây UnicodeEncodeError và mã thoát 1.
+    import io
+    import sys
+
+    n = 60
+    proc = cli_cache(tmp_path, n)
+    src = np.random.default_rng(1).integers(0, 16, size=(n, 4))
+    A.write_semantic_ids(src, proc, "src", n_codebook=4, codebook_size=16)
+    console = io.TextIOWrapper(io.BytesIO(), encoding="cp1252")
+    monkeypatch.setattr(sys, "stdout", console)
+    assert T.main(["random", "--processed-dir", str(proc), "--out", str(tmp_path / "r.npy"), "--source-name", "src",
+                   "--n-codebook", "4", "--codebook-size", "16"]) == 0
+    console.flush()
+    assert "Đã ghi".encode("utf-8") in console.buffer.getvalue()
