@@ -1,7 +1,11 @@
-# RQ1: token ngẫu nhiên (đối chứng). Còn lại giữ như rpg_main.yaml.
+# RQ1: token ngẫu nhiên (đối chứng): hoán vị mã OPQ của code gốc giữa các item theo từng codebook.
+# Còn lại giữ như rpg_main.yaml.
 base: rpg_main.yaml
-run_name: rpg_random
+run_name: random    # run_id: random_s<seed>
 semantic_id:
   method: random
+  tokenizer: python -m src.tokenizer random --seed 42
+  source: sentence-t5-base   # ID OPQ của code gốc
+  adapter_name: random   # sent_emb_model = x/random
 train:
-  seeds: [42]
+  seeds: [42, 43, 44]

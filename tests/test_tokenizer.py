@@ -1,6 +1,7 @@
-"""Unit test cho src/tokenizer.py (PQ và token ngẫu nhiên).
+"""Unit test cho src/tokenizer.py (PQ, OPQ kiểm tra, RQ, token ngẫu nhiên).
 
-CI không cài faiss nên các test dùng backend sklearn; test riêng cho faiss tự bỏ qua khi thiếu.
+CI không cài faiss: test PQ/OPQ bằng FAISS tự bỏ qua, RQ dùng backend sklearn. Trên Kaggle/Colab có faiss
+nên mọi test đều chạy; notebook còn kiểm tra ``opq_ids`` tái tạo đúng semantic ID của code gốc trên dữ liệu thật.
 """
 import json
 
@@ -9,16 +10,6 @@ import pytest
 
 from adapters import load_ids as A
 from src import tokenizer as T
-
-
-def separable(n_per=30, m=4, k=3, dsub=2, seed=0):
-    """Dữ liệu có k cụm tách biệt rõ trong từng đoạn; trả về x (N, m*dsub) và nhãn thật (N, m)."""
-    rng = np.random.default_rng(seed)
-    n = n_per * k
-    truth = np.stack([rng.permutation(np.repeat(np.arange(k), n_per)) for _ in range(m)], axis=1)
-    centers = np.arange(k)[:, None] * 10.0
-    x = np.concatenate([centers[truth[:, j]] + rng.normal(0, 0.1, (n, dsub)) for j in range(m)], axis=1)
-    return x.astype(np.float32), truth
 
 
 def make_cache(tmp_path, seqs, n_items):
@@ -63,92 +54,147 @@ def test_pca_whiten_shape_and_unit_variance():
     np.testing.assert_allclose(z.std(0, ddof=1), 1, atol=1e-3)
 
 
+def test_pca_is_reproducible_with_seed_even_with_randomized_solver():
+    # 540 x 96 -> 8: scikit-learn chọn solver randomized; không có random_state thì mỗi lần ra khác nhau
+    x = np.random.default_rng(0).normal(size=(540, 96))
+    np.testing.assert_array_equal(T.pca_whiten(x, 8, seed=42), T.pca_whiten(x, 8, seed=42))
+
+
 def test_pca_whiten_rejects_too_few_columns():
     with pytest.raises(ValueError):
         T.pca_whiten(np.ones((10, 4)), n_components=8)
 
 
-# --- PQ ---
+# --- PQ / OPQ bằng FAISS ---
 
-def test_pq_shape_dtype_range():
-    x, _ = separable()
-    ids = T.pq_ids(x, n_codebook=4, codebook_size=3, backend="sklearn")
-    assert ids.shape == (90, 4) and ids.dtype == np.int16
-    assert ids.min() >= 0 and ids.max() < 3
-
-
-def test_pq_recovers_clusters_in_each_subspace():
-    x, truth = separable()
-    ids = T.pq_ids(x, n_codebook=4, codebook_size=3, backend="sklearn")
-    for j in range(4):
-        # mỗi cụm thật ứng với đúng một mã và ngược lại (chỉ khác cách đánh số)
-        pairs = set(zip(truth[:, j].tolist(), ids[:, j].tolist()))
-        assert len(pairs) == 3
+def test_faiss_factory_strings():
+    assert T.faiss_factory() == "IVF1,PQ32x8"                          # PQ: bỏ phần OPQ32,
+    assert T.faiss_factory(rotation=True) == "OPQ32,IVF1,PQ32x8"       # đúng chuỗi của code gốc
+    assert T.faiss_factory(4, 16) == "IVF1,PQ4x4"
+    with pytest.raises(ValueError):
+        T.faiss_factory(4, 100)
 
 
-def test_pq_uses_contiguous_subvectors_without_rotation():
-    # Đoạn j chỉ phụ thuộc cột [j*dsub, (j+1)*dsub): đổi cột của đoạn 0 không làm đổi mã đoạn 1
-    x, _ = separable(m=2)
-    ids = T.pq_ids(x, n_codebook=2, codebook_size=3, backend="sklearn")
-    x2 = x.copy()
-    x2[:, :2] = np.random.default_rng(5).normal(size=(len(x), 2))
-    ids2 = T.pq_ids(x2, n_codebook=2, codebook_size=3, backend="sklearn")
-    np.testing.assert_array_equal(ids[:, 1], ids2[:, 1])
+def blobs(n=600, d=16, seed=0):
+    rng = np.random.default_rng(seed)
+    return (rng.normal(size=(8, d))[rng.integers(0, 8, n)] * 3 + rng.normal(size=(n, d))).astype(np.float32)
 
 
-def test_pq_learns_centroids_only_from_train_rows():
-    # Hàng train ở quanh 0 và 10; hàng không train ở quanh 5 không được kéo tâm cụm về 5
+@pytest.mark.parametrize("fn", ["pq_ids", "opq_ids"])
+def test_faiss_quantizers_shape_range_and_determinism(fn):
+    pytest.importorskip("faiss")
+    x = blobs()
+    quant = getattr(T, fn)
+    a = quant(x, n_codebook=4, codebook_size=16, threads=1)
+    b = quant(x, n_codebook=4, codebook_size=16, threads=1)
+    assert a.shape == (600, 4) and a.dtype == np.int16 and a.min() >= 0 and a.max() < 16
+    np.testing.assert_array_equal(a, b)
+
+
+def test_pq_and_opq_differ_only_by_rotation_and_both_cover_codes():
+    pytest.importorskip("faiss")
+    x = blobs()
+    pq = T.pq_ids(x, n_codebook=4, codebook_size=16, threads=1)
+    opq = T.opq_ids(x, n_codebook=4, codebook_size=16, threads=1)
+    assert not np.array_equal(pq, opq)                                  # phép xoay làm đổi mã
+    assert min(len(np.unique(pq[:, j])) for j in range(4)) > 8
+
+
+def test_faiss_quantize_assigns_codes_to_rows_outside_train_mask():
+    pytest.importorskip("faiss")
+    x = blobs()
+    mask = np.r_[np.ones(500, bool), np.zeros(100, bool)]
+    ids = T.pq_ids(x, n_codebook=4, codebook_size=16, train_mask=mask, threads=1)
+    assert ids.shape == (600, 4)
+
+
+# --- RQ ---
+
+def coarse_fine(n_per=40, seed=0):
+    """2 nhóm thô cách nhau 20 đơn vị, mỗi nhóm 2 nhóm con cách nhau 2 đơn vị (3 chiều)."""
+    rng = np.random.default_rng(seed)
+    coarse = np.repeat([0, 1, 0, 1], n_per)
+    fine = np.repeat([0, 0, 1, 1], n_per)
+    x = coarse[:, None] * 20.0 + fine[:, None] * 2.0 + rng.normal(0, 0.05, (4 * n_per, 3))
+    return x.astype(np.float32), coarse, fine
+
+
+def test_rq_defaults_follow_faiss_defaults():
+    assert (T.FAISS_NITER, T.FAISS_SEED) == (25, 1234)
+    import inspect
+    sig = inspect.signature(T.rq_ids)
+    assert sig.parameters["niter"].default == 25 and sig.parameters["seed"].default == 1234
+    assert sig.parameters["backend"].default == "faiss"
+
+
+def test_rq_shape_dtype_range_and_any_dim():
+    x, _, _ = coarse_fine()
+    ids = T.rq_ids(x, n_codebook=4, codebook_size=2, backend="sklearn")   # 3 chiều, không cần chia hết cho 4
+    assert ids.shape == (160, 4) and ids.dtype == np.int16
+    assert ids.min() >= 0 and ids.max() < 2
+
+
+def test_rq_first_level_is_coarse_and_second_level_is_fine():
+    x, coarse, fine = coarse_fine()
+    ids = T.rq_ids(x, n_codebook=2, codebook_size=2, backend="sklearn")
+    assert len(set(zip(coarse.tolist(), ids[:, 0].tolist()))) == 2      # tầng 1 tách đúng 2 nhóm thô
+    assert len(set(zip(fine.tolist(), ids[:, 1].tolist()))) == 2        # tầng 2 tách nhóm con trên phần dư
+
+
+def test_rq_residual_energy_decreases():
+    x, _, _ = coarse_fine()
+    ids, books = T.rq_ids(x, n_codebook=3, codebook_size=2, backend="sklearn", return_codebooks=True)
+    energy = T.rq_residual_energy(x, ids, books)
+    assert energy.shape == (4,) and energy[0] == 1.0
+    assert energy[1] < 0.05 and energy[2] < energy[1] and energy[3] <= energy[2] + 1e-6
+
+
+def test_rq_learns_first_level_only_from_train_rows():
     rng = np.random.default_rng(0)
     train = np.concatenate([rng.normal(0, 0.1, (20, 1)), rng.normal(10, 0.1, (20, 1))])
     other = rng.normal(5, 0.1, (40, 1))
     x = np.concatenate([train, other]).astype(np.float32)
     mask = np.r_[np.ones(40, bool), np.zeros(40, bool)]
-    ids, books = T.pq_ids(x, n_codebook=1, codebook_size=2, train_mask=mask,
+    ids, books = T.rq_ids(x, n_codebook=1, codebook_size=2, train_mask=mask,
                           backend="sklearn", return_codebooks=True)
     np.testing.assert_allclose(np.sort(books[0].ravel()), [0, 10], atol=0.2)
-    assert ids.shape == (80, 1)                                   # hàng không train vẫn được gán mã
+    assert ids.shape == (80, 1)
 
 
-def test_pq_is_reproducible_with_same_seed():
-    x, _ = separable(seed=3)
-    a = T.pq_ids(x, n_codebook=4, codebook_size=3, seed=7, backend="sklearn")
-    b = T.pq_ids(x, n_codebook=4, codebook_size=3, seed=7, backend="sklearn")
+def test_rq_is_reproducible_with_same_seed():
+    x, _, _ = coarse_fine(seed=2)
+    a = T.rq_ids(x, n_codebook=3, codebook_size=2, seed=7, backend="sklearn")
+    b = T.rq_ids(x, n_codebook=3, codebook_size=2, seed=7, backend="sklearn")
     np.testing.assert_array_equal(a, b)
 
 
-@pytest.mark.parametrize("kwargs, err", [
-    (dict(x=np.ones((90, 7)), n_codebook=4, codebook_size=3), ValueError),       # 7 không chia hết cho 4
-    (dict(x=np.ones(90), n_codebook=1, codebook_size=3), ValueError),            # mảng 1 chiều
-    (dict(x=np.ones((90, 4)), n_codebook=4, codebook_size=3,
-          train_mask=np.zeros(90, bool)), ValueError),                           # không có hàng train
-    (dict(x=np.ones((90, 4)), n_codebook=4, codebook_size=3,
-          train_mask=np.ones(10, bool)), ValueError),                            # mặt nạ sai độ dài
-    (dict(x=np.ones((90, 4)), n_codebook=4, codebook_size=3, backend="gpu"), ValueError),
+def test_rq_with_faiss_backend():
+    pytest.importorskip("faiss")
+    x, _, _ = coarse_fine(n_per=100)
+    a = T.rq_ids(x, n_codebook=3, codebook_size=2)
+    np.testing.assert_array_equal(a, T.rq_ids(x, n_codebook=3, codebook_size=2))
+    assert a.shape == (400, 3) and a.max() < 2
+
+
+@pytest.mark.parametrize("kwargs", [
+    dict(x=np.ones(90), n_codebook=1, codebook_size=4),                                  # mảng 1 chiều
+    dict(x=np.ones((10, 2)), n_codebook=2, codebook_size=4, train_mask=np.r_[np.ones(3, bool), np.zeros(7, bool)]),
+    dict(x=np.ones((90, 4)), n_codebook=4, codebook_size=3, train_mask=np.ones(10, bool)),  # mặt nạ sai độ dài
+    dict(x=np.ones((90, 4)), n_codebook=4, codebook_size=3, backend="gpu"),
 ])
-def test_pq_rejects_invalid_input(kwargs, err):
+def test_rq_rejects_invalid_input(kwargs):
     x = kwargs.pop("x")
     kwargs.setdefault("backend", "sklearn")
-    with pytest.raises(err):
-        T.pq_ids(x, **kwargs)
+    with pytest.raises(ValueError):
+        T.rq_ids(x, **kwargs)
 
 
-def test_pq_with_faiss_backend():
-    # Chỉ kiểm tra tính chất không phụ thuộc điểm khởi tạo: k-means của faiss chọn tâm đầu ngẫu nhiên
-    # nên có thể rơi vào cực trị địa phương trên dữ liệu nhỏ; chất lượng cụm đo trên dữ liệu thật.
-    pytest.importorskip("faiss")
-    x, _ = separable(n_per=60)
-    a = T.pq_ids(x, n_codebook=4, codebook_size=3, seed=1, backend="faiss")
-    b = T.pq_ids(x, n_codebook=4, codebook_size=3, seed=1, backend="faiss")
-    assert a.shape == (180, 4) and a.dtype == np.int16 and a.min() >= 0 and a.max() < 3
-    np.testing.assert_array_equal(a, b)
-
-
-def test_pq_output_loads_through_adapter(tmp_path):
-    proc = make_cache(tmp_path, {"u": list(range(1, 91))}, n_items=90)
-    x, _ = separable()
-    ids = T.pq_ids(x, n_codebook=4, codebook_size=3, backend="sklearn")
-    A.write_semantic_ids(ids, proc, "pq", n_codebook=4, codebook_size=4)
-    np.testing.assert_array_equal(A.read_semantic_ids(proc, "pq", n_codebook=4, codebook_size=4), ids)
+def test_rq_output_loads_through_adapter(tmp_path):
+    proc = make_cache(tmp_path, {"u": list(range(1, 161))}, n_items=160)
+    x, _, _ = coarse_fine()
+    ids = T.rq_ids(x, n_codebook=4, codebook_size=2, backend="sklearn")
+    A.write_semantic_ids(ids, proc, "rq", n_codebook=4, codebook_size=2)
+    np.testing.assert_array_equal(A.read_semantic_ids(proc, "rq", n_codebook=4, codebook_size=2), ids)
 
 
 # --- Token ngẫu nhiên ---
@@ -159,7 +205,14 @@ def test_permuted_ids_keep_code_usage_of_each_codebook():
     assert out.shape == ids.shape and out.dtype == np.int16
     for j in range(32):
         np.testing.assert_array_equal(np.sort(out[:, j]), np.sort(ids[:, j]))
-    assert (out == ids).all(1).mean() < 0.01                        # gần như không item nào giữ ID cũ
+
+
+def test_permuted_ids_shuffle_each_column_independently():
+    # Nếu chỉ xáo nguyên hàng, mọi ID mới vẫn là một ID cũ (100%); hoán vị độc lập theo cột thì gần như không.
+    ids = np.random.default_rng(0).integers(0, 256, size=(500, 32))
+    out = T.permuted_ids(ids, seed=1)
+    old_rows = {tuple(r) for r in ids.tolist()}
+    assert np.mean([tuple(r) in old_rows for r in out.tolist()]) < 0.01
 
 
 def test_permuted_ids_remove_collisions():
@@ -190,25 +243,49 @@ def test_summary():
 
 # --- CLI ---
 
-def test_cli_pq_and_random(tmp_path):
-    n = 40
+def cli_cache(tmp_path, n=60, n_out=6):
+    """Cache giả: n item, trong đó n_out item chỉ ở 2 vị trí cuối của chuỗi (không thuộc phần train)."""
     rng = np.random.default_rng(0)
-    seqs = {"all": list(range(1, n + 1)) + [1, 2]}                  # mọi item đều có trong phần train
+    train_part = list(range(1, n - n_out + 1))
+    seqs = {"all": train_part + [n - n_out + 1, n - n_out + 2]}
+    for u in range(n_out // 2):
+        seqs[f"tail{u}"] = [1, 2, n - n_out + 1 + 2 * u, n - n_out + 2 + 2 * u]
     proc = make_cache(tmp_path, seqs, n_items=n)
     rng.normal(size=(n, 16)).astype(np.float32).tofile(proc / "sentence-t5-base.sent_emb")
-    small = ["--n-codebook", "4", "--codebook-size", "4"]
+    return proc
 
-    out_pq = tmp_path / "pq.npy"
-    assert T.main(["pq", "--processed-dir", str(proc), "--out", str(out_pq), "--emb-dim", "16",
-                   "--pca-dim", "8", "--backend", "sklearn", *small]) == 0
-    pq = np.load(out_pq)
-    assert pq.shape == (n, 4) and pq.max() < 4
 
-    # Token ngẫu nhiên hoán vị từ một file .sem_ids nguồn (ở đây dùng chính kết quả PQ)
-    A.write_semantic_ids(pq, proc, "src", n_codebook=4, codebook_size=4)
-    out_rd = tmp_path / "random.npy"
-    assert T.main(["random", "--processed-dir", str(proc), "--out", str(out_rd),
-                   "--source-name", "src", *small]) == 0
-    rd = np.load(out_rd)
+def test_cli_rq_uses_train_mask_and_is_reproducible(tmp_path, capsys):
+    n, n_out = 60, 6
+    proc = cli_cache(tmp_path, n, n_out)
+    small = ["--n-codebook", "4", "--codebook-size", "4", "--emb-dim", "16", "--pca-dim", "8", "--backend", "sklearn"]
+    out1, out2 = tmp_path / "rq1.npy", tmp_path / "rq2.npy"
+    assert T.main(["rq", "--processed-dir", str(proc), "--out", str(out1), *small]) == 0
+    printed = capsys.readouterr().out
+    assert f"item dùng để học tâm cụm: {n - n_out} / {n}" in printed      # mặt nạ train được dùng thật
+    assert T.main(["rq", "--processed-dir", str(proc), "--out", str(out2), *small]) == 0
+    np.testing.assert_array_equal(np.load(out1), np.load(out2))           # cùng seed -> cùng ID
+
+
+def test_cli_random_preserves_source_code_usage(tmp_path):
+    n = 60
+    proc = cli_cache(tmp_path, n)
+    src = np.random.default_rng(1).integers(0, 16, size=(n, 4))       # 16^4 tổ hợp: đủ chỗ cho 60 ID không trùng
+    A.write_semantic_ids(src, proc, "src", n_codebook=4, codebook_size=16)
+    out = tmp_path / "random.npy"
+    assert T.main(["random", "--processed-dir", str(proc), "--out", str(out), "--source-name", "src",
+                   "--n-codebook", "4", "--codebook-size", "16"]) == 0
+    rd = np.load(out)
     for j in range(4):
-        np.testing.assert_array_equal(np.sort(rd[:, j]), np.sort(pq[:, j]))
+        np.testing.assert_array_equal(np.sort(rd[:, j]), np.sort(src[:, j]))
+
+
+def test_cli_pq_with_faiss(tmp_path, capsys):
+    pytest.importorskip("faiss")
+    n = 300
+    proc = cli_cache(tmp_path, n, n_out=10)
+    out = tmp_path / "pq.npy"
+    assert T.main(["pq", "--processed-dir", str(proc), "--out", str(out), "--emb-dim", "16", "--pca-dim", "8",
+                   "--n-codebook", "4", "--codebook-size", "16", "--threads", "1"]) == 0
+    assert np.load(out).shape == (n, 4)
+    assert f"item dùng để học tâm cụm: {n - 10} / {n}" in capsys.readouterr().out
