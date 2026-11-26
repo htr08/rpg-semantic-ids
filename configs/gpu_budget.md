@@ -6,7 +6,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 - SASRec-BCE theo S³-Rec hoàn tất 3 seed ngày 20/11 với khoảng 0,54 giờ. Tổng thời gian gồm các lần chạy thử và chạy chính là khoảng 5,98/45 giờ, còn khoảng 39,02 giờ.
 - Kiểm tra adapter ngày 23/11 (chế độ a 0,11 giờ; Cổng 2 1,71 giờ; chấm lại 0,05 giờ) nâng tổng lên khoảng 7,85/45 giờ, còn khoảng 37,15 giờ.
 - RQ1 ngày 24/11 trên Kaggle (PQ bản đầu và ngẫu nhiên, mỗi biến thể 3 seed, 8,66 giờ) nâng tổng lên khoảng 16,51/45 giờ, còn khoảng 28,49 giờ. PQ bản đầu (4,53 giờ) bị bỏ sau review 25/11 (xem `reports/decisions.md`) nhưng giờ GPU vẫn tính.
-- Kế hoạch 26/11 (Colab, chuyển từ Kaggle): PQ 3 seed + RQ 3 seed, mỗi lần khoảng 1,7 giờ (khoảng 10 giờ): tổng dự kiến khoảng 27/45 giờ.
+- RQ1 ngày 26/11 trên Colab (PQ và RQ, mỗi biến thể 3 seed, 8,54 giờ) nâng tổng lên khoảng 25,05/45 giờ, còn khoảng 19,95 giờ. RQ1 đã đủ 4 biến thể × 3 seed.
 - Nền tảng: Google Colab (chính) + Kaggle (dự phòng, chạy song song từ Tuần 3). Mọi output ghi vào Drive `MyDrive/rpg/`.
 - Ngân sách trần: 45 giờ GPU. Dự kiến dùng khoảng 20–25 giờ (17 lần train nếu các biến thể RQ1 chạy 3 seed).
 - Ngưỡng cảnh báo: 80% ngân sách (36 giờ) → áp dụng danh sách cắt giảm trong `docs/project_plan.md`, mục 1.3.
@@ -16,7 +16,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | # | Run | Seed | Số lần | Ghi chú |
 |---|---|---|---|---|
 | 1 | `rpg_main` | 42, 43, 44 | 3 | Cấu hình chính, không cắt giảm. **Xong 14/11** |
-| 2 | `pq_s*`, `rq_s*`, `random_s*` | 42, 43, 44 | 9 | RQ1. 3 seed vì chênh lệch giữa các seed của main khoảng 8%. Ngẫu nhiên xong 24/11; PQ (bản đầu bị bỏ) và RQ chạy trên Colab từ 26/11 |
+| 2 | `pq_s*`, `rq_s*`, `random_s*` | 42, 43, 44 | 9 | RQ1. 3 seed vì chênh lệch giữa các seed của main khoảng 8%. Ngẫu nhiên xong 24/11; PQ (bản đầu bị bỏ) và RQ xong 26/11 trên Colab |
 | 3 | `rpg_behavior` | 42, 43, 44 | 3 | Nâng cấp chính; giảm còn 2 seed nếu thiếu ngân sách |
 | 4 | Dự phòng | – | 2 | Chạy lại lỗi, α thứ hai hoặc encoder mới |
 | 5 | SASRec-BCE theo S³-Rec | 42, 43, 44 | 3 | **Xong 20/11**, best epoch 54/78/54 |
@@ -47,6 +47,12 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 24/11 | `random_s43` (RQ1) | 43 | Kaggle / TK A | 1,22 | ≈ 13,52 | ≈ 31,48 |
 | 24/11 | `pq_s44` (RQ1, bản đầu, **đã bỏ**) | 44 | Kaggle / TK A | 1,49 | ≈ 15,01 | ≈ 29,99 |
 | 24/11 | `random_s44` (RQ1) | 44 | Kaggle / TK A | 1,50 | ≈ 16,51 | ≈ 28,49 |
+| 26/11 | `pq_s42` (RQ1) | 42 | Colab | 1,43 | ≈ 17,94 | ≈ 27,06 |
+| 26/11 | `pq_s43` (RQ1) | 43 | Colab | 1,13 | ≈ 19,07 | ≈ 25,93 |
+| 26/11 | `pq_s44` (RQ1) | 44 | Colab | 1,32 | ≈ 20,39 | ≈ 24,61 |
+| 26/11 | `rq_s42` (RQ1) | 42 | Colab | 1,50 | ≈ 21,89 | ≈ 23,11 |
+| 26/11 | `rq_s43` (RQ1) | 43 | Colab | 1,89 | ≈ 23,78 | ≈ 21,22 |
+| 26/11 | `rq_s44` (RQ1) | 44 | Colab | 1,27 | ≈ 25,05 | ≈ 19,95 |
 
 Các lượt SASRec dùng `elapsed_seconds / 3600` trong `run.json` hoặc
 `run_seconds / 3600` trong `result.json` làm ước tính thời gian chạy
