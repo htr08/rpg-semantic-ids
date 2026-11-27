@@ -1,0 +1,17 @@
+variant,group,item_id,asin,title,brand,leaf,description_chars,metadata_missing,same_title,same_embedding
+opq,1,9660,B00DPTW8JY,Lovely Vintage Jewelry Crystal Hair Clips Hairpins- For Hair Clip Beauty Tools,Jolin,Clips,91,False,True,True
+opq,1,9661,B00DPU6ZAG,Lovely Vintage Jewelry Crystal Hair Clips Hairpins- For Hair Clip Beauty Tools,Jolin,Clips,91,False,True,True
+opq,2,9092,B006OMHTXO,New Bundle 3 Nail Art Jumbo Image Plates Stamps (Z3) of 168 Designs by Cheeky&reg;,,Nail Art Equipment,1829,False,False,False
+opq,2,11234,B006OMHTMK,New Bundle 3 Nail Art Jumbo Image Plates Stamps (Z2) of 168 Designs by Cheeky&reg;,,Nail Art Equipment,1829,False,False,False
+opq,3,8247,B002UEF3OM,"Essie Nail Lacquer, Mint Candy Apple, 0.5 Fluid Ounce",Essie,Nail Polish,123,False,True,True
+opq,3,10323,B003F25CNK,"Essie Nail Lacquer, Mint Candy Apple, 0.5 Fluid Ounce",Essie,Nail Polish,123,False,True,True
+pq,1,8247,B002UEF3OM,"Essie Nail Lacquer, Mint Candy Apple, 0.5 Fluid Ounce",Essie,Nail Polish,123,False,True,True
+pq,1,10323,B003F25CNK,"Essie Nail Lacquer, Mint Candy Apple, 0.5 Fluid Ounce",Essie,Nail Polish,123,False,True,True
+pq,2,9660,B00DPTW8JY,Lovely Vintage Jewelry Crystal Hair Clips Hairpins- For Hair Clip Beauty Tools,Jolin,Clips,91,False,True,True
+pq,2,9661,B00DPU6ZAG,Lovely Vintage Jewelry Crystal Hair Clips Hairpins- For Hair Clip Beauty Tools,Jolin,Clips,91,False,True,True
+rq,1,8247,B002UEF3OM,"Essie Nail Lacquer, Mint Candy Apple, 0.5 Fluid Ounce",Essie,Nail Polish,123,False,True,True
+rq,1,10323,B003F25CNK,"Essie Nail Lacquer, Mint Candy Apple, 0.5 Fluid Ounce",Essie,Nail Polish,123,False,True,True
+rq,2,9660,B00DPTW8JY,Lovely Vintage Jewelry Crystal Hair Clips Hairpins- For Hair Clip Beauty Tools,Jolin,Clips,91,False,True,True
+rq,2,9661,B00DPU6ZAG,Lovely Vintage Jewelry Crystal Hair Clips Hairpins- For Hair Clip Beauty Tools,Jolin,Clips,91,False,True,True
+rq,3,7745,B0034RLFGE,Bundle Monster 5 Nail Art Nailart Manicure Wheels w/ 3D Designs Glitters Rhinestones Beads - total over 7000pc,Bundle Monster,Nail Art Equipment,412,False,True,False
+rq,3,11945,B0034RSNCS,Bundle Monster 5 Nail Art Nailart Manicure Wheels w/ 3D Designs Glitters Rhinestones Beads - total over 7000pc,Bundle Monster,Nail Art Equipment,412,False,True,False
