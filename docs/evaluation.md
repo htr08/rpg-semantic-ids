@@ -3,6 +3,7 @@
 Phần này thêm coverage, tỉ lệ long-tail và đa dạng danh mục vào bộ chấm Recall/NDCG
 của C. Mọi mô hình xuất ranking về cùng `item_id` của pipeline B rồi dùng một bộ
 chấm. Không cần embedding, GPU hoặc adapter để tính các metric này.
+Xem [bảng so sánh RQ4, phân khúc và kiểm định theo user](../reports/rq4_analysis.md).
 
 ## Ý nghĩa và công thức
 

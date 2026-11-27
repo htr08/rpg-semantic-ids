@@ -1,0 +1,43 @@
+models:
+  popularity:
+    label: Popularity
+    runs:
+      single: experiments/baselines_no_seen_pinned/pop/test
+  itemknn:
+    label: ItemKNN
+    runs:
+      single: experiments/baselines_no_seen_pinned/itemknn/test
+  sasrec:
+    label: SASRec-BCE
+    runs:
+      42: experiments/sasrec_paper_pr10/seed_42/test
+      43: experiments/sasrec_paper_pr10/seed_43/test
+      44: experiments/sasrec_paper_pr10/seed_44/test
+  ar_rec:
+    label: AR-Rec
+    runs:
+      single: experiments/rq4/ar_rec/test
+  opq:
+    label: RPG OPQ
+    runs:
+      42: experiments/rpg_ranking_export/main_s42/test
+      43: experiments/rpg_ranking_export/main_s43/test
+      44: experiments/rpg_ranking_export/main_s44/test
+  hybrid:
+    label: RPG Hybrid
+    runs:
+      42: experiments/rpg_ranking_export/hyb_s42/test
+      43: experiments/rpg_ranking_export/hyb_s43/test
+      44: experiments/rpg_ranking_export/hyb_s44/test
+
+reference_model: opq
+segments:
+  n_clusters: 3
+  seed: 42
+hub_exposure:
+  # Đồ thị OPQ main_s42 do PR 1 xuất, hàng i ứng với item_id i + 1.
+  adjacency: experiments/graph_hubness/adjacency.npy
+  sha256: c4a904326607fc5c8ee4c0b3920f5db7169cc096226b6e2e3b3baca0ba3df90b
+  runs:
+    opq: 42
+    sasrec: 42
