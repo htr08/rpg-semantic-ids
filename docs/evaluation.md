@@ -136,7 +136,6 @@ python -m scripts.paired_t_test \
 Đầu ra cho biết số user, chênh lệch trung bình (RPG trừ SASRec), thống kê t và p-value.
 Nếu mọi chênh lệch bằng nhau, thống kê t là `null`. Khi hai bên giống hệt nhau,
 p-value ghi 1. Khi chênh lệch là hằng số khác 0, p-value ghi `null`.
-K3 chờ ranking test của RPG từ A.
 
 ### Cold-start theo tần suất sản phẩm
 
@@ -230,10 +229,39 @@ Bộ chấm S³-Rec gốc cho test NDCG@10 **0,0317 ± 0,0001**, so với mốc
 [Mã nguồn S³-Rec đã pin](https://github.com/aHuiWang/CIKM2020-S3Rec/tree/49a890dcb516c9ed3126564495234ea74d5cd566) ·
 [Kết quả theo seed](../reports/sasrec_paper_common.json).
 
-## Đối chiếu với điểm RPG của A
+## Xuất ranking test từ checkpoint RPG
 
-Code RPG gốc tại commit `7dcf95c` giữ item đã xem trong `generate`/`evaluate`.
-Để đối chiếu các run đã log, cần ranking của A theo cùng mapping và bộ chia.
+Chuẩn bị code RPG gốc tại commit `7dcf95c` và các phụ thuộc của repo đó như trong README.
+Giải nén gói A bàn giao, giữ cấu trúc `cache/`, `ckpt/` và `results/` bên dưới thư mục
+`--root`. Trong cache cần có hai file raw Beauty, cache dữ liệu đã xử lý và `.sem_ids`
+tương ứng với checkpoint. Giữ `results/<run_gốc>.json` để script lấy best epoch và
+điểm validation lúc chọn checkpoint. Chuẩn bị dữ liệu nhóm theo [hợp đồng dữ liệu](data_contract.md).
+
+```bash
+python -m scripts.run_rpg \
+  --repo experiments/rpg_upstream --root experiments/rpg_ranking_export --seed 42 \
+  --checkpoint experiments/rpg_ranking_export/ckpt/main_s42/main_s42-run_rpg.py-Nov-14-2026_16-24-f3eab8.pth \
+  --run_id main_s42_rankings \
+  --rankings-output experiments/rpg_ranking_export/main_s42/test/rankings.jsonl
+
+python -m src.evaluate \
+  --rankings experiments/rpg_ranking_export/main_s42/test/rankings.jsonl \
+  --model-name main_s42 --split test --ks 5 10 \
+  --output-dir experiments/rpg_ranking_export/main_s42/test
+```
+
+Với checkpoint hybrid, truyền thêm `--sent_emb_model=x/hyb` và chọn đúng file `.pth`,
+seed và đường dẫn output của run. Chế độ export chạy test trên một tiến trình.
+Script đối chiếu mapping, lịch sử và nhãn test trước khi chạy, lấy top-10 có giữ
+item đã xem từ chính lượt chấm của code RPG gốc và kiểm tra Recall/NDCG bằng bộ
+chấm chung trước khi ghi JSONL. File `results/<run_id>.json` của lượt export ghi
+checksum đầu vào và ranking, thiết bị, phiên bản PyTorch và batch size.
+
+Lượt chấm lại có thể lệch nhẹ với điểm A ghi lúc train. Đồ thị giải mã của RPG
+lấy điểm bắt đầu ngẫu nhiên, nên trạng thái RNG ở lượt chấm checkpoint mới có
+thể khác lúc vừa train xong. So sánh hai bộ chấm trên ranking của cùng một lượt chạy.
+Xem [kết quả và checksum của sáu lượt xuất OPQ và hybrid](../reports/rpg_ranking_exports.json).
+
 Baseline SASRec dùng checkpoint từ S³-Rec, chọn theo validation NDCG@20 với
 patience 10. Khi chấm bằng bộ chấm dự án, `scripts.evaluate_sasrec_paper` quy đổi
 item ID, giữ item đã xem và xuất kết quả theo user theo mapping B.

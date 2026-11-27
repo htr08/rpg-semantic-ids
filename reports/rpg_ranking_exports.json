@@ -1,0 +1,179 @@
+{
+  "upstream_commit": "7dcf95ce9e08601810efdd1c850ed6dada5f97c2",
+  "protocol": {
+    "split": "test",
+    "keep_seen": true,
+    "users": 22363,
+    "top_k": 10,
+    "split_sha256": "5c423ba1c6e5ff5f24147bffc700bfc57f545bd670014697bd0031eeb2719ea5",
+    "split_manifest_sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510"
+  },
+  "runs": [
+    {
+      "run": "main_s42",
+      "seed": 42,
+      "model": "opq",
+      "checkpoint": "main_s42-run_rpg.py-Nov-14-2026_16-24-f3eab8.pth",
+      "checkpoint_sha256": "cb71ba24a8b387d4a8f2a053197726fde058c6a2c36060aed4d376fa629596ee",
+      "semantic_ids_sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c",
+      "rankings_sha256": "af4404cfc070b46089d8fc1cb3e8b4a5c4097cd00544eec17ca4a2f68cf228c3",
+      "reference_test": {
+        "recall@5": 0.04726557433605194,
+        "recall@10": 0.06841658055782318,
+        "ndcg@5": 0.03306596353650093,
+        "ndcg@10": 0.03985198587179184
+      },
+      "common_evaluation": {
+        "recall@5": 0.047131422438849886,
+        "recall@10": 0.0685060143987837,
+        "ndcg@5": 0.033000927552008105,
+        "ndcg@10": 0.03985993386898892
+      },
+      "absolute_ndcg_at_10_difference": 7.947997197083057e-06,
+      "users_with_seen_item_in_top_10": 7476,
+      "reference_checkpoint_rescore": {
+        "seed": 42,
+        "ndcg@10": 0.03985993564128876
+      }
+    },
+    {
+      "run": "main_s43",
+      "seed": 43,
+      "model": "opq",
+      "checkpoint": "main_s43-run_rpg.py-Nov-14-2026_18-21-68d309.pth",
+      "checkpoint_sha256": "2bf7292287c8356356812c590cc3970d213784445475d616b95334c345ea523f",
+      "semantic_ids_sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c",
+      "rankings_sha256": "2816b3e0a4347447ae3fbb5179352ea39a217c488a51296dcb225244411b53c4",
+      "reference_test": {
+        "recall@5": 0.05012744292616844,
+        "recall@10": 0.074408620595932,
+        "ndcg@5": 0.03485474735498428,
+        "ndcg@10": 0.0426812469959259
+      },
+      "common_evaluation": {
+        "recall@5": 0.04999329249206278,
+        "recall@10": 0.07445333810311676,
+        "ndcg@5": 0.034741548942563566,
+        "ndcg@10": 0.04262299666261223
+      },
+      "absolute_ndcg_at_10_difference": 5.8250333313671077e-05,
+      "users_with_seen_item_in_top_10": 7455,
+      "reference_checkpoint_rescore": {
+        "seed": 42,
+        "ndcg@10": 0.042688559740781784
+      }
+    },
+    {
+      "run": "main_s44",
+      "seed": 44,
+      "model": "opq",
+      "checkpoint": "main_s44-run_rpg.py-Nov-14-2026_19-38-a57169.pth",
+      "checkpoint_sha256": "1e91722a2a8f6969a608ede02cbdc784502d61c95de4cffcc89c95d879a82806",
+      "semantic_ids_sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c",
+      "rankings_sha256": "34ddc185e56716c344a4fef30254cf46a6b44c413b9f6bded44a2cd87f13285f",
+      "reference_test": {
+        "recall@5": 0.05084291100502014,
+        "recall@10": 0.07494521886110306,
+        "ndcg@5": 0.035500627011060715,
+        "ndcg@10": 0.04332224652171135
+      },
+      "common_evaluation": {
+        "recall@5": 0.050753476724947455,
+        "recall@10": 0.07534767249474579,
+        "ndcg@5": 0.03538785330510328,
+        "ndcg@10": 0.043346086159457065
+      },
+      "absolute_ndcg_at_10_difference": 2.383963774571507e-05,
+      "users_with_seen_item_in_top_10": 7644
+    },
+    {
+      "run": "hyb_s42",
+      "seed": 42,
+      "model": "hybrid",
+      "checkpoint": "hyb_s42-run_rpg.py-Nov-26-2026_18-30-6c3d46.pth",
+      "checkpoint_sha256": "2384fab5eb37bafff8c565e3b45c8d8af81cfc8c8e6b3fbf5482a9ab6dfd900f",
+      "semantic_ids_sha256": "9995c4ea95444b3aa0404b434f6ec70529145c665197df3f7e5deb006c8f6ebe",
+      "rankings_sha256": "d3819e123b5d714883974db41b5f44ba5c3f551059b70da014fdffcec77ea5ed",
+      "reference_test": {
+        "recall@5": 0.05464383214712143,
+        "recall@10": 0.0803559422492981,
+        "ndcg@5": 0.037597473710775375,
+        "ndcg@10": 0.04590548574924469
+      },
+      "common_evaluation": {
+        "recall@5": 0.05442024773062648,
+        "recall@10": 0.07990877789205383,
+        "ndcg@5": 0.03749002847786562,
+        "ndcg@10": 0.045736780996187595
+      },
+      "absolute_ndcg_at_10_difference": 0.00016870475305709454,
+      "users_with_seen_item_in_top_10": 9497
+    },
+    {
+      "run": "hyb_s43",
+      "seed": 43,
+      "model": "hybrid",
+      "checkpoint": "hyb_s43-run_rpg.py-Nov-27-2026_02-59-a5bac5.pth",
+      "checkpoint_sha256": "801fb71c0a4558da4f4fc0bc12758ca5fd9b4bfc44b3ef3bbd0f0fda78b82a62",
+      "semantic_ids_sha256": "9995c4ea95444b3aa0404b434f6ec70529145c665197df3f7e5deb006c8f6ebe",
+      "rankings_sha256": "79f77a21680d2a303d9d86e2b02f001f3e8284d14c7c1751555382c2133e47b5",
+      "reference_test": {
+        "recall@5": 0.05218441039323807,
+        "recall@10": 0.07834368944168091,
+        "ndcg@5": 0.03617420420050621,
+        "ndcg@10": 0.04460674896836281
+      },
+      "common_evaluation": {
+        "recall@5": 0.05227384519071681,
+        "recall@10": 0.07825425926754014,
+        "ndcg@5": 0.03615700850809136,
+        "ndcg@10": 0.0445376264524005
+      },
+      "absolute_ndcg_at_10_difference": 6.912251596230545e-05,
+      "users_with_seen_item_in_top_10": 9317
+    },
+    {
+      "run": "hyb_s44",
+      "seed": 44,
+      "model": "hybrid",
+      "checkpoint": "hyb_s44-run_rpg.py-Nov-27-2026_03-01-b04ed1.pth",
+      "checkpoint_sha256": "a081fc861bd28d0b28c5880d6863fb232122be08fd85dc12e605b9a4e7a3209c",
+      "semantic_ids_sha256": "9995c4ea95444b3aa0404b434f6ec70529145c665197df3f7e5deb006c8f6ebe",
+      "rankings_sha256": "a336ad3c2510fb7b9fbf758f8cc183808b799fff1e7db1917cdd9eb2b4b0e972",
+      "reference_test": {
+        "recall@5": 0.05531458184123039,
+        "recall@10": 0.07977462559938431,
+        "ndcg@5": 0.038079164922237396,
+        "ndcg@10": 0.04598385840654373
+      },
+      "common_evaluation": {
+        "recall@5": 0.05544873228099986,
+        "recall@10": 0.080221794929124,
+        "ndcg@5": 0.03815612139540828,
+        "ndcg@10": 0.046150967862024043
+      },
+      "absolute_ndcg_at_10_difference": 0.0001671094554803118,
+      "users_with_seen_item_in_top_10": 9714
+    }
+  ],
+  "ndcg_at_10": {
+    "opq": {
+      "common_mean": 0.041943005563686075,
+      "common_sample_std": 0.0018398655845056106,
+      "reference_mean": 0.04195182646314303,
+      "reference_sample_std": 0.0018465421684404832
+    },
+    "hybrid": {
+      "common_mean": 0.04547512510353738,
+      "common_sample_std": 0.0008378934780868352,
+      "reference_mean": 0.04549869770805041,
+      "reference_sample_std": 0.0007734435881341018
+    }
+  },
+  "runtime": {
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "torch_version": "2.8.0+cu129",
+    "eval_batch_size": 32
+  }
+}
