@@ -47,6 +47,7 @@ def test_scatter_skips_variants_without_runs():
 
 
 def test_cli_scatter_writes_png_and_table(tmp_path, capsys):
+    pytest.importorskip("matplotlib")  # CI không cài matplotlib
     c = write_csv(tmp_path / "c.csv", CLUSTER)
     r = write_csv(tmp_path / "r.csv", RUNS)
     assert R.main(["scatter", "--cluster-csv", str(c), "--runs-csv", str(r), "--out-dir", str(tmp_path / "out")]) == 0
@@ -80,6 +81,7 @@ def test_level_diagnostics_shapes_and_prefix_effect():
 
 
 def test_plot_levels_writes_png(tmp_path):
+    pytest.importorskip("matplotlib")  # CI không cài matplotlib
     per_pos = [{"variant": "rq", "position": j, "entropy": 1.0, "label_ami": 0.1, "ami_with_previous": 0.0} for j in range(4)]
     per_prefix = [{"variant": "rq", "n_codes": L, "neighbor_purity": 0.1 * L, "chance": 0.02} for L in (1, 2, 4)]
     assert R.plot_levels(per_pos, per_prefix, tmp_path / "l.png").stat().st_size > 1000
@@ -140,6 +142,7 @@ def test_project_2d_umap_when_installed():
 
 
 def test_plot_projection_writes_png(tmp_path):
+    pytest.importorskip("matplotlib")  # CI không cài matplotlib
     rng = np.random.default_rng(0)
     coords = rng.normal(size=(100, 2))
     leaf = list(rng.choice(["a", "b", "c", None], 100))
