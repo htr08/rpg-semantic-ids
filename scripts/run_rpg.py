@@ -31,7 +31,7 @@ Chế độ ``--checkpoint`` chỉ chấm test: code gốc trả ``best_epoch`` 
 (``trainer.py`` dòng 75–78), nên script lấy hai giá trị này từ ``results/<run gốc>.json`` nếu có
 (run gốc = tên thư mục chứa checkpoint) và ghi ``source_run``.
 
-Chưa làm: xuất top-K theo từng user để chấm bằng ``src/evaluate.py`` và paired t-test (Tuần 4).
+Dùng ``--rankings-output`` cùng ``--checkpoint`` để xuất top-K của lượt chấm test theo mapping chung.
 
 Phụ trách: A.
 """
@@ -69,8 +69,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     p.add_argument("--sent_emb_dim", type=int, default=None,
                    help="số chiều embedding; mặc định 768, hoặc lấy từ <tên>.adapter.json ở chế độ (a)")
     p.add_argument("--checkpoint", default=None, help="chỉ chấm test từ checkpoint có sẵn, không train")
+    p.add_argument("--rankings-output", type=Path, help="xuất ranking test JSONL từ checkpoint")
+    p.add_argument("--processed-dir", type=Path, default=PROJECT_ROOT / "data" / "processed")
+    p.add_argument("--splits-dir", type=Path, default=PROJECT_ROOT / "data" / "splits")
     p.add_argument("--overwrite_results", action="store_true", help="cho phép ghi đè results/<run_id>.json")
-    return p.parse_args(argv)
+    args = p.parse_args(argv)
+    if args.rankings_output and not args.checkpoint:
+        p.error("--rankings-output cần --checkpoint")
+    return args
 
 
 def adapter_name(args: argparse.Namespace) -> str | None:
@@ -201,6 +207,24 @@ def main(argv: Sequence[str] | None = None) -> dict:
     if info:
         print(f"[run_rpg] Adapter {adapter_name(args)}: chế độ {info['mode']}, sent_emb_dim={args.sent_emb_dim}")
     cfg = build_config(args)
+    if args.rankings_output:
+        if args.rankings_output.exists() and not args.overwrite_results:
+            raise FileExistsError(args.rankings_output)
+        if str(PROJECT_ROOT) not in sys.path:
+            sys.path.insert(0, str(PROJECT_ROOT))
+        from adapters.load_ids import processed_dir, read_semantic_ids, sem_ids_path
+        from adapters.rpg_rankings import run_with_rankings
+        from src.preprocessing import sha256_file, verify_preprocessed
+
+        verify_preprocessed(args.processed_dir, args.splits_dir)
+        cache = processed_dir(cfg["cache_dir"], cfg["category"])
+        encoder = os.path.basename(args.sent_emb_model)
+        sem_ids = sem_ids_path(cache, encoder, cfg["n_codebook"], cfg["codebook_size"])
+        if args.rankings_output.resolve() in {
+            results_path(args.root, run_id).resolve(), Path(args.checkpoint).resolve(), sem_ids.resolve(),
+        }:
+            raise ValueError("Đường dẫn ranking phải khác checkpoint, semantic ID và JSON kết quả")
+        read_semantic_ids(cache, encoder, n_codebook=cfg["n_codebook"], codebook_size=cfg["codebook_size"])
 
     sys.path.insert(0, args.repo)
     sys.argv = [os.path.basename(sys.argv[0]) or "run_rpg.py"]  # giữ tên file checkpoint < 255 ký tự
@@ -211,7 +235,12 @@ def main(argv: Sequence[str] | None = None) -> dict:
     t0 = time.time()
     pipe = Pipeline(model_name="RPG", dataset_name="AmazonReviews2014",
                     checkpoint_path=args.checkpoint, config_dict=cfg)
-    res = pipe.run()
+    if args.rankings_output:
+        res, users, top_k = run_with_rankings(
+            pipe, args.processed_dir, args.rankings_output, overwrite=args.overwrite_results,
+        )
+    else:
+        res = pipe.run()
     out = {
         "run_id": run_id, "seed": args.seed, "gpu_hours": round((time.time() - t0) / 3600, 2),
         "best_epoch": res["best_epoch"], "best_val_ndcg10": res["best_val_score"],
@@ -225,6 +254,21 @@ def main(argv: Sequence[str] | None = None) -> dict:
         for key, value in source_run_metrics(args.root, args.checkpoint).items():
             if key == "source_run" or out.get(key) is None:
                 out[key] = value
+    if args.rankings_output:
+        import torch
+
+        device = pipe.accelerator.device
+        if device.type == "cpu":
+            out["gpu_hours"] = 0
+        out["ranking_export"] = {
+            "split": "test", "users": users, "top_k": top_k, "path": str(args.rankings_output),
+            "sha256": sha256_file(args.rankings_output),
+            "checkpoint_sha256": sha256_file(args.checkpoint),
+            "semantic_ids_sha256": sha256_file(sem_ids),
+            "split_manifest_sha256": sha256_file(args.splits_dir / "manifest.json"),
+            "device": str(device), "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
+            "torch_version": str(torch.__version__), "eval_batch_size": pipe.config["eval_batch_size"],
+        }
     write_results(out, args.root, args.overwrite_results)
     print("DONE", json.dumps(out, default=str))
     return out

@@ -85,6 +85,8 @@ python scripts/run_rpg.py --checkpoint=<root>/ckpt/main_s42/<file>.pth          
 
 Mỗi lần chạy ghi `results/<run_id>.json` và một dòng `results/log.csv` dưới `--root`; script dừng trước khi train nếu `run_id` đã có kết quả. Kiểm tra adapter với hàm thật của code gốc: `RPG_KDD2025_DIR=/content/RPG_KDD2025 pytest tests/test_adapter.py`.
 
+Để chấm checkpoint đã chọn và xuất top-10 theo từng user, dùng `--rankings-output` cùng `--checkpoint`. Xem [cách chuẩn bị cache và chấm ranking RPG](docs/evaluation.md#xuất-ranking-test-từ-checkpoint-rpg).
+
 Xóa output notebook trước khi commit:
 
 ```bash
