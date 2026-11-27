@@ -1,0 +1,10 @@
+{
+  "note": "Bản sao của Drive MyDrive/rpg/share/ID_MANIFEST.json. Mọi lần train pq_s*, rq_s* ngày 26/11 được kiểm tra sha256 khớp file này (results/<run>.ids.json trên Drive).",
+  "pq": {"file": "pq_OPQ32,IVF1,PQ32x8.sem_ids", "sha256": "06c95e6ee151657115f31fcc491e57edcd4131bb4d8ead9cd8bd414e250fce40",
+         "id_tag": "tokenizer-v2", "created_at": "2026-11-26 02:40 UTC", "command": "python -m src.tokenizer pq --threads 2"},
+  "rq": {"file": "rq_OPQ32,IVF1,PQ32x8.sem_ids", "sha256": "12ebf0507c70e5b3e58dd788e7a558577fba38913a44063f3050f744b3445de3",
+         "id_tag": "tokenizer-v2", "created_at": "2026-11-26 02:41 UTC", "command": "python -m src.tokenizer rq --backend faiss"},
+  "opq": {"file": "sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids", "sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c", "id_tag": "code gốc"},
+  "random": {"file": "random_OPQ32,IVF1,PQ32x8.sem_ids", "sha256": "4966221292c6317e6b76b6d2686694932e13a0107617e1ea2b5cf0ba0381e8aa", "id_tag": "random seed 42"},
+  "versions": {"python": "3.13.18", "numpy": "2.4.6", "sklearn": "1.6.1", "faiss": "1.12.0", "code_goc": "7dcf95c", "cpu": 2}
+}

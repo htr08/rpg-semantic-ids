@@ -186,7 +186,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 - Encoder `sentence-t5-base` (768 chiều) trên mô tả sản phẩm; OPQ của FAISS với m = 32 đoạn con, mỗi đoạn codebook 256 → mỗi item là 32 token, tổng từ vựng 32 × 256 = 8.192. OPQ chỉ fit trên embedding item (không dùng nhãn) nên không có rò rỉ.
 - Lưu ánh xạ item → 32 token vào `data/processed/semantic_ids.npy`; ghi số item trùng ID hoàn toàn và mức sử dụng từng codebook.
-- Biến thể semantic ID (RQ1): (i) token ngẫu nhiên; (ii) PQ thường (k-means độc lập trên từng đoạn con bằng sklearn, không xoay); (iii) RQ (k-means trên phần dư qua nhiều tầng, cùng m = 32 và codebook 256). Mục đích là tách vai trò của ngữ nghĩa, của phép xoay OPQ và của cấu trúc phân tầng. Mỗi biến thể được đo độ đo cụm trước khi train.
+- Biến thể semantic ID (RQ1): (i) token ngẫu nhiên; (ii) PQ thường (FAISS `IVF1,PQ32x8`: cùng quy trình và tham số với OPQ của code gốc, chỉ bỏ phép xoay); (iii) RQ (32 tầng `faiss.Kmeans` trên phần dư, mặc định FAISS, cùng m = 32 và codebook 256). Cả ba dùng chung đầu vào PCA 128 có whiten với code gốc; token ngẫu nhiên là hoán vị mã OPQ theo từng codebook. Mục đích là tách vai trò của ngữ nghĩa, của phép xoay OPQ và của cấu trúc phân tầng. Mỗi biến thể được đo độ đo cụm trước khi train.
 
 #### c) Huấn luyện và giải mã RPG (code gốc)
 

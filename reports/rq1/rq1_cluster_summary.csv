@@ -1,0 +1,6 @@
+variant,collision_rate,entropy_mean,entropy_min,leaf_ami_pos_mean,level3_ami_pos_mean,brand_ami_pos_mean,leaf_neighbor_purity@10,level3_neighbor_purity@10,brand_neighbor_purity@10
+opq,0.000496,0.9845,0.9819,0.0592,0.0479,0.0607,0.1417,0.2418,0.1279
+pq,0.000331,0.9838,0.9794,0.0674,0.0557,0.0653,0.1969,0.3214,0.1516
+rq,0.000496,0.9624,0.8572,0.0312,0.0256,0.0369,0.1268,0.2215,0.1204
+random,0.000000,0.9845,0.9819,-0.0002,-0.0002,0.0001,0.0182,0.0820,0.0047
+chance,,,,0,0,0,0.0186,0.0820,0.0041

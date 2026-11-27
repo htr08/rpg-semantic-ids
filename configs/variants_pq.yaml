@@ -1,7 +1,12 @@
-# RQ1: semantic ID bằng PQ thường (k-means độc lập trên từng đoạn con, không xoay). Còn lại giữ như rpg_main.yaml.
+# RQ1: semantic ID bằng PQ thường: đúng quy trình FAISS của code gốc với chuỗi IVF1,PQ32x8 (bỏ OPQ32,),
+# mặc định FAISS (25 vòng, seed 1234), trên PCA 128 có whiten. Còn lại giữ như rpg_main.yaml.
 base: rpg_main.yaml
-run_name: rpg_pq
+run_name: pq        # run_id: pq_s<seed>
 semantic_id:
   method: pq
+  tokenizer: python -m src.tokenizer pq --seed 42
+  faiss_factory: IVF1,PQ32x8
+  pca_dim: 128
+  adapter_name: pq   # sent_emb_model = x/pq
 train:
-  seeds: [42]
+  seeds: [42, 43, 44]

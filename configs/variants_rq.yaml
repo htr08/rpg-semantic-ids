@@ -1,7 +1,12 @@
-# RQ1: semantic ID bằng RQ (k-means trên phần dư qua nhiều tầng). Còn lại giữ như rpg_main.yaml.
+# RQ1: semantic ID bằng RQ: 32 tầng faiss.Kmeans 256 cụm trên phần dư, mặc định FAISS (25 vòng, seed 1234),
+# trên PCA 128 có whiten. Còn lại giữ như rpg_main.yaml.
 base: rpg_main.yaml
-run_name: rpg_rq
+run_name: rq        # run_id: rq_s<seed>
 semantic_id:
   method: rq
+  tokenizer: python -m src.tokenizer rq --seed 42
+  kmeans: {niter: 25, seed: 1234, backend: faiss}
+  pca_dim: 128
+  adapter_name: rq   # sent_emb_model = x/rq
 train:
-  seeds: [42]
+  seeds: [42, 43, 44]
