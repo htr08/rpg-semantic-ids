@@ -1,0 +1,952 @@
+{
+  "n_transactions": 22363,
+  "n_items": 12101,
+  "n_validation_users": 22363,
+  "min_confidence": 0.1,
+  "max_len": 3,
+  "levels": [
+    {
+      "level": "item",
+      "n_groups": 12101,
+      "n_items_without_group": 0,
+      "train_interactions_without_group": 0,
+      "train_interactions": 153776,
+      "supports": [
+        {
+          "min_support": 0.0005,
+          "min_count": 12,
+          "n_frequent_groups": 3218,
+          "n_frequent_itemsets": 29385,
+          "fpgrowth_seconds": 6.837,
+          "n_rules": 119967,
+          "n_pair_rules": 13127,
+          "n_groups_in_rules": 514,
+          "confidence_mean": 0.4434125045385241,
+          "lift_median": 155.20879120879118,
+          "lift_max": 1397.6875000000002,
+          "n_users": 22363,
+          "n_covered_users": 8741,
+          "coverage": 0.3908688458614676,
+          "mean_predicted_groups": 34.600732181672576,
+          "n_scored_users": 8741,
+          "hit_rate_rules": 0.13911451778972658,
+          "hit_rate_popularity_same_size": 0.0327193684933074
+        },
+        {
+          "min_support": 0.001,
+          "min_count": 23,
+          "n_frequent_groups": 1452,
+          "n_frequent_itemsets": 3905,
+          "fpgrowth_seconds": 2.773,
+          "n_rules": 8995,
+          "n_pair_rules": 2837,
+          "n_groups_in_rules": 245,
+          "confidence_mean": 0.46370764065344094,
+          "lift_median": 127.64674171555413,
+          "lift_max": 894.5199999999999,
+          "n_users": 22363,
+          "n_covered_users": 5590,
+          "coverage": 0.2499664624603139,
+          "mean_predicted_groups": 22.416100178890876,
+          "n_scored_users": 5590,
+          "hit_rate_rules": 0.129695885509839,
+          "hit_rate_popularity_same_size": 0.025760286225402506
+        },
+        {
+          "min_support": 0.002,
+          "min_count": 45,
+          "n_frequent_groups": 601,
+          "n_frequent_itemsets": 715,
+          "fpgrowth_seconds": 2.067,
+          "n_rules": 276,
+          "n_pair_rules": 204,
+          "n_groups_in_rules": 66,
+          "confidence_mean": 0.5001223408896818,
+          "lift_median": 100.49503887583361,
+          "lift_max": 275.1052487698196,
+          "n_users": 22363,
+          "n_covered_users": 3146,
+          "coverage": 0.14067879980324643,
+          "mean_predicted_groups": 5.245708836617927,
+          "n_scored_users": 3146,
+          "hit_rate_rules": 0.08010171646535283,
+          "hit_rate_popularity_same_size": 0.009535918626827717
+        }
+      ]
+    },
+    {
+      "level": "brand",
+      "n_groups": 2041,
+      "n_items_without_group": 2118,
+      "train_interactions_without_group": 23699,
+      "train_interactions": 153776,
+      "supports": [
+        {
+          "min_support": 0.005,
+          "min_count": 112,
+          "n_frequent_groups": 183,
+          "n_frequent_itemsets": 519,
+          "fpgrowth_seconds": 0.685,
+          "n_rules": 978,
+          "n_pair_rules": 368,
+          "n_groups_in_rules": 48,
+          "confidence_mean": 0.32241485952581217,
+          "lift_median": 10.92965076269024,
+          "lift_max": 32.209438341147106,
+          "n_users": 22363,
+          "n_covered_users": 15113,
+          "coverage": 0.6758037830344766,
+          "mean_predicted_groups": 12.032422417786012,
+          "n_scored_users": 13197,
+          "hit_rate_rules": 0.2510419034629082,
+          "hit_rate_popularity_same_size": 0.24058498143517465
+        },
+        {
+          "min_support": 0.01,
+          "min_count": 224,
+          "n_frequent_groups": 85,
+          "n_frequent_itemsets": 148,
+          "fpgrowth_seconds": 0.751,
+          "n_rules": 140,
+          "n_pair_rules": 110,
+          "n_groups_in_rules": 23,
+          "confidence_mean": 0.3130833608585913,
+          "lift_median": 7.405076485681725,
+          "lift_max": 32.209438341147106,
+          "n_users": 22363,
+          "n_covered_users": 11661,
+          "coverage": 0.521441667039306,
+          "mean_predicted_groups": 8.251007632278535,
+          "n_scored_users": 10243,
+          "hit_rate_rules": 0.22239578248559994,
+          "hit_rate_popularity_same_size": 0.2053109440593576,
+          "top_rules": [
+            {
+              "antecedents": [
+                "Gelish"
+              ],
+              "consequents": [
+                "Harmony"
+              ],
+              "count": 247,
+              "antecedent_count": 461,
+              "consequent_count": 372,
+              "confidence": 0.5357917570498915,
+              "lift": 32.209438341147106,
+              "kulczynski": 0.5998851258367737
+            },
+            {
+              "antecedents": [
+                "AXE"
+              ],
+              "consequents": [
+                "Dove",
+                "Suave"
+              ],
+              "count": 244,
+              "antecedent_count": 718,
+              "consequent_count": 450,
+              "confidence": 0.3398328690807799,
+              "lift": 16.888183225007737,
+              "kulczynski": 0.4410275456515011
+            },
+            {
+              "antecedents": [
+                "AXE"
+              ],
+              "consequents": [
+                "Clear",
+                "Suave"
+              ],
+              "count": 228,
+              "antecedent_count": 718,
+              "consequent_count": 434,
+              "confidence": 0.31754874651810583,
+              "lift": 16.36254059535576,
+              "kulczynski": 0.4214471843189607
+            },
+            {
+              "antecedents": [
+                "AXE"
+              ],
+              "consequents": [
+                "Clear",
+                "Dove"
+              ],
+              "count": 264,
+              "antecedent_count": 718,
+              "consequent_count": 520,
+              "confidence": 0.36768802228412256,
+              "lift": 15.81270623526891,
+              "kulczynski": 0.4376901649882151
+            },
+            {
+              "antecedents": [
+                "Clear",
+                "Dove"
+              ],
+              "consequents": [
+                "Simple"
+              ],
+              "count": 248,
+              "antecedent_count": 520,
+              "consequent_count": 730,
+              "confidence": 0.47692307692307695,
+              "lift": 14.610179135932562,
+              "kulczynski": 0.4083245521601686
+            },
+            {
+              "antecedents": [
+                "Clear"
+              ],
+              "consequents": [
+                "Dove",
+                "Suave"
+              ],
+              "count": 307,
+              "antecedent_count": 1086,
+              "consequent_count": 450,
+              "confidence": 0.2826887661141805,
+              "lift": 14.048375281358705,
+              "kulczynski": 0.4824554941682013
+            },
+            {
+              "antecedents": [
+                "Clear"
+              ],
+              "consequents": [
+                "Motions"
+              ],
+              "count": 237,
+              "antecedent_count": 1086,
+              "consequent_count": 376,
+              "confidence": 0.21823204419889503,
+              "lift": 12.97958299047843,
+              "kulczynski": 0.42427559656753266
+            },
+            {
+              "antecedents": [
+                "Clear"
+              ],
+              "consequents": [
+                "Simple"
+              ],
+              "count": 386,
+              "antecedent_count": 1086,
+              "consequent_count": 730,
+              "confidence": 0.35543278084714547,
+              "lift": 10.888415449431116,
+              "kulczynski": 0.4420999520674084
+            },
+            {
+              "antecedents": [
+                "AXE"
+              ],
+              "consequents": [
+                "Clear"
+              ],
+              "count": 377,
+              "antecedent_count": 718,
+              "consequent_count": 1086,
+              "confidence": 0.5250696378830084,
+              "lift": 10.812276530366223,
+              "kulczynski": 0.4361075629562372
+            },
+            {
+              "antecedents": [
+                "Banana Boat"
+              ],
+              "consequents": [
+                "Clear"
+              ],
+              "count": 289,
+              "antecedent_count": 568,
+              "consequent_count": 1086,
+              "confidence": 0.5088028169014084,
+              "lift": 10.47730883459134,
+              "kulczynski": 0.38745849869011484
+            }
+          ]
+        },
+        {
+          "min_support": 0.02,
+          "min_count": 448,
+          "n_frequent_groups": 40,
+          "n_frequent_itemsets": 46,
+          "fpgrowth_seconds": 0.451,
+          "n_rules": 12,
+          "n_pair_rules": 12,
+          "n_groups_in_rules": 7,
+          "confidence_mean": 0.2962209511111072,
+          "lift_median": 2.5897518779660444,
+          "lift_max": 8.532177001019862,
+          "n_users": 22363,
+          "n_covered_users": 7780,
+          "coverage": 0.3478960783436927,
+          "mean_predicted_groups": 2.664910025706941,
+          "n_scored_users": 6837,
+          "hit_rate_rules": 0.10794207985958754,
+          "hit_rate_popularity_same_size": 0.10838086880210619
+        }
+      ]
+    },
+    {
+      "level": "category depth 2",
+      "n_groups": 10,
+      "n_items_without_group": 0,
+      "train_interactions_without_group": 0,
+      "train_interactions": 153776,
+      "supports": [
+        {
+          "min_support": 0.005,
+          "min_count": 112,
+          "n_frequent_groups": 6,
+          "n_frequent_itemsets": 41,
+          "fpgrowth_seconds": 0.224,
+          "n_rules": 123,
+          "n_pair_rules": 27,
+          "n_groups_in_rules": 6,
+          "confidence_mean": 0.3879184067224178,
+          "lift_median": 1.0424689186628353,
+          "lift_max": 1.450282436524575,
+          "n_users": 22363,
+          "n_covered_users": 22363,
+          "coverage": 1.0,
+          "mean_predicted_groups": 5.7022313643071145,
+          "n_scored_users": 22363,
+          "hit_rate_rules": 0.9085095917363503,
+          "hit_rate_popularity_same_size": 0.9922192907928274
+        },
+        {
+          "min_support": 0.01,
+          "min_count": 224,
+          "n_frequent_groups": 6,
+          "n_frequent_itemsets": 41,
+          "fpgrowth_seconds": 0.144,
+          "n_rules": 123,
+          "n_pair_rules": 27,
+          "n_groups_in_rules": 6,
+          "confidence_mean": 0.3879184067224178,
+          "lift_median": 1.0424689186628353,
+          "lift_max": 1.450282436524575,
+          "n_users": 22363,
+          "n_covered_users": 22363,
+          "coverage": 1.0,
+          "mean_predicted_groups": 5.7022313643071145,
+          "n_scored_users": 22363,
+          "hit_rate_rules": 0.9085095917363503,
+          "hit_rate_popularity_same_size": 0.9922192907928274,
+          "top_rules": [
+            {
+              "antecedents": [
+                "Beauty > Fragrance",
+                "Beauty > Hair Care"
+              ],
+              "consequents": [
+                "Beauty > Bath & Body"
+              ],
+              "count": 441,
+              "antecedent_count": 1296,
+              "consequent_count": 5247,
+              "confidence": 0.3402777777777778,
+              "lift": 1.450282436524575,
+              "kulczynski": 0.21216290261101584
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body",
+                "Beauty > Makeup"
+              ],
+              "consequents": [
+                "Beauty > Fragrance"
+              ],
+              "count": 337,
+              "antecedent_count": 2385,
+              "consequent_count": 2246,
+              "confidence": 0.14129979035639414,
+              "lift": 1.4068954638201434,
+              "kulczynski": 0.1456721569769504
+            },
+            {
+              "antecedents": [
+                "Beauty > Fragrance",
+                "Beauty > Tools & Accessories"
+              ],
+              "consequents": [
+                "Beauty > Bath & Body"
+              ],
+              "count": 226,
+              "antecedent_count": 696,
+              "consequent_count": 5247,
+              "confidence": 0.32471264367816094,
+              "lift": 1.38394298657799,
+              "kulczynski": 0.183892437714819
+            },
+            {
+              "antecedents": [
+                "Beauty > Fragrance",
+                "Beauty > Skin Care"
+              ],
+              "consequents": [
+                "Beauty > Bath & Body"
+              ],
+              "count": 515,
+              "antecedent_count": 1630,
+              "consequent_count": 5247,
+              "confidence": 0.3159509202453988,
+              "lift": 1.346600043729341,
+              "kulczynski": 0.20705112240590884
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body"
+              ],
+              "consequents": [
+                "Beauty > Hair Care",
+                "Beauty > Skin Care"
+              ],
+              "count": 2966,
+              "antecedent_count": 5247,
+              "consequent_count": 9740,
+              "confidence": 0.5652753954640747,
+              "lift": 1.297869986525986,
+              "kulczynski": 0.4348964246314213
+            },
+            {
+              "antecedents": [
+                "Beauty > Fragrance",
+                "Beauty > Tools & Accessories"
+              ],
+              "consequents": [
+                "Beauty > Makeup"
+              ],
+              "count": 477,
+              "antecedent_count": 696,
+              "consequent_count": 11812,
+              "confidence": 0.685344827586207,
+              "lift": 1.2975250913740557,
+              "kulczynski": 0.36286374464308657
+            },
+            {
+              "antecedents": [
+                "Beauty > Makeup"
+              ],
+              "consequents": [
+                "Beauty > Tools & Accessories"
+              ],
+              "count": 5696,
+              "antecedent_count": 11812,
+              "consequent_count": 8499,
+              "confidence": 0.4822214696918388,
+              "lift": 1.2688455967429804,
+              "kulczynski": 0.5762089816984903
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body"
+              ],
+              "consequents": [
+                "Beauty > Hair Care",
+                "Beauty > Tools & Accessories"
+              ],
+              "count": 1228,
+              "antecedent_count": 5247,
+              "consequent_count": 4282,
+              "confidence": 0.23403849818944159,
+              "lift": 1.2222799941640548,
+              "kulczynski": 0.2604101879083593
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body"
+              ],
+              "consequents": [
+                "Beauty > Skin Care",
+                "Beauty > Tools & Accessories"
+              ],
+              "count": 1422,
+              "antecedent_count": 5247,
+              "consequent_count": 4985,
+              "confidence": 0.27101200686106347,
+              "lift": 1.2157756287731118,
+              "kulczynski": 0.27813388708148457
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body"
+              ],
+              "consequents": [
+                "Beauty > Skin Care"
+              ],
+              "count": 4352,
+              "antecedent_count": 5247,
+              "consequent_count": 15664,
+              "confidence": 0.829426338860301,
+              "lift": 1.1841458896790673,
+              "kulczynski": 0.5536304319429186
+            }
+          ]
+        },
+        {
+          "min_support": 0.02,
+          "min_count": 448,
+          "n_frequent_groups": 6,
+          "n_frequent_itemsets": 37,
+          "fpgrowth_seconds": 0.185,
+          "n_rules": 107,
+          "n_pair_rules": 27,
+          "n_groups_in_rules": 6,
+          "confidence_mean": 0.4019625099213588,
+          "lift_median": 1.0399826859744283,
+          "lift_max": 1.346600043729341,
+          "n_users": 22363,
+          "n_covered_users": 22363,
+          "coverage": 1.0,
+          "mean_predicted_groups": 5.683182041765416,
+          "n_scored_users": 22363,
+          "hit_rate_rules": 0.908286008138443,
+          "hit_rate_popularity_same_size": 0.9919957071949201
+        }
+      ]
+    },
+    {
+      "level": "category depth 3",
+      "n_groups": 54,
+      "n_items_without_group": 0,
+      "train_interactions_without_group": 0,
+      "train_interactions": 153776,
+      "supports": [
+        {
+          "min_support": 0.005,
+          "min_count": 112,
+          "n_frequent_groups": 38,
+          "n_frequent_itemsets": 1286,
+          "fpgrowth_seconds": 0.9,
+          "n_rules": 3740,
+          "n_pair_rules": 449,
+          "n_groups_in_rules": 36,
+          "confidence_mean": 0.3182749131353401,
+          "lift_median": 1.7701169864339843,
+          "lift_max": 5.111021324354657,
+          "n_users": 22363,
+          "n_covered_users": 22363,
+          "coverage": 1.0,
+          "mean_predicted_groups": 19.676698117426106,
+          "n_scored_users": 22363,
+          "hit_rate_rules": 0.8997451146983857,
+          "hit_rate_popularity_same_size": 0.9185708536421768
+        },
+        {
+          "min_support": 0.01,
+          "min_count": 224,
+          "n_frequent_groups": 33,
+          "n_frequent_itemsets": 652,
+          "fpgrowth_seconds": 0.722,
+          "n_rules": 2000,
+          "n_pair_rules": 346,
+          "n_groups_in_rules": 32,
+          "confidence_mean": 0.31630201238159134,
+          "lift_median": 1.7071318906761443,
+          "lift_max": 4.280423521186171,
+          "n_users": 22363,
+          "n_covered_users": 22363,
+          "coverage": 1.0,
+          "mean_predicted_groups": 18.357554889773287,
+          "n_scored_users": 22363,
+          "hit_rate_rules": 0.8834682287707374,
+          "hit_rate_popularity_same_size": 0.9005947323704333,
+          "top_rules": [
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Scrubs & Body Treatments",
+                "Beauty > Hair Care > Conditioners"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Hair & Scalp Treatments"
+              ],
+              "count": 265,
+              "antecedent_count": 536,
+              "consequent_count": 2583,
+              "confidence": 0.4944029850746269,
+              "lift": 4.280423521186171,
+              "kulczynski": 0.2984984340781574
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Conditioners",
+                "Beauty > Skin Care > Sun"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Hair & Scalp Treatments"
+              ],
+              "count": 326,
+              "antecedent_count": 728,
+              "consequent_count": 2583,
+              "confidence": 0.4478021978021978,
+              "lift": 3.8769649823656795,
+              "kulczynski": 0.28700601566455225
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Conditioners",
+                "Beauty > Skin Care > Sun"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "count": 506,
+              "antecedent_count": 728,
+              "consequent_count": 4078,
+              "confidence": 0.695054945054945,
+              "lift": 3.8115531476860562,
+              "kulczynski": 0.40956768831952745
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Conditioners"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Hair & Scalp Treatments",
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "count": 626,
+              "antecedent_count": 3777,
+              "consequent_count": 989,
+              "confidence": 0.16574000529520785,
+              "lift": 3.74766808737789,
+              "kulczynski": 0.39935129688420656
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Scrubs & Body Treatments",
+                "Beauty > Hair Care > Styling Products"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Hair & Scalp Treatments"
+              ],
+              "count": 254,
+              "antecedent_count": 600,
+              "consequent_count": 2583,
+              "confidence": 0.42333333333333334,
+              "lift": 3.665119370241322,
+              "kulczynski": 0.2608343012001549
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Cleansers",
+                "Beauty > Hair Care > Conditioners"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "count": 568,
+              "antecedent_count": 851,
+              "consequent_count": 4078,
+              "confidence": 0.6674500587544067,
+              "lift": 3.6601730416686604,
+              "kulczynski": 0.40336701074061676
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Hair & Scalp Treatments",
+                "Beauty > Skin Care > Sun"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "count": 358,
+              "antecedent_count": 538,
+              "consequent_count": 4078,
+              "confidence": 0.6654275092936803,
+              "lift": 3.64908175339249,
+              "kulczynski": 0.37660782036532964
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Scrubs & Body Treatments",
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Hair & Scalp Treatments"
+              ],
+              "count": 251,
+              "antecedent_count": 597,
+              "consequent_count": 2583,
+              "confidence": 0.42043551088777215,
+              "lift": 3.6400307123434956,
+              "kulczynski": 0.25880466988445905
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Scrubs & Body Treatments",
+                "Beauty > Hair Care > Conditioners"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "count": 353,
+              "antecedent_count": 536,
+              "consequent_count": 4078,
+              "confidence": 0.6585820895522388,
+              "lift": 3.611542733854026,
+              "kulczynski": 0.37257206488401545
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Cleansers",
+                "Beauty > Hair Care > Hair & Scalp Treatments"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Conditioners"
+              ],
+              "count": 332,
+              "antecedent_count": 545,
+              "consequent_count": 3777,
+              "confidence": 0.6091743119266054,
+              "lift": 3.606821587930812,
+              "kulczynski": 0.34853738100963577
+            }
+          ]
+        },
+        {
+          "min_support": 0.02,
+          "min_count": 448,
+          "n_frequent_groups": 29,
+          "n_frequent_itemsets": 285,
+          "fpgrowth_seconds": 0.569,
+          "n_rules": 873,
+          "n_pair_rules": 244,
+          "n_groups_in_rules": 24,
+          "confidence_mean": 0.3195748889311429,
+          "lift_median": 1.6488898583405787,
+          "lift_max": 3.8115531476860562,
+          "n_users": 22363,
+          "n_covered_users": 22323,
+          "coverage": 0.998211331216742,
+          "mean_predicted_groups": 17.357120458719706,
+          "n_scored_users": 22323,
+          "hit_rate_rules": 0.86341441562514,
+          "hit_rate_popularity_same_size": 0.8836625901536532
+        }
+      ]
+    },
+    {
+      "level": "category depth 4",
+      "n_groups": 202,
+      "n_items_without_group": 0,
+      "train_interactions_without_group": 0,
+      "train_interactions": 153776,
+      "supports": [
+        {
+          "min_support": 0.005,
+          "min_count": 112,
+          "n_frequent_groups": 117,
+          "n_frequent_itemsets": 1965,
+          "fpgrowth_seconds": 1.252,
+          "n_rules": 5007,
+          "n_pair_rules": 960,
+          "n_groups_in_rules": 88,
+          "confidence_mean": 0.32996096242043893,
+          "lift_median": 2.6916941429021333,
+          "lift_max": 11.455776451219368,
+          "n_users": 22363,
+          "n_covered_users": 22354,
+          "coverage": 0.9995975495237669,
+          "mean_predicted_groups": 26.17057349915004,
+          "n_scored_users": 22354,
+          "hit_rate_rules": 0.6916435537264024,
+          "hit_rate_popularity_same_size": 0.6501744654200591
+        },
+        {
+          "min_support": 0.01,
+          "min_count": 224,
+          "n_frequent_groups": 88,
+          "n_frequent_itemsets": 698,
+          "fpgrowth_seconds": 0.872,
+          "n_rules": 1798,
+          "n_pair_rules": 498,
+          "n_groups_in_rules": 55,
+          "confidence_mean": 0.3253851319924003,
+          "lift_median": 2.482463300715456,
+          "lift_max": 7.657347423216158,
+          "n_users": 22363,
+          "n_covered_users": 22233,
+          "coverage": 0.9941868264544113,
+          "mean_predicted_groups": 21.252237664732604,
+          "n_scored_users": 22233,
+          "hit_rate_rules": 0.6205640264471731,
+          "hit_rate_popularity_same_size": 0.586425583591958,
+          "top_rules": [
+            {
+              "antecedents": [
+                "Beauty > Makeup > Nails > Nail Art",
+                "Beauty > Makeup > Nails > Nail Polish"
+              ],
+              "consequents": [
+                "Beauty > Tools & Accessories > Nail Tools > Nail Art Equipment"
+              ],
+              "count": 311,
+              "antecedent_count": 392,
+              "consequent_count": 2317,
+              "confidence": 0.7933673469387755,
+              "lift": 7.657347423216158,
+              "kulczynski": 0.46379631913188235
+            },
+            {
+              "antecedents": [
+                "Beauty > Makeup > Nails > Nail Art"
+              ],
+              "consequents": [
+                "Beauty > Tools & Accessories > Nail Tools > Nail Art Equipment"
+              ],
+              "count": 746,
+              "antecedent_count": 954,
+              "consequent_count": 2317,
+              "confidence": 0.7819706498951782,
+              "lift": 7.547349867762567,
+              "kulczynski": 0.5519693560222546
+            },
+            {
+              "antecedents": [
+                "Beauty > Tools & Accessories > Nail Tools > Nail Art Equipment"
+              ],
+              "consequents": [
+                "Beauty > Tools & Accessories > Nail Tools > Nail Brushes"
+              ],
+              "count": 251,
+              "antecedent_count": 2317,
+              "consequent_count": 385,
+              "confidence": 0.10832973672852826,
+              "lift": 6.292410136259941,
+              "kulczynski": 0.3801388943382901
+            },
+            {
+              "antecedents": [
+                "Beauty > Tools & Accessories > Nail Tools > False Nails"
+              ],
+              "consequents": [
+                "Beauty > Tools & Accessories > Nail Tools > Nail Art Equipment"
+              ],
+              "count": 354,
+              "antecedent_count": 545,
+              "consequent_count": 2317,
+              "confidence": 0.6495412844036698,
+              "lift": 6.269180726421781,
+              "kulczynski": 0.40116252826139465
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Conditioners",
+                "Beauty > Hair Care > Styling Products > Hair Sprays"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Styling Products > Creams, Gels & Lotions"
+              ],
+              "count": 246,
+              "antecedent_count": 517,
+              "consequent_count": 2035,
+              "confidence": 0.4758220502901354,
+              "lift": 5.228898531026191,
+              "kulczynski": 0.29835328558732815
+            },
+            {
+              "antecedents": [
+                "Beauty > Skin Care > Body > Moisturizers",
+                "Beauty > Skin Care > Face > Exfoliators & Scrubs"
+              ],
+              "consequents": [
+                "Beauty > Skin Care > Face > Oils & Serums"
+              ],
+              "count": 227,
+              "antecedent_count": 599,
+              "consequent_count": 1667,
+              "confidence": 0.3789649415692822,
+              "lift": 5.083859021184077,
+              "kulczynski": 0.2575688535080964
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Conditioners",
+                "Beauty > Skin Care > Sun > Skin Protection"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Styling Products > Creams, Gels & Lotions"
+              ],
+              "count": 260,
+              "antecedent_count": 568,
+              "consequent_count": 2035,
+              "confidence": 0.4577464788732394,
+              "lift": 5.030262657023219,
+              "kulczynski": 0.2927553033186836
+            },
+            {
+              "antecedents": [
+                "Beauty > Bath & Body > Cleansers > Body Washes",
+                "Beauty > Hair Care > Shampoos"
+              ],
+              "consequents": [
+                "Beauty > Skin Care > Sun > Skin Protection"
+              ],
+              "count": 239,
+              "antecedent_count": 649,
+              "consequent_count": 1641,
+              "confidence": 0.3682588597842835,
+              "lift": 5.0185087637757055,
+              "kulczynski": 0.2569508802273033
+            },
+            {
+              "antecedents": [
+                "Beauty > Skin Care > Face > Creams & Moisturizers",
+                "Beauty > Skin Care > Face > Oils & Serums"
+              ],
+              "consequents": [
+                "Beauty > Skin Care > Face > Exfoliators & Scrubs"
+              ],
+              "count": 235,
+              "antecedent_count": 935,
+              "consequent_count": 1120,
+              "confidence": 0.25133689839572193,
+              "lift": 5.018434873949579,
+              "kulczynski": 0.23057916348357527
+            },
+            {
+              "antecedents": [
+                "Beauty > Hair Care > Shampoos",
+                "Beauty > Hair Care > Styling Products > Hair Sprays"
+              ],
+              "consequents": [
+                "Beauty > Hair Care > Styling Products > Creams, Gels & Lotions"
+              ],
+              "count": 238,
+              "antecedent_count": 524,
+              "consequent_count": 2035,
+              "confidence": 0.4541984732824428,
+              "lift": 4.991272952341655,
+              "kulczynski": 0.28557589511787984
+            }
+          ]
+        },
+        {
+          "min_support": 0.02,
+          "min_count": 448,
+          "n_frequent_groups": 58,
+          "n_frequent_itemsets": 221,
+          "fpgrowth_seconds": 0.631,
+          "n_rules": 491,
+          "n_pair_rules": 206,
+          "n_groups_in_rules": 29,
+          "confidence_mean": 0.322048723709348,
+          "lift_median": 2.109475058401951,
+          "lift_max": 7.547349867762567,
+          "n_users": 22363,
+          "n_covered_users": 21641,
+          "coverage": 0.967714528462192,
+          "mean_predicted_groups": 15.3801580333626,
+          "n_scored_users": 21641,
+          "hit_rate_rules": 0.5121759622937941,
+          "hit_rate_popularity_same_size": 0.4727600388152119
+        }
+      ]
+    }
+  ]
+}

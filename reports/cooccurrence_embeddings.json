@@ -1,0 +1,36 @@
+{
+  "n_transactions": 22363,
+  "n_items": 12101,
+  "dim": 128,
+  "seed": 42,
+  "n_validation_users": 22363,
+  "n_items_without_train": 33,
+  "item2vec": {
+    "file": "item_emb_cooc_item2vec.npy",
+    "sha256": "9f4a76d457205f8a25e8bec4de3bd70173e16cbfa7013a8a140f079f40348aa0",
+    "n_zero_rows": 33,
+    "epochs": 100,
+    "negative": 5,
+    "window": 202
+  },
+  "svd": {
+    "file": "item_emb_cooc_svd.npy",
+    "sha256": "f2043e9fe7dbc5abe354fc1ed5d4c587a3228172d8681d96eebf42a0489f2919",
+    "n_zero_rows": 33,
+    "explained_variance": 0.30071558414796296
+  },
+  "quality": {
+    "popularity": {
+      "recall@10": 0.016366319366811252,
+      "ndcg@10": 0.007961707848286243
+    },
+    "item2vec": {
+      "recall@10": 0.034834324553950725,
+      "ndcg@10": 0.019020356363917336
+    },
+    "svd": {
+      "recall@10": 0.035147341591020884,
+      "ndcg@10": 0.019117970050088976
+    }
+  }
+}

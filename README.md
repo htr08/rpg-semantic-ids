@@ -197,6 +197,23 @@ python -m src.clustering_compare
 
 Repo chưa có script tạo lại các file này (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; cần nhận gói từ nhóm A. Lệnh so sánh Ward, k-means (mẫu 5.000 item, k = 64/256/1024) và DBSCAN cosine (toàn bộ item, MinPts 5/10/20, eps theo điểm gãy và phân vị của đường k-distance, PCA 50 và 20 chiều). Cấu hình có eps xấp xỉ 0 (từ MinPts item trùng embedding) hoặc đường k-distance phẳng bị bỏ qua riêng và ghi lý do, các cấu hình còn lại vẫn chạy. Kết quả: [reports/clustering_hier_dbscan.md](reports/clustering_hier_dbscan.md), [reports/clustering_hier_dbscan.json](reports/clustering_hier_dbscan.json), [reports/figures/dbscan_kdistance.png](reports/figures/dbscan_kdistance.png).
 
+## Luật cấp nhóm và embedding đồng xuất hiện (phần C)
+
+```bash
+python -m src.group_rules      # luật kết hợp cấp brand và danh mục so với cấp item (khoảng 1 phút)
+python -m src.cooccurrence     # item2vec và SVD (PPMI) từ phần train (khoảng 8 phút, chủ yếu item2vec 100 epoch)
+```
+
+**Luật cấp nhóm** (`src/group_rules.py`). Item được gộp lên brand hoặc danh mục độ sâu 2, 3, 4 (tiền tố của đường dẫn `categories`), rồi chạy FP-Growth trên giao dịch train. Đo coverage và hit rate trên lịch sử validation, kèm Popularity chọn cùng số nhóm cho mỗi user. Kết quả: [reports/group_rules.md](reports/group_rules.md), [reports/group_rules.json](reports/group_rules.json). Đầu vào: `data/processed/{interactions.csv,items.jsonl,validation.jsonl}` và `data/splits/leave_last_out.csv`.
+
+**Embedding đồng xuất hiện** (`src/cooccurrence.py`). Ghi hai file vào `data/processed/` (không commit): `item_emb_cooc_item2vec.npy` và `item_emb_cooc_svd.npy`, mỗi file là ma trận 12.101 × 128 float32, hàng j ứng với `item_id` j + 1, mỗi hàng chuẩn hóa L2. Item không có vector là hàng toàn 0 (33 item không xuất hiện trong train, ở cả hai file). Báo cáo, SHA-256 hai file và phép thử tín hiệu trên validation: [reports/cooccurrence_embeddings.md](reports/cooccurrence_embeddings.md). Số epoch của item2vec (100) được chọn trên validation trong {5, 20, 50, 100}. Việc ghép với embedding văn bản theo α thuộc phía A; hai file nạp được qua chế độ (a) của adapter:
+
+```bash
+python -m adapters.load_ids emb --processed-dir <processed> --npy data/processed/item_emb_cooc_svd.npy --name cooc_svd
+```
+
+Phụ thuộc: `gensim==4.3.3` (đã ghim trong `requirements.txt`). Tái lập: item2vec cho cùng kết quả theo seed với `workers = 1` (đã kiểm giữa các giá trị `PYTHONHASHSEED`); SHA-256 của file SVD chỉ khớp khi cùng số luồng BLAS, khác số luồng làm các phần tử lệch cỡ 1e-11.
+
 ## Kiểm thử
 
 ```bash
