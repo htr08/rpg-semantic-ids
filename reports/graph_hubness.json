@@ -1,0 +1,234 @@
+{
+  "n_items": 12101,
+  "neighbors_per_item": 200,
+  "self_edges_excluded": 12101,
+  "padding_edges_excluded": 0,
+  "directed_edges": 2408099,
+  "indegree": {
+    "mean": 199.0,
+    "std": 28.136016100949504,
+    "skewness": 0.364996463399257,
+    "p0": 110.0,
+    "p50": 197.0,
+    "p90": 235.0,
+    "p95": 248.0,
+    "p99": 274.0,
+    "p100": 347.0,
+    "zero_items": 0
+  },
+  "popularity": {
+    "spearman": 0.0014826519833683366,
+    "p_value": 0.8704541093163348,
+    "head_fraction": 0.2,
+    "head_hubs": 5
+  },
+  "top_hubs": [
+    {
+      "item_id": 5859,
+      "asin": "B003YCF47U",
+      "title": "Garnier Ultra-Lift Anti-Wrinkle Firming Moisturizer SPF 15, 1.60 Fluid Ounce",
+      "in_degree": 347,
+      "train_interactions": 5,
+      "is_head": false
+    },
+    {
+      "item_id": 3028,
+      "asin": "B00IT1HKV4",
+      "title": "ORGANIC Argan Oil For Hair &amp; Face - 100% Pure &amp; ECO Certified Organic - Larger 4 oz Bottle - Miracle Oil For Every Skin Condition, Hair, Nails, Anti-aging &amp; More! Pure Moroccan Argan Oil - 100% Guaranteed to Work Wonders for Your Body!",
+      "in_degree": 332,
+      "train_interactions": 72,
+      "is_head": true
+    },
+    {
+      "item_id": 9362,
+      "asin": "B00G6TQSX2",
+      "title": "BEST Anti-Aging Cream To Rejuvenate And Beautify Your Skin - 100% Satisfaction Guarantee Or Your Money Back &#9733; Get Luxuriously Soft and Age-Free Skin After &#9733; Anti Wrinkle Skin Care Formula Includes Organic Aloe Vera, MSM, Plant Based Hyaluronic Acid, Wildcrafted Green Tea, Organic Coconut Oil, and Cucumber Distillate For MAXIMUM Benefit &#9733; Our Cruelty-Free, Eco-Friendly, Gluten-Free Formula Heals Sun Damage, Hydrates, Nourishes, And Erases Wrinkles And Fine Lines &#9733; Works for Normal AND Sensitive Skin &#9733; PREMIUM INGREDIENTS FOR OPTIMAL SKIN",
+      "in_degree": 318,
+      "train_interactions": 3,
+      "is_head": false
+    },
+    {
+      "item_id": 11657,
+      "asin": "B00HST6XPC",
+      "title": "Advanced Anti Aging Serum for face - Best Anti Wrinkle Moisturizer with Hyaluronic Acid - Peptide enriched with Matrixyl 3000 &amp; Argireline, combined with Retinol, Renovage, Vitamin C, B3, E - Exclusive formulation stimulates Collagen production - Moisturizes to reduce the appearance of fine lines and wrinkles - Powerful antioxidants - 100% Money Back Guarantee!",
+      "in_degree": 313,
+      "train_interactions": 1,
+      "is_head": false
+    },
+    {
+      "item_id": 8424,
+      "asin": "B004W55086",
+      "title": "La Roche-Posay Anthelios 50 Mineral Ultra Light Sunscreen SPF 50, Untinted, 1.7 Ounce",
+      "in_degree": 310,
+      "train_interactions": 8,
+      "is_head": false
+    },
+    {
+      "item_id": 9964,
+      "asin": "B003YCAQDC",
+      "title": "d.j.v. beautenizer d.j.v. beautenizer Fiberwig LX Pure Black",
+      "in_degree": 309,
+      "train_interactions": 5,
+      "is_head": false
+    },
+    {
+      "item_id": 11719,
+      "asin": "B00GHXHSPY",
+      "title": "Best Anti Aging Triple Peptide Collagen Firming Serum With Hyaluronic Acid Instantly Tightens Skin For Age-Defying Radiance - 3 Powerful Tightening Peptides, Matrixyl&reg; Pentapeptides and Hexapeptides Diminish Fine Lines And Reduce Pigmentation For A Luminous Glow. Made in USA FDA Lab - Paraben Free. Enjoy Our Free Book Included, Aria's Secrets to Anti-Aging.100% Satisfaction Guaranteed! 21st Century Science Skincare by Visio Elan&trade;",
+      "in_degree": 309,
+      "train_interactions": 6,
+      "is_head": false
+    },
+    {
+      "item_id": 11088,
+      "asin": "B0011FMDU8",
+      "title": "NIA24 Physical Cleansing Scrub, 3.75 Fluid Ounce",
+      "in_degree": 304,
+      "train_interactions": 7,
+      "is_head": false
+    },
+    {
+      "item_id": 11692,
+      "asin": "B004NN0FIW",
+      "title": "Harmony Gelish UV Soak Off Gel Polish Champagne",
+      "in_degree": 303,
+      "train_interactions": 8,
+      "is_head": false
+    },
+    {
+      "item_id": 1919,
+      "asin": "B00AEY1SQW",
+      "title": "Vitamin C Skin Serum 25% (L-ascorbic Acid) with Pure Hyaluronic Acid Anti Aging Serum - (1oz)",
+      "in_degree": 300,
+      "train_interactions": 4,
+      "is_head": false
+    },
+    {
+      "item_id": 2272,
+      "asin": "B00IG9L8QM",
+      "title": "Hyaluronic Pure Moisturizing Cream (Post-peel Repair and Restore) Enhanced with Squalane and Botanical Extracts",
+      "in_degree": 300,
+      "train_interactions": 12,
+      "is_head": false
+    },
+    {
+      "item_id": 6079,
+      "asin": "B007L5UGZ6",
+      "title": "Maybelline Lash Stiletto Voluptuous Mascara/eyeliner, 973 Very Black",
+      "in_degree": 300,
+      "train_interactions": 7,
+      "is_head": false
+    },
+    {
+      "item_id": 9380,
+      "asin": "B000VEG964",
+      "title": "Glycolic Acid 50% Peel Gel easily penetrates your skin to exfoliate layers of dead skin cells that dull your complexion to immediately expose a clear, softer, more radiant face.",
+      "in_degree": 300,
+      "train_interactions": 9,
+      "is_head": false
+    },
+    {
+      "item_id": 10845,
+      "asin": "B003VMUIGK",
+      "title": "Harmony Gelish Uv Soak Off Gel Polish -Tumberline Violet (0.5 Oz)",
+      "in_degree": 300,
+      "train_interactions": 6,
+      "is_head": false
+    },
+    {
+      "item_id": 11754,
+      "asin": "B00GRBVM0S",
+      "title": "Virgin Argan Oil for Hair &amp; Face Treatment - 100% Cold Pressed Pure Organic Moroccan Oil - 4 Oz - Perfect for Dry Skin, Split Ends, Acne &amp; Damaged Nails - Get Beautiful Skin &amp; Hair Starting Today, Guaranteed!",
+      "in_degree": 299,
+      "train_interactions": 19,
+      "is_head": true
+    },
+    {
+      "item_id": 11863,
+      "asin": "B00GM6H9BO",
+      "title": "Anti-Aging Eye Cream - Best Age Defying Anti-Wrinkle Skin Care for Men and Women - 100% Satisfaction Guaranteed - Natural Replenishing Moisturizer Eye Balm - Aloe Vera + Cucumber + Green Tea Reduces Puffiness, Dark Circles and Bags Under Eyes - Hydrolyzed Collagen + Elastin + Vitamin E for Smoothing Fine Lines Around Your Eyes - Licorice Root Naturally Brightens the Complexion - Advanced Formula for All Skin Types - Lightweight Hypoallergenic Eye Care with Powerful Antioxidant Properties - A Must Have Skin Care Product - 0.5oz lasts 60 Days",
+      "in_degree": 299,
+      "train_interactions": 18,
+      "is_head": true
+    },
+    {
+      "item_id": 3223,
+      "asin": "B00GMAWI66",
+      "title": "Virgin Argan Oil &#9733; Premium Quality 100% Organic For Hair, Skin, Face &amp; Nails - Best Moroccan Anti-Aging, Anti-Wrinkle, Anti-Oxidant Beauty Secret - Prevents Frizz &amp; Increases Natural Hair Shine &amp; Silkiness - Natural Skin Care Products for Women and Men - Nature's Best Beard Oil - Moisturizer for Dry Skin &amp; Cuticles - Pure Oil not a Cream or Serum - USDA &amp; EcoCert Certified - ONE YEAR Satisfaction Guarantee",
+      "in_degree": 297,
+      "train_interactions": 2,
+      "is_head": false
+    },
+    {
+      "item_id": 9480,
+      "asin": "B003VMZYSC",
+      "title": "Harmony Gelish Uv Soak Off Gel Polish -Water Field (0.5 Oz)",
+      "in_degree": 297,
+      "train_interactions": 39,
+      "is_head": true
+    },
+    {
+      "item_id": 3395,
+      "asin": "B007TLJP2W",
+      "title": "Gelish .5 Base &amp; Top Coat Gel SET Harmony Nail Salon UV Manicure Polish Soak Off",
+      "in_degree": 296,
+      "train_interactions": 26,
+      "is_head": true
+    },
+    {
+      "item_id": 8425,
+      "asin": "B00EJSONGG",
+      "title": "Elite Serum Rx - Extra Strength - Defend. Protect. Rejuvenate.",
+      "in_degree": 296,
+      "train_interactions": 5,
+      "is_head": false
+    }
+  ],
+  "louvain": {
+    "seed": 42,
+    "undirected_edges": 1305638,
+    "n_communities": 7,
+    "modularity": 0.1198784250770462,
+    "community_sizes": [
+      3421,
+      2952,
+      2312,
+      1765,
+      1078,
+      366,
+      207
+    ],
+    "category_agreement": {
+      "leaf": {
+        "labeled_items": 12101,
+        "nmi": 0.22135517187276552,
+        "ami": 0.20770511442130712
+      },
+      "level3": {
+        "labeled_items": 12101,
+        "nmi": 0.22442230348063455,
+        "ami": 0.22086233066348906
+      }
+    }
+  },
+  "rpg_source_revision": "7dcf95ce9e08601810efdd1c850ed6dada5f97c2",
+  "torch_version": "2.4.1+cpu",
+  "inputs": {
+    "checkpoint": {
+      "file": "main_s42-run_rpg.py-Nov-14-2026_16-24-f3eab8.pth",
+      "sha256": "cb71ba24a8b387d4a8f2a053197726fde058c6a2c36060aed4d376fa629596ee"
+    },
+    "semantic_ids": {
+      "file": "sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids",
+      "sha256": "e85affbd11102542ea2be0d64aff1491575ec625dc67e9dc82efb0cc57ef140c"
+    },
+    "config": {
+      "file": "graph_hubness.yaml",
+      "sha256": "58e934adfa1ca67197deacda7933d927a25b80ad6df452cfe3a8a589f557fa2f"
+    },
+    "split_manifest": {
+      "file": "manifest.json",
+      "sha256": "fa76326332742815bff360dc663f94b94785628bc58cd6b0a5b7a016777c5510"
+    }
+  }
+}
