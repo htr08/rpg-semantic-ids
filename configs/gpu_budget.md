@@ -8,7 +8,7 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 - RQ1 ngày 24/11 trên Kaggle (PQ bản đầu và ngẫu nhiên, mỗi biến thể 3 seed, 8,66 giờ) nâng tổng lên khoảng 16,51/45 giờ, còn khoảng 28,49 giờ. PQ bản đầu (4,53 giờ) bị bỏ sau review 25/11 (xem `reports/decisions.md`) nhưng giờ GPU vẫn tính.
 - RQ1 ngày 26/11 trên Colab (PQ và RQ, mỗi biến thể 3 seed, 8,54 giờ) nâng tổng lên khoảng 25,05/45 giờ, còn khoảng 19,95 giờ. RQ1 đã đủ 4 biến thể × 3 seed.
 - Nền tảng: Google Colab (chính) + Kaggle (dự phòng, chạy song song từ Tuần 3). Mọi output ghi vào Drive `MyDrive/rpg/`.
-- Ngân sách trần: 45 giờ GPU. Đã dùng khoảng 25,05 giờ (26/11). Dự kiến: cộng `rpg_behavior` 3 seed (khoảng 4,5 giờ) là khoảng 29,5 giờ; dùng thêm cả 2 lần dự phòng thì khoảng 32–34 giờ, sát ngưỡng cảnh báo 36 giờ.
+- Ngân sách trần: 45 giờ GPU. Đã dùng khoảng 30,57 giờ (27/11): RQ1 và nâng cấp chính đã đủ 3 seed. Còn khoảng 14,4 giờ cho dự phòng; đóng băng thí nghiệm 5/12.
 - Ngưỡng cảnh báo: 80% ngân sách (36 giờ) → áp dụng danh sách cắt giảm trong `docs/project_plan.md`, mục 1.3.
 
 ## Kế hoạch các lần train
@@ -53,6 +53,10 @@ Người theo dõi: thành viên A. Cập nhật sau mỗi lần train.
 | 26/11 | `rq_s42` (RQ1) | 42 | Colab | 1,50 | ≈ 21,89 | ≈ 23,11 |
 | 26/11 | `rq_s43` (RQ1) | 43 | Colab | 1,89 | ≈ 23,78 | ≈ 21,22 |
 | 26/11 | `rq_s44` (RQ1) | 44 | Colab | 1,27 | ≈ 25,05 | ≈ 19,95 |
+| 27/11 | `beh_s42` (nâng cấp chính, thử 1 seed) | 42 | Colab | 1,40 | ≈ 26,45 | ≈ 18,55 |
+| 27/11 | `hyb_s42` (nâng cấp chính, thử 1 seed) | 42 | Colab | 1,43 | ≈ 27,88 | ≈ 17,12 |
+| 27/11 | `hyb_s43` (nâng cấp chính) | 43 | Colab | 1,54 | ≈ 29,42 | ≈ 15,58 |
+| 27/11 | `hyb_s44` (nâng cấp chính) | 44 | Colab | 1,15 | ≈ 30,57 | ≈ 14,43 |
 
 Các lượt SASRec dùng `elapsed_seconds / 3600` trong `run.json` hoặc
 `run_seconds / 3600` trong `result.json` làm ước tính thời gian chạy
