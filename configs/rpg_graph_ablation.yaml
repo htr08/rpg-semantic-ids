@@ -1,0 +1,3 @@
+seed: 42
+# Chọn trước khi chấm test, theo số ứng viên trên mỗi hàng của graph gốc.
+indegree_cap: 200

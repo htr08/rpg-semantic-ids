@@ -262,6 +262,9 @@ lấy điểm bắt đầu ngẫu nhiên, nên trạng thái RNG ở lượt ch�
 thể khác lúc vừa train xong. So sánh hai bộ chấm trên ranking của cùng một lượt chạy.
 Xem [kết quả và checksum của sáu lượt xuất OPQ và hybrid](../reports/rpg_ranking_exports.json).
 
+Xem [ablation và đồ thị giảm hub](../reports/rpg_graph_ablation.md) để chấm lại
+checkpoint OPQ khi thay đổi cách tìm ứng viên.
+
 Baseline SASRec dùng checkpoint từ S³-Rec, chọn theo validation NDCG@20 với
 patience 10. Khi chấm bằng bộ chấm dự án, `scripts.evaluate_sasrec_paper` quy đổi
 item ID, giữ item đã xem và xuất kết quả theo user theo mapping B.

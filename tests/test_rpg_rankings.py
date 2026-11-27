@@ -29,7 +29,7 @@ def evaluation(tmp_path):
 
     def generate(batch, n_return_sequences):
         assert USER_COLUMN not in batch and n_return_sequences == 2
-        return np.array([[[2], [1]], [[3], [2]]]), np.array([3, 3])
+        return np.array([[[2], [1]], [[3], [2]]]), np.array([[3], [2]], dtype=float)
 
     pipeline = SimpleNamespace(
         accelerator=SimpleNamespace(num_processes=1),
@@ -60,10 +60,12 @@ def test_export_preserves_native_order_and_seen_items(evaluation, tmp_path):
     output = tmp_path / "rankings.jsonl"
     generate = evaluation.trainer.model.generate
     dataset = evaluation.tokenized_datasets["test"]
-    _, users, top_k = run_with_rankings(evaluation, tmp_path, output)
+    visited = {}
+    _, users, top_k = run_with_rankings(evaluation, tmp_path, output, visited=visited)
 
     assert (users, top_k) == (2, 2)
     assert load_rankings(output) == {1: [3, 2], 2: [2, 1]}
+    assert visited == {1: 2, 2: 3}
     assert evaluation.trainer.model.generate is generate
     assert evaluation.tokenized_datasets["test"] is dataset
 

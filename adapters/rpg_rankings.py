@@ -49,7 +49,7 @@ def write_rankings(path, rankings, *, overwrite):
         temporary.replace(path)
 
 
-def run_with_rankings(pipeline, processed_dir, output, *, overwrite=False):
+def run_with_rankings(pipeline, processed_dir, output, *, overwrite=False, visited=None):
     """Thu ranking từ chính generate() dùng để tính metric ở lượt test."""
     if pipeline.accelerator.num_processes != 1 or pipeline.config["use_ddp"]:
         raise ValueError("Xuất ranking chỉ hỗ trợ một tiến trình")
@@ -63,8 +63,15 @@ def run_with_rankings(pipeline, processed_dir, output, *, overwrite=False):
     def capture(batch, *args, **kwargs):
         output = generate({key: value for key, value in batch.items() if key != USER_COLUMN}, *args, **kwargs)
         predictions = output[0] if isinstance(output, tuple) else output
+        batch_users = batch[USER_COLUMN].tolist()
+        if visited is not None:
+            counts = output[1].squeeze(-1).tolist()
+            for user, count in zip(batch_users, counts, strict=True):
+                if not k <= count <= n_items or int(count) != count:
+                    raise ValueError(f"Số item đã thăm của user {user} ngoài phạm vi")
+                visited[user] = int(count)
         # RPG trả tensor (batch, k, 1) vì mỗi ứng viên có một item ID.
-        for user, items, labels in zip(batch[USER_COLUMN].tolist(), predictions.squeeze(-1).tolist(),
+        for user, items, labels in zip(batch_users, predictions.squeeze(-1).tolist(),
                                        batch["labels"].tolist(), strict=True):
             if user in rankings or labels != [expected[user]["target"]]:
                 raise ValueError(f"User {user} bị lặp hoặc nhãn của batch test không khớp")
