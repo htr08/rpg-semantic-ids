@@ -1,0 +1,5 @@
+# Số cạnh mỗi item khớp hparams.yml của RPG main_s42 trên Beauty.
+n_edges: 200
+codebook_size: 256
+block_size: 512
+louvain_seed: 42

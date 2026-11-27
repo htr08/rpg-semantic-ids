@@ -197,6 +197,21 @@ python -m src.clustering_compare
 
 Repo chưa có script tạo lại các file này (`scripts/build_semantic_ids.py` mới là khung rỗng) và chưa có liên kết tải cố định; cần nhận gói từ nhóm A. Lệnh so sánh Ward, k-means (mẫu 5.000 item, k = 64/256/1024) và DBSCAN cosine (toàn bộ item, MinPts 5/10/20, eps theo điểm gãy và phân vị của đường k-distance, PCA 50 và 20 chiều). Cấu hình có eps xấp xỉ 0 (từ MinPts item trùng embedding) hoặc đường k-distance phẳng bị bỏ qua riêng và ghi lý do, các cấu hình còn lại vẫn chạy. Kết quả: [reports/clustering_hier_dbscan.md](reports/clustering_hier_dbscan.md), [reports/clustering_hier_dbscan.json](reports/clustering_hier_dbscan.json), [reports/figures/dbscan_kdistance.png](reports/figures/dbscan_kdistance.png).
 
+## Phân tích đồ thị giải mã RPG (phần B)
+
+`src.graph` dựng lại đồ thị OPQ trên CPU từ checkpoint RPG và file `.sem_ids` tương ứng trong gói A bàn giao. Module đối chiếu ASIN với catalog và kiểm tra bộ chia trước khi chạy. Cấu hình mặc định dùng 200 ứng viên mỗi item theo lần chạy Beauty `main_s42`.
+
+```bash
+python -m src.graph \
+  --checkpoint "experiments/graph_hubness/main_s42-run_rpg.py-Nov-14-2026_16-24-f3eab8.pth" \
+  --semantic-ids "experiments/graph_hubness/sentence-t5-base_OPQ32,IVF1,PQ32x8.sem_ids" \
+  --output reports/graph_hubness.json \
+  --figure reports/figures/graph_hubness.png \
+  --adjacency-output experiments/graph_hubness/adjacency.npy
+```
+
+Báo cáo ghi phân bố bậc vào, 20 hub, tương quan với tần suất tương tác train và mức khớp giữa cộng đồng Louvain với danh mục. Mảng adjacency giữ tự nối theo bộ giải mã. Hàng `i` ứng với `item_id = i + 1`, giá trị là ID item của RPG. Xem [báo cáo RQ3](reports/graph_hubness.md) và [mã dựng đồ thị của RPG](https://github.com/facebookresearch/RPG_KDD2025/blob/7dcf95ce9e08601810efdd1c850ed6dada5f97c2/genrec/models/RPG/model.py#L144-L227).
+
 ## Kiểm thử
 
 ```bash

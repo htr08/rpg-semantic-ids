@@ -192,7 +192,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 - Huấn luyện bằng `main.py` của `RPG_KDD2025` với siêu tham số theo paper (d = 448, FFN 1024, 4 head, τ = 0,03, batch 256, lr 0,01, early stopping 20 epoch), seed {42, 43, 44}; không sửa kiến trúc hay loss. Kiến trúc vẫn phải được hiểu và trình bày (embedding theo codebook, mean pooling, Transformer 2 lớp, đầu MLP từng vị trí, loss MTP).
 - Adapter (`adapters/`): nạp file `semantic_ids.npy` hoặc embedding tự tạo vào code gốc thay cho bước tạo ID mặc định. Kiểm tra bằng cách nạp lại chính ID OPQ của code gốc và xác nhận kết quả không đổi.
-- Giải mã: kết quả chính dùng giải mã đồ thị của code gốc (k, q theo paper). B dựng lại đồ thị kNN (FAISS, k = 100) từ embedding token của checkpoint để phân tích RQ3 và thử đồ thị giảm hub; đồ thị tự dựng cộng giải mã tự viết phải cho NDCG gần code gốc thì mới được dùng để phân tích.
+- Giải mã: kết quả chính dùng giải mã đồ thị của code gốc. B dựng lại đồ thị từ embedding token của checkpoint theo hàm tương đồng của RPG và cấu hình Beauty thực tế (`n_edges = 200`). Khi chạy lại giải mã bằng đồ thị tự dựng, đối chiếu NDCG với code gốc trước khi so sánh kết quả gợi ý.
 
 #### d) Khai phá mẫu mua kèm (FP-Growth, PrefixSpan)
 
@@ -212,7 +212,7 @@ Thư mục môi trường ảo không được commit (đã có trong `.gitignor
 
 #### f) Phân tích đồ thị kNN (RQ3)
 
-- Đồ thị: đỉnh là item, mỗi đỉnh nối tới k = 100 láng giềng theo độ tương đồng embedding token (như paper); phân tích bậc vào trên đồ thị có hướng, phát hiện cộng đồng trên bản vô hướng.
+- Đồ thị: đỉnh là item; mỗi hàng giữ 200 ứng viên có điểm cao nhất theo độ tương đồng embedding token như lần chạy RPG trên Beauty. Khi phân tích bậc vào trên đồ thị có hướng và khi chuyển sang vô hướng để tìm cộng đồng, bỏ cạnh tự nối và đỉnh đệm.
 - Hubness: phân bố bậc vào, độ lệch (skewness), danh sách 20 hub; hub có phải sản phẩm phổ biến không (tương quan với số tương tác train); hub có bị gợi ý quá mức không (tương quan với tần suất xuất hiện trong top-10 của RPG).
 - Cộng đồng: Louvain trên đồ thị vô hướng; modularity; NMI giữa cộng đồng và danh mục; so với cụm k-means của C.
 - Nâng cấp phụ: đồ thị mutual kNN hoặc giới hạn bậc vào; đo lại NDCG, coverage, tỉ lệ long-tail và hubness; không cần train lại.
